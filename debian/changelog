@@ -1,3 +1,13 @@
+libsdl2 (2.0.14+dfsg2-4) UNRELEASED; urgency=medium
+
+  [ Simon McVittie ]
+  * d/rules: Pass CPPFLAGS and LDFLAGS while linking test programs
+
+  [ Guido Günther ]
+  * debian: Add salsa-ci integration
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 21 Jun 2021 09:59:53 +0100
+
 libsdl2 (2.0.14+dfsg2-3) unstable; urgency=medium
 
   * d/libsdl2-2.0-0.symbols: SDL_LinuxSetThreadPriority is Linux-only
