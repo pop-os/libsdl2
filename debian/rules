@@ -12,6 +12,7 @@ confflags = --disable-rpath --enable-sdl-dlopen \
             --disable-video-opengles1 \
             --disable-wayland-shared \
             --enable-video-kmsdrm --disable-kmsdrm-shared \
+            --disable-libdecor \
             --enable-hidapi
 
 # disable autoheader (invoked automatically by autoreconf), necessary in order
