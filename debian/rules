@@ -10,7 +10,7 @@ confflags = --disable-rpath --enable-sdl-dlopen \
             --disable-x11-shared --disable-video-directfb \
             --enable-video-opengles \
             --disable-video-opengles1 \
-            --enable-video-wayland --disable-wayland-shared \
+            --disable-wayland-shared \
             --enable-video-kmsdrm --disable-kmsdrm-shared \
             --enable-hidapi
 
@@ -27,12 +27,10 @@ ifeq ($(DEB_HOST_ARCH_CPU),ppc64el)
   confflags += --disable-altivec
 endif
 
-# disable Wayland and Vulkan on non-Linux, they do not support other kernels at the moment
-ifeq (hurd,$(findstring hurd,$(DEB_HOST_ARCH_CPU)))
-  confflags += --disable-video-vulkan
-  confflags += --disable-video-wayland
-endif
-ifeq (kfreefsd,$(findstring kfreebsd,$(DEB_HOST_ARCH_CPU)))
+ifeq ($(DEB_HOST_ARCH_OS),linux)
+  confflags += --enable-video-vulkan
+  confflags += --enable-video-wayland
+else
   confflags += --disable-video-vulkan
   confflags += --disable-video-wayland
 endif
