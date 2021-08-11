@@ -20,6 +20,7 @@ Build-Depends:
  libgles-dev [!hurd-any],
  libglu1-mesa-dev,
  libibus-1.0-dev,
+ libpipewire-0.3-dev [linux-any],
  libpulse-dev,
  libsndio-dev,
  libudev-dev [linux-any],

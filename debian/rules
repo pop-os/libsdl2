@@ -29,9 +29,11 @@ ifeq ($(DEB_HOST_ARCH_CPU),ppc64el)
 endif
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
+  confflags += --enable-pipewire
   confflags += --enable-video-vulkan
   confflags += --enable-video-wayland
 else
+  confflags += --disable-pipewire
   confflags += --disable-video-vulkan
   confflags += --disable-video-wayland
 endif
