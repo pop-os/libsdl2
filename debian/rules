@@ -36,7 +36,7 @@ else
 endif
 
 # disable OpenGLES on Hurd, it does not support it at the moment
-ifeq (hurd,$(findstring hurd,$(DEB_HOST_ARCH_CPU)))
+ifeq ($(DEB_HOST_ARCH_OS),hurd)
   confflags += --disable--video-opengles
 endif
 
