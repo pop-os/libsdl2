@@ -3,6 +3,9 @@ Date: Wed, 11 Aug 2021 14:51:56 +0100
 Subject: Revert "x11: Don't let XRRSetScreenSize fire a BadMatch error."
 
 This reverts commit d0effadf68e9b7299fdade38f6bcef3d1a117a12.
+
+Bug: https://github.com/libsdl-org/SDL/issues/4630
+Forwarded: https://github.com/libsdl-org/SDL/pull/4631
 ---
  src/video/x11/SDL_x11modes.c | 19 -------------------
  1 file changed, 19 deletions(-)

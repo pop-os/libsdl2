@@ -3,6 +3,9 @@ Date: Wed, 11 Aug 2021 14:51:51 +0100
 Subject: Revert "x11: XSync while trying to catch XRRSetScreenSize error."
 
 This reverts commit 4c7825f6bd81f2d245cbd086544bc1da8f3e7e84.
+
+Bug: https://github.com/libsdl-org/SDL/issues/4630
+Forwarded: https://github.com/libsdl-org/SDL/pull/4631
 ---
  src/video/x11/SDL_x11modes.c | 1 -
  1 file changed, 1 deletion(-)
