@@ -1,6 +1,7 @@
-libsdl2 (2.0.14+dfsg2-4) UNRELEASED; urgency=medium
+libsdl2 (2.0.16+dfsg1-1) UNRELEASED; urgency=medium
 
   [ Simon McVittie ]
+  * New upstream release
   * d/rules: Pass CPPFLAGS and LDFLAGS while linking test programs
 
   [ Guido Günther ]
