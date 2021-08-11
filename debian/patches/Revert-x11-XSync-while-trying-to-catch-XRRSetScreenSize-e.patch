@@ -1,0 +1,21 @@
+From: Simon McVittie <smcv@debian.org>
+Date: Wed, 11 Aug 2021 14:51:51 +0100
+Subject: Revert "x11: XSync while trying to catch XRRSetScreenSize error."
+
+This reverts commit 4c7825f6bd81f2d245cbd086544bc1da8f3e7e84.
+---
+ src/video/x11/SDL_x11modes.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/video/x11/SDL_x11modes.c b/src/video/x11/SDL_x11modes.c
+index 0ac47b3..7dab9ff 100644
+--- a/src/video/x11/SDL_x11modes.c
++++ b/src/video/x11/SDL_x11modes.c
+@@ -1059,7 +1059,6 @@ X11_SetDisplayMode(_THIS, SDL_VideoDisplay * sdl_display, SDL_DisplayMode * mode
+            crashing */
+         PreXRRSetScreenSizeErrorHandler = X11_XSetErrorHandler(SDL_XRRSetScreenSizeErrHandler);
+         X11_XRRSetScreenSize(display, RootWindow(display, data->screen), mode->w, mode->h, mm_width, mm_height);
+-        X11_XSync(display, False);  /* hopefully force any protocol errors to process with this handler. */
+         X11_XSetErrorHandler(PreXRRSetScreenSizeErrorHandler);
+ 
+         status = X11_XRRSetCrtcConfig (display, res, output_info->crtc, CurrentTime,

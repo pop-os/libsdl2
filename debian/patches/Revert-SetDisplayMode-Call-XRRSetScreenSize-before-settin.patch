@@ -1,0 +1,46 @@
+From: Simon McVittie <smcv@debian.org>
+Date: Wed, 11 Aug 2021 14:52:03 +0100
+Subject: Revert "SetDisplayMode: Call XRRSetScreenSize before setting CRTC
+ config"
+
+This reverts commit 16e3bfe807dfdd48b6833da4cd78e789a920e2ec.
+---
+ src/video/x11/SDL_x11modes.c | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+diff --git a/src/video/x11/SDL_x11modes.c b/src/video/x11/SDL_x11modes.c
+index 09707a5..e14c90e 100644
+--- a/src/video/x11/SDL_x11modes.c
++++ b/src/video/x11/SDL_x11modes.c
+@@ -1002,7 +1002,6 @@ X11_SetDisplayMode(_THIS, SDL_VideoDisplay * sdl_display, SDL_DisplayMode * mode
+     Display *display = viddata->display;
+     SDL_DisplayData *data = (SDL_DisplayData *) sdl_display->driverdata;
+     SDL_DisplayModeData *modedata = (SDL_DisplayModeData *)mode->driverdata;
+-    int mm_width, mm_height;
+ 
+     viddata->last_mode_change_deadline = SDL_GetTicks() + (PENDING_FOCUS_TIME * 2);
+ 
+@@ -1031,23 +1030,10 @@ X11_SetDisplayMode(_THIS, SDL_VideoDisplay * sdl_display, SDL_DisplayMode * mode
+             return SDL_SetError("Couldn't get XRandR crtc info");
+         }
+ 
+-        X11_XGrabServer(display);
+-        status = X11_XRRSetCrtcConfig(display, res, output_info->crtc, CurrentTime,
+-          0, 0, None, crtc->rotation, NULL, 0);
+-        if (status != Success) {
+-            goto setCrtcError;
+-        }
+-
+-        mm_width = mode->w * DisplayWidthMM(display, data->screen) / DisplayWidth(display, data->screen);
+-        mm_height = mode->h * DisplayHeightMM(display, data->screen) / DisplayHeight(display, data->screen);
+-        X11_XRRSetScreenSize(display, RootWindow(display, data->screen), mode->w, mode->h, mm_width, mm_height);
+-
+         status = X11_XRRSetCrtcConfig (display, res, output_info->crtc, CurrentTime,
+           crtc->x, crtc->y, modedata->xrandr_mode, crtc->rotation,
+           &data->xrandr_output, 1);
+ 
+-setCrtcError:
+-        X11_XUngrabServer(display);
+         X11_XRRFreeCrtcInfo(crtc);
+         X11_XRRFreeOutputInfo(output_info);
+         X11_XRRFreeScreenResources(res);
