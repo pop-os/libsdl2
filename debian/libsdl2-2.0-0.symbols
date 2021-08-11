@@ -81,6 +81,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_FillRect@Base 2.0.12
  SDL_FillRects@Base 2.0.12
  SDL_FilterEvents@Base 2.0.12
+ SDL_FlashWindow@Base 2.0.16
  SDL_FlushEvent@Base 2.0.12
  SDL_FlushEvents@Base 2.0.12
  SDL_FreeAudioStream@Base 2.0.12
@@ -128,6 +129,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerGetProduct@Base 2.0.12
  SDL_GameControllerGetProductVersion@Base 2.0.12
  SDL_GameControllerGetSensorData@Base 2.0.14
+ SDL_GameControllerGetSensorDataRate@Base 2.0.16
  SDL_GameControllerGetSerial@Base 2.0.14
  SDL_GameControllerGetStringForAxis@Base 2.0.12
  SDL_GameControllerGetStringForButton@Base 2.0.12
@@ -149,6 +151,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerOpen@Base 2.0.12
  SDL_GameControllerRumble@Base 2.0.12
  SDL_GameControllerRumbleTriggers@Base 2.0.14
+ SDL_GameControllerSendEffect@Base 2.0.16
  SDL_GameControllerSetLED@Base 2.0.14
  SDL_GameControllerSetPlayerIndex@Base 2.0.12
  SDL_GameControllerSetSensorEnabled@Base 2.0.14
@@ -157,6 +160,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetAssertionHandler@Base 2.0.12
  SDL_GetAssertionReport@Base 2.0.12
  SDL_GetAudioDeviceName@Base 2.0.12
+ SDL_GetAudioDeviceSpec@Base 2.0.16
  SDL_GetAudioDeviceStatus@Base 2.0.12
  SDL_GetAudioDriver@Base 2.0.12
  SDL_GetAudioStatus@Base 2.0.12
@@ -256,8 +260,10 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetWindowGammaRamp@Base 2.0.12
  SDL_GetWindowGrab@Base 2.0.12
  SDL_GetWindowID@Base 2.0.12
+ SDL_GetWindowKeyboardGrab@Base 2.0.16
  SDL_GetWindowMaximumSize@Base 2.0.12
  SDL_GetWindowMinimumSize@Base 2.0.12
+ SDL_GetWindowMouseGrab@Base 2.0.16
  SDL_GetWindowOpacity@Base 2.0.12
  SDL_GetWindowPixelFormat@Base 2.0.12
  SDL_GetWindowPosition@Base 2.0.12
@@ -368,6 +374,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickOpen@Base 2.0.12
  SDL_JoystickRumble@Base 2.0.12
  SDL_JoystickRumbleTriggers@Base 2.0.14
+ SDL_JoystickSendEffect@Base 2.0.16
  SDL_JoystickSetLED@Base 2.0.14
  SDL_JoystickSetPlayerIndex@Base 2.0.12
  SDL_JoystickSetVirtualAxis@Base 2.0.14
@@ -561,6 +568,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_SetTextureColorMod@Base 2.0.12
  SDL_SetTextureScaleMode@Base 2.0.12
  SDL_SetThreadPriority@Base 2.0.12
+ SDL_SetWindowAlwaysOnTop@Base 2.0.16
  SDL_SetWindowBordered@Base 2.0.12
  SDL_SetWindowBrightness@Base 2.0.12
  SDL_SetWindowData@Base 2.0.12
@@ -571,9 +579,11 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_SetWindowHitTest@Base 2.0.12
  SDL_SetWindowIcon@Base 2.0.12
  SDL_SetWindowInputFocus@Base 2.0.12
+ SDL_SetWindowKeyboardGrab@Base 2.0.16
  SDL_SetWindowMaximumSize@Base 2.0.12
  SDL_SetWindowMinimumSize@Base 2.0.12
  SDL_SetWindowModalFor@Base 2.0.12
+ SDL_SetWindowMouseGrab@Base 2.0.16
  SDL_SetWindowOpacity@Base 2.0.12
  SDL_SetWindowPosition@Base 2.0.12
  SDL_SetWindowResizable@Base 2.0.12
@@ -586,8 +596,10 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_ShowSimpleMessageBox@Base 2.0.12
  SDL_ShowWindow@Base 2.0.12
  SDL_SoftStretch@Base 2.0.12
+ SDL_SoftStretchLinear@Base 2.0.16
  SDL_StartTextInput@Base 2.0.12
  SDL_StopTextInput@Base 2.0.12
+ SDL_TLSCleanup@Base 2.0.16
  SDL_TLSCreate@Base 2.0.12
  SDL_TLSGet@Base 2.0.12
  SDL_TLSSet@Base 2.0.12
@@ -602,6 +614,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_UnlockSensors@Base 2.0.14
  SDL_UnlockSurface@Base 2.0.12
  SDL_UnlockTexture@Base 2.0.12
+ SDL_UpdateNVTexture@Base 2.0.16
  SDL_UpdateTexture@Base 2.0.12
  SDL_UpdateWindowSurface@Base 2.0.12
  SDL_UpdateWindowSurfaceRects@Base 2.0.12
@@ -662,16 +675,26 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_iconv_close@Base 2.0.12
  SDL_iconv_open@Base 2.0.12
  SDL_iconv_string@Base 2.0.12
+ SDL_isalnum@Base 2.0.16
+ SDL_isalpha@Base 2.0.16
+ SDL_isblank@Base 2.0.16
+ SDL_iscntrl@Base 2.0.16
  SDL_isdigit@Base 2.0.12
+ SDL_isgraph@Base 2.0.16
  SDL_islower@Base 2.0.12
+ SDL_isprint@Base 2.0.16
+ SDL_ispunct@Base 2.0.16
  SDL_isspace@Base 2.0.12
  SDL_isupper@Base 2.0.12
+ SDL_isxdigit@Base 2.0.16
  SDL_itoa@Base 2.0.12
  SDL_lltoa@Base 2.0.12
  SDL_log10@Base 2.0.12
  SDL_log10f@Base 2.0.12
  SDL_log@Base 2.0.12
  SDL_logf@Base 2.0.12
+ SDL_lround@Base 2.0.16
+ SDL_lroundf@Base 2.0.16
  SDL_ltoa@Base 2.0.12
  SDL_malloc@Base 2.0.12
  SDL_memcmp@Base 2.0.12
@@ -682,6 +705,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_powf@Base 2.0.12
  SDL_qsort@Base 2.0.12
  SDL_realloc@Base 2.0.12
+ SDL_round@Base 2.0.16
+ SDL_roundf@Base 2.0.16
  SDL_scalbn@Base 2.0.12
  SDL_scalbnf@Base 2.0.12
  SDL_setenv@Base 2.0.12
