@@ -3,11 +3,28 @@ libsdl2 (2.0.16+dfsg1-1) UNRELEASED; urgency=medium
   [ Simon McVittie ]
   * New upstream release
   * d/rules: Pass CPPFLAGS and LDFLAGS while linking test programs
+  * d/copyright: Update
+  * d/copyright: Exclude less of src/hidapi/
+  * d/rules: Improve handling of Linux-specific features
+  * d/rules: Check for Hurd correctly
+  * d/rules: Explicitly disable libdecor for now (ITP: #988116)
+  * d/rules: Enable Pipewire audio driver.
+    The required version is currently only in experimental, but will
+    presumably go to unstable after Debian 11 is released.
+  * Drop Wayland-related patches, applied upstream
+  * d/p/no-libdir.patch: Refresh.
+    The patch conflicted with upstream updates to sdl2-config.cmake.in,
+    but we don't actually need to patch that file for multiarch
+    co-installation anyway: the file generated from it gets installed into
+    the ${libdir}, so it's OK for it to have architecture-dependent contents.
+  * d/patches: Refresh
+  * d/docs: Install README.md, not README.txt
+  * d/libsdl2-2.0-0.symbols: Update
 
   [ Guido Günther ]
   * debian: Add salsa-ci integration
 
- -- Simon McVittie <smcv@debian.org>  Mon, 21 Jun 2021 09:59:53 +0100
+ -- Simon McVittie <smcv@debian.org>  Wed, 11 Aug 2021 15:47:17 +0100
 
 libsdl2 (2.0.14+dfsg2-3) unstable; urgency=medium
 
