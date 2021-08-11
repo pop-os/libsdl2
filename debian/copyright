@@ -4,15 +4,14 @@ Upstream-Contact: Sam Lantinga <slouken@libsdl.org>
 Source: https://www.libsdl.org/
 Files-Excluded: Android.mk
                 android-project
-                debian
                 src/hidapi/android
                 src/hidapi/ios
-                src/hidapi/linux/hid.cpp
                 src/hidapi/mac
                 src/hidapi/testgui
                 src/hidapi/windows
                 src/render/metal/SDL_shaders_metal_*.h
-                src/video/os2/my_gradd.h
+                src/video/os2/SDL_gradd.h
+                test/unifont-*
                 VisualC
                 VisualC-WinRT
                 Xcode
@@ -20,7 +19,7 @@ Files-Excluded: Android.mk
 
 Files: *
 Copyright:
- 1997-2020 Sam Lantinga <slouken@libsdl.org>
+ 1997-2021 Sam Lantinga <slouken@libsdl.org>
  2012 Raspberry Pi Foundation
  2012-2018 RISC OS Open Ltd
  2018-2019 EXL
@@ -123,6 +122,17 @@ Files: test/shapes/*
 Copyright: none
 License: zlib/libpng
 Comment: No specific information about the images
+
+Files: wayland-protocols/*.xml
+Copyright:
+ 2008-2011 Kristian Høgsberg
+ 2010-2013 Intel Corporation
+ 2012-2013 Collabora, Ltd.
+ 2015-2016 Jan Arne Petersen
+ 2015 Samsung Electronics Co., Ltd
+ 2017-2018 Red Hat, Inc.
+ 2018 Purism SPC
+License: Expat and MIT-open-group
 
 Files: debian/*
 Copyright: 2015-2020, Gianfranco Costamagna <locutusofborg@debian.org>
@@ -528,6 +538,29 @@ License: RSA_Data_Security
  ** documentation and/or software.                                    **
  ***********************************************************************
 
+License: MIT-open-group
+ Permission to use, copy, modify, distribute, and sell this
+ software and its documentation for any purpose is hereby granted
+ without fee, provided that the above copyright notice appear in
+ all copies and that both that copyright notice and this permission
+ notice appear in supporting documentation, and that the name of
+ the copyright holders not be used in advertising or publicity
+ pertaining to distribution of the software without specific,
+ written prior permission.  The copyright holders make no
+ representations about the suitability of this software for any
+ purpose.  It is provided "as is" without express or implied
+ warranty.
+ .
+ THE COPYRIGHT HOLDERS DISCLAIM ALL WARRANTIES WITH REGARD TO THIS
+ SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS, IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+ AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+ THIS SOFTWARE.
+Comment: SPDX: MIT-open-group
+
 License: Mozilla-permissive
  Permission to use, copy, modify, distribute, and sell this software and its
  documentation for any purpose is hereby granted without fee, provided that
@@ -547,6 +580,9 @@ License: Mozilla-permissive
  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
  OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
  SOFTWARE.
+Comment:
+ Same as MIT-open-group but with "Mozilla Corporation" instead of
+ "The copyright holders"
 
 License: hidapi-orig
  This software may be used by anyone for any reason so
