@@ -4,11 +4,7 @@ Upstream-Contact: Sam Lantinga <slouken@libsdl.org>
 Source: https://www.libsdl.org/
 Files-Excluded: Android.mk
                 android-project
-                src/hidapi/android
-                src/hidapi/ios
-                src/hidapi/mac
-                src/hidapi/testgui
-                src/hidapi/windows
+                src/hidapi/windows/ddk_build
                 src/render/metal/SDL_shaders_metal_*.h
                 src/video/os2/SDL_gradd.h
                 test/unifont-*
@@ -23,7 +19,7 @@ Copyright:
  2012 Raspberry Pi Foundation
  2012-2018 RISC OS Open Ltd
  2018-2019 EXL
- 2020 Valve Corporation
+ 2020-2021 Valve Corporation
 License: zlib/libpng and zlib-libpng-like-permissive
 
 Files: include/SDL_opengl_glext.h
@@ -37,9 +33,18 @@ Files: include/SDL_opengles2_gl2.h
 Copyright: 1997-2016 Sam Lantinga <slouken@libsdl.org>
 License: SGI-Free-Software-License-B
 
-Files: src/hidapi/linux/hid.c
+Files: src/hidapi/*
 Copyright: 2009-2010 Alan Ott, Signal 11 Software
 License: BSD-3-clause or GPL-3 or hidapi-orig
+
+Files:
+ src/hidapi/SDL_hidapi.c
+ src/hidapi/SDL_hidapi.h
+ src/hidapi/android/hid.cpp
+Copyright:
+ 1997-2021 Sam Lantinga <slouken@libsdl.org>
+ 2021 Valve Corporation
+License: zlib/libpng
 
 Files: src/libm/*
 Copyright: 1993 by Sun Microsystems, Inc. All rights reserved.
