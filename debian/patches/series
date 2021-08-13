@@ -1,6 +1,3 @@
+x11-Don-t-change-mode-if-we-are-already-in-the-correct-mo.patch
 Add-a-make-install-target-for-the-tests.patch
 no-libdir.patch
-Revert-Fixed-XSync-sequence-to-match-other-cases-where-we.patch
-Revert-x11-XSync-while-trying-to-catch-XRRSetScreenSize-e.patch
-Revert-x11-Don-t-let-XRRSetScreenSize-fire-a-BadMatch-err.patch
-Revert-SetDisplayMode-Call-XRRSetScreenSize-before-settin.patch
