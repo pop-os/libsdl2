@@ -1,0 +1,23 @@
+From: Sam Lantinga <slouken@libsdl.org>
+Date: Thu, 12 Aug 2021 15:49:33 -0700
+Subject: Fixed libudev hotplug notifications in the HIDAPI driver
+
+Origin: upstream, 2.0.18, commit:cec5a129f52f23d1823c486f24454564e1aafca5
+---
+ src/joystick/hidapi/SDL_hidapijoystick.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/joystick/hidapi/SDL_hidapijoystick.c b/src/joystick/hidapi/SDL_hidapijoystick.c
+index 23fb076..0aa850d 100644
+--- a/src/joystick/hidapi/SDL_hidapijoystick.c
++++ b/src/joystick/hidapi/SDL_hidapijoystick.c
+@@ -47,8 +47,8 @@
+ #include <IOKit/usb/USBSpec.h>
+ #endif
+ 
+-#ifdef SDL_USE_LIBUDEV
+ #include "../../core/linux/SDL_udev.h"
++#ifdef SDL_USE_LIBUDEV
+ #include <poll.h>
+ #include <unistd.h>
+ #endif
