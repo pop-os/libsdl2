@@ -1,3 +1,10 @@
+libsdl2 (2.0.16+dfsg1-3) experimental; urgency=medium
+
+  * d/p/Fixed-libudev-hotplug-notifications-in-the-HIDAPI-driver.patch:
+    Add patch recommended by upstream to fix HIDAPI hotplug
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 16 Aug 2021 12:52:32 +0100
+
 libsdl2 (2.0.16+dfsg1-2) experimental; urgency=medium
 
   * d/p/Revert-*: Remove patches
