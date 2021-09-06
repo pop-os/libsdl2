@@ -1,9 +1,12 @@
-libsdl2 (2.0.16+dfsg1-4) UNRELEASED; urgency=medium
+libsdl2 (2.0.16+dfsg1-4) unstable; urgency=medium
 
   * d/p/audio-Support-pulse-as-an-alias-for-pulseaudio.patch:
     Add patch from upstream to improve compatibility with SDL 1.2
+  * d/p/test-Fix-path-used-in-AC_CONFIG_AUX_DIR.patch:
+    Add proposed patch to fix FTBFS with autoconf 2.71
+  * Release to unstable
 
- -- Simon McVittie <smcv@debian.org>  Tue, 31 Aug 2021 11:17:10 +0100
+ -- Simon McVittie <smcv@debian.org>  Mon, 06 Sep 2021 10:56:33 +0100
 
 libsdl2 (2.0.16+dfsg1-3) experimental; urgency=medium
 
