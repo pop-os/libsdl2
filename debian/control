@@ -22,6 +22,7 @@ Build-Depends:
  libibus-1.0-dev,
  libpipewire-0.3-dev (>= 0.3.20) [linux-any],
  libpulse-dev,
+ libsamplerate0-dev,
  libsndio-dev,
  libudev-dev [linux-any],
  libusb2-dev [kfreebsd-any],
@@ -40,7 +41,6 @@ Build-Depends:
  libxv-dev,
  libxxf86vm-dev,
  pkg-config,
- libsamplerate0-dev,
  wayland-protocols
 Build-Depends-Indep:
  graphviz <!nodoc>,
