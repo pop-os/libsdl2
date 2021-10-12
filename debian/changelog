@@ -1,3 +1,21 @@
+libsdl2 (2.0.16+dfsg1-5) unstable; urgency=medium
+
+  * d/p/test-Fix-path-used-in-AC_CONFIG_AUX_DIR.patch:
+    Replace patch with the version that went upstream.
+    This is compatible with both old and new Autoconf, unlike my previous
+    attempt, which only fully worked with 2.71.
+  * d/control: Move libsamplerate0-dev to sorted position in B-D
+  * Depend on libgl-dev instead of transitional libgl1-mesa-dev
+  * Update standards version to 4.6.0, no changes needed.
+  * Build documentation during build-indep, not binary-indep
+  * Don't disable opengles on Hurd.
+    The configure option was misspelled and OpenGL|ES v2 was actually
+    enabled. Nobody has complained that it didn't work, so presumably
+    either it does, in fact, work, or nobody has ever tried it. Either way,
+    we can get the same result with fewer lines of code.
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 12 Oct 2021 21:55:42 +0100
+
 libsdl2 (2.0.16+dfsg1-4) unstable; urgency=medium
 
   * d/p/audio-Support-pulse-as-an-alias-for-pulseaudio.patch:
