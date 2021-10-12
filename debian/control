@@ -7,7 +7,7 @@ Uploaders:
  Manuel A. Fernandez Montecelo <mafm@debian.org>,
  Felix Geyer <fgeyer@debian.org>,
  Simon McVittie <smcv@debian.org>
-Standards-Version: 4.5.1
+Standards-Version: 4.6.0
 Build-Depends:
  debhelper-compat (= 12),
  fcitx-libs-dev,
