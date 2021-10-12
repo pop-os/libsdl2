@@ -38,11 +38,6 @@ else
   confflags += --disable-video-wayland
 endif
 
-# disable OpenGLES on Hurd, it does not support it at the moment
-ifeq ($(DEB_HOST_ARCH_OS),hurd)
-  confflags += --disable--video-opengles
-endif
-
 # don't use libunwind even if it happens to be installed
 confflags += ac_cv_header_libunwind_h=no
 
