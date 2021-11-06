@@ -120,9 +120,6 @@ override_dh_install:
 	ln -s ../../SDL2/close_code.h debian/tmp/usr/include/$(DEB_HOST_MULTIARCH)/SDL2/
 	dh_install
 
-override_dh_missing:
-	dh_missing --fail-missing
-
 override_dh_link:
 	# to address lintian warning
 	# W: libsdl2-2.0-0: dev-pkg-without-shlib-symlink usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.0.0 usr/lib/x86_64-linux-gnu/libSDL2-2.0.so

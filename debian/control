@@ -9,7 +9,7 @@ Uploaders:
  Simon McVittie <smcv@debian.org>
 Standards-Version: 4.6.0
 Build-Depends:
- debhelper-compat (= 12),
+ debhelper-compat (= 13),
  fcitx-libs-dev,
  libasound2-dev [linux-any],
  libdbus-1-dev,
