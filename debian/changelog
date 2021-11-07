@@ -1,9 +1,15 @@
-libsdl2 (2.0.16+dfsg1-6) UNRELEASED; urgency=medium
+libsdl2 (2.0.16+dfsg1-6) experimental; urgency=medium
 
   * Enable libdecor support on Linux architectures.
-    This allows native Wayland games to have client-side window decorations.
+    This allows native Wayland games to have client-side window
+    decorations. (To test, for example try:
+    SDL_VIDEODRIVER=wayland openarena +set r_fullscreen 0 +set r_mode 5)
+  * Use recommended debhelper compat level 13.
+    Stop overriding dh_missing to pass --fail-missing, which is the default
+    in this compat level.
+  * d/gbp.conf, d/control: Branch for experimental
 
- -- Simon McVittie <smcv@debian.org>  Sat, 06 Nov 2021 16:24:05 +0000
+ -- Simon McVittie <smcv@debian.org>  Sun, 07 Nov 2021 11:09:02 +0000
 
 libsdl2 (2.0.16+dfsg1-5) unstable; urgency=medium
 
