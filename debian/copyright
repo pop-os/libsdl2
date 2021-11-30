@@ -22,10 +22,12 @@ Copyright:
  2020-2021 Valve Corporation
 License: zlib/libpng and zlib-libpng-like-permissive
 
-Files: include/SDL_opengl_glext.h
+Files: include/SDL_egl.h
+       include/SDL_opengl_glext.h
        include/SDL_opengles2_khrplatform.h
-Copyright: 2008-2014 The Khronos Group Inc.
-License: Expat-like
+Copyright: 1997-2021 Sam Lantinga
+           2008-2014 The Khronos Group Inc.
+License: zlib/libpng and Expat-like and Apache-2.0
 
 Files: include/SDL_opengles2_gl2.h
        include/SDL_opengles2_gl2ext.h
@@ -33,9 +35,11 @@ Files: include/SDL_opengles2_gl2.h
 Copyright: 1997-2016 Sam Lantinga <slouken@libsdl.org>
 License: SGI-Free-Software-License-B
 
-Files: src/hidapi/*
+Files: include/SDL_hidapi.h
+       src/hidapi/*
 Copyright: 2009-2010 Alan Ott, Signal 11 Software
-License: BSD-3-clause or GPL-3 or hidapi-orig
+           1997-2021 Sam Lantinga
+License: BSD-3-clause or GPL-3 or hidapi-orig, and zlib/libpng
 
 Files:
  src/hidapi/SDL_hidapi.c
