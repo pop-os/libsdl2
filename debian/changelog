@@ -1,3 +1,15 @@
+libsdl2 (2.0.18-1) UNRELEASED; urgency=medium
+
+  * d/gbp.conf, d/control: Branch for experimental
+  * New upstream release
+    - Refresh patch series, dropping patches taken from upstream
+  * Add new dependency on libxfixes-dev
+  * Version the dependency on libxkbcommon-dev
+  * d/copyright: Update
+  * Update configure options
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 30 Nov 2021 18:33:44 +0000
+
 libsdl2 (2.0.16+dfsg1-7) unstable; urgency=medium
 
   * Upload to unstable
