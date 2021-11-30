@@ -36,7 +36,7 @@ Build-Depends:
  libxfixes-dev,
  libxi-dev,
  libxinerama-dev,
- libxkbcommon-dev,
+ libxkbcommon-dev (>= 0.5.0),
  libxrandr-dev,
  libxss-dev,
  libxt-dev,
