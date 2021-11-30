@@ -115,6 +115,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerEventState@Base 2.0.12
  SDL_GameControllerFromInstanceID@Base 2.0.12
  SDL_GameControllerFromPlayerIndex@Base 2.0.12
+ SDL_GameControllerGetAppleSFSymbolsNameForAxis@Base 2.0.18
+ SDL_GameControllerGetAppleSFSymbolsNameForButton@Base 2.0.18
  SDL_GameControllerGetAttached@Base 2.0.12
  SDL_GameControllerGetAxis@Base 2.0.12
  SDL_GameControllerGetAxisFromString@Base 2.0.12
@@ -139,6 +141,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerHasAxis@Base 2.0.14
  SDL_GameControllerHasButton@Base 2.0.14
  SDL_GameControllerHasLED@Base 2.0.14
+ SDL_GameControllerHasRumble@Base 2.0.18
+ SDL_GameControllerHasRumbleTriggers@Base 2.0.18
  SDL_GameControllerHasSensor@Base 2.0.14
  SDL_GameControllerIsSensorEnabled@Base 2.0.14
  SDL_GameControllerMapping@Base 2.0.12
@@ -242,8 +246,10 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetTextureBlendMode@Base 2.0.12
  SDL_GetTextureColorMod@Base 2.0.12
  SDL_GetTextureScaleMode@Base 2.0.12
+ SDL_GetTextureUserData@Base 2.0.18
  SDL_GetThreadID@Base 2.0.12
  SDL_GetThreadName@Base 2.0.12
+ SDL_GetTicks64@Base 2.0.18
  SDL_GetTicks@Base 2.0.12
  SDL_GetTouchDevice@Base 2.0.12
  SDL_GetTouchDeviceType@Base 2.0.12
@@ -259,11 +265,13 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetWindowFromID@Base 2.0.12
  SDL_GetWindowGammaRamp@Base 2.0.12
  SDL_GetWindowGrab@Base 2.0.12
+ SDL_GetWindowICCProfile@Base 2.0.18
  SDL_GetWindowID@Base 2.0.12
  SDL_GetWindowKeyboardGrab@Base 2.0.16
  SDL_GetWindowMaximumSize@Base 2.0.12
  SDL_GetWindowMinimumSize@Base 2.0.12
  SDL_GetWindowMouseGrab@Base 2.0.16
+ SDL_GetWindowMouseRect@Base 2.0.18
  SDL_GetWindowOpacity@Base 2.0.12
  SDL_GetWindowPixelFormat@Base 2.0.12
  SDL_GetWindowPosition@Base 2.0.12
@@ -362,6 +370,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickGetType@Base 2.0.12
  SDL_JoystickGetVendor@Base 2.0.12
  SDL_JoystickHasLED@Base 2.0.14
+ SDL_JoystickHasRumble@Base 2.0.18
+ SDL_JoystickHasRumbleTriggers@Base 2.0.18
  SDL_JoystickInstanceID@Base 2.0.12
  SDL_JoystickIsHaptic@Base 2.0.12
  SDL_JoystickIsVirtual@Base 2.0.14
@@ -382,6 +392,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickSetVirtualHat@Base 2.0.14
  SDL_JoystickUpdate@Base 2.0.12
  (arch=linux-any)SDL_LinuxSetThreadPriority@Base 2.0.12
+ (arch=linux-any)SDL_LinuxSetThreadPriorityAndPolicy@Base 2.0.18
  SDL_LoadBMP_RW@Base 2.0.12
  SDL_LoadDollarTemplates@Base 2.0.12
  SDL_LoadFile@Base 2.0.12
@@ -446,6 +457,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_PeepEvents@Base 2.0.12
  SDL_PixelFormatEnumToMasks@Base 2.0.12
  SDL_PollEvent@Base 2.0.12
+ SDL_PremultiplyAlpha@Base 2.0.18
  SDL_PumpEvents@Base 2.0.12
  SDL_PushEvent@Base 2.0.12
  SDL_QueryTexture@Base 2.0.12
@@ -495,6 +507,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_RenderFillRects@Base 2.0.12
  SDL_RenderFillRectsF@Base 2.0.12
  SDL_RenderFlush@Base 2.0.12
+ SDL_RenderGeometry@Base 2.0.18
+ SDL_RenderGeometryRaw@Base 2.0.18
  SDL_RenderGetClipRect@Base 2.0.12
  SDL_RenderGetIntegerScale@Base 2.0.12
  SDL_RenderGetLogicalSize@Base 2.0.12
@@ -503,14 +517,17 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_RenderGetScale@Base 2.0.12
  SDL_RenderGetViewport@Base 2.0.12
  SDL_RenderIsClipEnabled@Base 2.0.12
+ SDL_RenderLogicalToWindow@Base 2.0.18
  SDL_RenderPresent@Base 2.0.12
  SDL_RenderReadPixels@Base 2.0.12
  SDL_RenderSetClipRect@Base 2.0.12
  SDL_RenderSetIntegerScale@Base 2.0.12
  SDL_RenderSetLogicalSize@Base 2.0.12
  SDL_RenderSetScale@Base 2.0.12
+ SDL_RenderSetVSync@Base 2.0.18
  SDL_RenderSetViewport@Base 2.0.12
  SDL_RenderTargetSupported@Base 2.0.12
+ SDL_RenderWindowToLogical@Base 2.0.18
  SDL_ReportAssertion@Base 2.0.12
  SDL_ResetAssertionReport@Base 2.0.12
  SDL_RestoreWindow@Base 2.0.12
@@ -567,6 +584,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_SetTextureBlendMode@Base 2.0.12
  SDL_SetTextureColorMod@Base 2.0.12
  SDL_SetTextureScaleMode@Base 2.0.12
+ SDL_SetTextureUserData@Base 2.0.18
  SDL_SetThreadPriority@Base 2.0.12
  SDL_SetWindowAlwaysOnTop@Base 2.0.16
  SDL_SetWindowBordered@Base 2.0.12
@@ -584,6 +602,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_SetWindowMinimumSize@Base 2.0.12
  SDL_SetWindowModalFor@Base 2.0.12
  SDL_SetWindowMouseGrab@Base 2.0.16
+ SDL_SetWindowMouseRect@Base 2.0.18
  SDL_SetWindowOpacity@Base 2.0.12
  SDL_SetWindowPosition@Base 2.0.12
  SDL_SetWindowResizable@Base 2.0.12
@@ -647,6 +666,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_acosf@Base 2.0.12
  SDL_asin@Base 2.0.12
  SDL_asinf@Base 2.0.12
+ SDL_asprintf@Base 2.0.18
  SDL_atan2@Base 2.0.12
  SDL_atan2f@Base 2.0.12
  SDL_atan@Base 2.0.12
@@ -671,6 +691,25 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_fmodf@Base 2.0.12
  SDL_free@Base 2.0.12
  SDL_getenv@Base 2.0.12
+ SDL_hid_ble_scan@Base 2.0.18
+ SDL_hid_close@Base 2.0.18
+ SDL_hid_device_change_count@Base 2.0.18
+ SDL_hid_enumerate@Base 2.0.18
+ SDL_hid_exit@Base 2.0.18
+ SDL_hid_free_enumeration@Base 2.0.18
+ SDL_hid_get_feature_report@Base 2.0.18
+ SDL_hid_get_indexed_string@Base 2.0.18
+ SDL_hid_get_manufacturer_string@Base 2.0.18
+ SDL_hid_get_product_string@Base 2.0.18
+ SDL_hid_get_serial_number_string@Base 2.0.18
+ SDL_hid_init@Base 2.0.18
+ SDL_hid_open@Base 2.0.18
+ SDL_hid_open_path@Base 2.0.18
+ SDL_hid_read@Base 2.0.18
+ SDL_hid_read_timeout@Base 2.0.18
+ SDL_hid_send_feature_report@Base 2.0.18
+ SDL_hid_set_nonblocking@Base 2.0.18
+ SDL_hid_write@Base 2.0.18
  SDL_iconv@Base 2.0.12
  SDL_iconv_close@Base 2.0.12
  SDL_iconv_open@Base 2.0.12
@@ -747,6 +786,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_ultoa@Base 2.0.12
  SDL_utf8strlcpy@Base 2.0.12
  SDL_utf8strlen@Base 2.0.12
+ SDL_vasprintf@Base 2.0.18
  SDL_vsnprintf@Base 2.0.12
  SDL_vsscanf@Base 2.0.12
  SDL_wcscasecmp@Base 2.0.14
