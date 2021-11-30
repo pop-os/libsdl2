@@ -1,0 +1,31 @@
+From: Simon McVittie <smcv@debian.org>
+Date: Tue, 30 Nov 2021 23:15:03 +0000
+Subject: docs: Don't let Doxygen expand HOME environment variable
+
+Otherwise, the API documentation will encode the home directory of the
+user or autobuilder that built SDL, instead of telling the user to use
+the literal string $(HOME) as intended.
+
+See also <https://github.com/doxygen/doxygen/issues/7073>.
+
+Signed-off-by: Simon McVittie <smcv@debian.org>
+Forwarded: https://github.com/libsdl-org/SDL/pull/5048
+---
+ docs/README-macos.md | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/docs/README-macos.md b/docs/README-macos.md
+index 67c53e2..9d2c6a9 100644
+--- a/docs/README-macos.md
++++ b/docs/README-macos.md
+@@ -239,8 +239,8 @@ Some of you won't want to use the Stationary so I'll give some tips:
+ * Remove "main.m" from your project
+ * Remove "MainMenu.xib" from your project
+ * Remove "AppDelegates.*" from your project
+-* Add "$(HOME)/Library/Frameworks/SDL.framework/Headers" to include path
+-* Add "$(HOME)/Library/Frameworks" to the frameworks search path
++* Add "\$(HOME)/Library/Frameworks/SDL.framework/Headers" to include path
++* Add "\$(HOME)/Library/Frameworks" to the frameworks search path
+ * Add "-framework SDL -framework Foundation -framework AppKit" to "OTHER_LDFLAGS"
+ * Add your files
+ * Clean and build
