@@ -3,7 +3,7 @@
 include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/pkg-info.mk
 
-confflags = --disable-rpath --enable-sdl-dlopen \
+confflags = --disable-rpath \
             --disable-nas --disable-esd --disable-arts \
             --disable-alsa-shared --disable-pulseaudio-shared \
             --enable-ibus \
@@ -12,7 +12,7 @@ confflags = --disable-rpath --enable-sdl-dlopen \
             --disable-video-opengles1 \
             --disable-wayland-shared \
             --enable-video-kmsdrm --disable-kmsdrm-shared \
-            --enable-hidapi
+            --enable-hidapi --enable-hidapi-joystick
 
 # disable autoheader (invoked automatically by autoreconf), necessary in order
 # to use debhelper compat level v10 without overriding dh-autoreconf calls
