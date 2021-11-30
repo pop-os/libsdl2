@@ -12,10 +12,10 @@ Signed-off-by: Simon McVittie <smcv@collabora.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/test/Makefile.in b/test/Makefile.in
-index be907ae..b0e743d 100644
+index 1e05758..9f09333 100644
 --- a/test/Makefile.in
 +++ b/test/Makefile.in
-@@ -78,6 +78,17 @@ TARGETS = \
+@@ -81,6 +81,17 @@ TARGETS = \
  
  all: Makefile $(TARGETS) copydatafiles
  

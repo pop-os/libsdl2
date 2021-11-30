@@ -1,6 +1,2 @@
-x11-Don-t-change-mode-if-we-are-already-in-the-correct-mo.patch
-Fixed-libudev-hotplug-notifications-in-the-HIDAPI-driver.patch
-audio-Support-pulse-as-an-alias-for-pulseaudio.patch
-test-Fix-path-used-in-AC_CONFIG_AUX_DIR.patch
 Add-a-make-install-target-for-the-tests.patch
 no-libdir.patch
