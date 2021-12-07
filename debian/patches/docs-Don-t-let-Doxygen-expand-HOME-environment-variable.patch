@@ -10,6 +10,7 @@ See also <https://github.com/doxygen/doxygen/issues/7073>.
 
 Signed-off-by: Simon McVittie <smcv@debian.org>
 Forwarded: https://github.com/libsdl-org/SDL/pull/5048
+Applied-upstream: 2.0.19, commit:0c7c4bfcf920cfc5d66b0a7054a53904c668ef8f
 ---
  docs/README-macos.md | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)

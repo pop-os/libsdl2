@@ -1,0 +1,22 @@
+From: Weng Xuetian <wengxt@gmail.com>
+Date: Thu, 2 Dec 2021 17:14:58 -0800
+Subject: Fix the wrong int size for fcitx capability.
+
+Origin: upstream, 2.0.19, commit:5056b29b0f8611b470d8b8bdb313eab628f8bd6e
+---
+ src/core/linux/SDL_fcitx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/core/linux/SDL_fcitx.c b/src/core/linux/SDL_fcitx.c
+index 1519f5c..8853a26 100644
+--- a/src/core/linux/SDL_fcitx.c
++++ b/src/core/linux/SDL_fcitx.c
+@@ -205,7 +205,7 @@ Fcitx_SetCapabilities(void *data,
+         const char *internal_editing)
+ {
+     FcitxClient *client = (FcitxClient *)data;
+-    Uint32 caps = 0;
++    Uint64 caps = 0;
+     if (!client->ic_path) {
+         return;
+     }

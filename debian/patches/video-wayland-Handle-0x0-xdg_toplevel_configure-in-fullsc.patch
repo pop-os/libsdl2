@@ -1,0 +1,41 @@
+From: David Gow <david@ingeniumdigital.com>
+Date: Sat, 4 Dec 2021 14:14:47 +0800
+Subject: video: wayland: Handle 0x0 xdg_toplevel_configure in fullscreen
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+The xdg_shell spec seems to state[1] that xdg_toplevel_configure events can
+always provide a 0×0 width/height to signal that the compositor doesn't
+care. SDL previously assumed the provided width/height was always valid
+for fullscreen windows, and so applied it as-is.
+
+This broke SDL applications on KDE/KWin 5.23, which now sends 0×0
+configure events (and, in 5.23.3, 1×1 events for some reason), breaking
+all SDL applications in fullscreen[2].
+
+[1]: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/issues/6
+[2]: https://bugs.kde.org/show_bug.cgi?id=444962#c6
+
+Origin: upstream, 2.0.19, commit:a709b5b602c525824f0d2293702af3793e920517
+---
+ src/video/wayland/SDL_waylandwindow.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/video/wayland/SDL_waylandwindow.c b/src/video/wayland/SDL_waylandwindow.c
+index 581f4b0..6d33caf 100644
+--- a/src/video/wayland/SDL_waylandwindow.c
++++ b/src/video/wayland/SDL_waylandwindow.c
+@@ -290,8 +290,10 @@ handle_configure_xdg_toplevel(void *data,
+         /* For fullscreen, foolishly do what the compositor says. If it's wrong,
+          * don't blame us, we were explicitly instructed to do this.
+          */
+-        window->w = width;
+-        window->h = height;
++        if (width != 0 && height != 0) {
++            window->w = width;
++            window->h = height;
++        }
+ 
+         /* This part is good though. */
+         if (window->flags & SDL_WINDOW_ALLOW_HIGHDPI) {
