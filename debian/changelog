@@ -1,10 +1,10 @@
-libsdl2 (2.0.18+dfsg-3) UNRELEASED; urgency=medium
+libsdl2 (2.0.18+dfsg-3) unstable; urgency=medium
 
   * d/p/Fixed-enabling-udev-hotplug-detection-on-Linux.patch:
     Add patch from upstream to use udev for raw HID device hotplug
     where possible
 
- -- Simon McVittie <smcv@debian.org>  Wed, 15 Dec 2021 19:06:27 +0000
+ -- Simon McVittie <smcv@debian.org>  Wed, 15 Dec 2021 19:10:16 +0000
 
 libsdl2 (2.0.18+dfsg-2) unstable; urgency=medium
 
