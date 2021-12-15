@@ -1,6 +1,7 @@
 docs-Don-t-let-Doxygen-expand-HOME-environment-variable.patch
 Fix-the-wrong-int-size-for-fcitx-capability.patch
 video-wayland-Handle-0x0-xdg_toplevel_configure-in-fullsc.patch
+Fixed-enabling-udev-hotplug-detection-on-Linux.patch
 Add-a-make-install-target-for-the-tests.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
