@@ -1,3 +1,10 @@
+libsdl2 (2.0.18+dfsg-4) unstable; urgency=medium
+
+  * Add proposed patch from upstream to fix osk-sdl regression
+    (Closes: #1001809)
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 06 Jan 2022 20:24:15 +0000
+
 libsdl2 (2.0.18+dfsg-3) unstable; urgency=medium
 
   * d/p/Fixed-enabling-udev-hotplug-detection-on-Linux.patch:
