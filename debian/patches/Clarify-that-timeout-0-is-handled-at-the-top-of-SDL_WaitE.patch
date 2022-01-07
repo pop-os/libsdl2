@@ -1,0 +1,42 @@
+From: Sam Lantinga <slouken@libsdl.org>
+Date: Thu, 6 Jan 2022 13:30:26 -0800
+Subject: Clarify that timeout == 0 is handled at the top of
+ SDL_WaitEventTimeout()
+
+Origin: upstream, 2.0.20, commit:2592e6219b644035eb68d466f5e044f42627873a
+Bug: https://github.com/libsdl-org/SDL/issues/5136
+Bug-Debian: https://bugs.debian.org/1001809
+---
+ src/events/SDL_events.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/events/SDL_events.c b/src/events/SDL_events.c
+index 42f5104..f02031f 100644
+--- a/src/events/SDL_events.c
++++ b/src/events/SDL_events.c
+@@ -973,8 +973,7 @@ SDL_WaitEventTimeout(SDL_Event * event, int timeout)
+ {
+     SDL_VideoDevice *_this = SDL_GetVideoDevice();
+     SDL_Window *wakeup_window;
+-    Uint32 start = 0;
+-    Uint32 expiration = 0;
++    Uint32 start, expiration;
+     SDL_bool include_sentinel = (timeout == 0) ? SDL_TRUE : SDL_FALSE;
+ 
+     /* If there isn't a poll sentinel event pending, pump events and add one */
+@@ -1005,10 +1004,15 @@ retry:
+         /* Has existing events */
+         return 1;
+     }
++    /* We should have completely handled timeout == 0 above */
++    SDL_assert(timeout != 0);
+ 
+     if (timeout > 0) {
+         start = SDL_GetTicks();
+         expiration = start + timeout;
++    } else {
++        start = 0;
++        expiration = 0;
+     }
+ 
+     if (_this && _this->WaitEventTimeout && _this->SendWakeupEvent && !SDL_events_need_polling()) {

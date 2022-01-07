@@ -1,0 +1,83 @@
+From: Cameron Gutman <aicommander@gmail.com>
+Date: Thu, 6 Jan 2022 19:38:10 -0600
+Subject: events: Only add sentinels for pumping done inside
+ SDL_WaitEventTimeout()
+
+We don't want to catch explicit SDL_PumpEvents() calls by the application with
+our polling check to avoid stale data. If the call to SDL_PumpEvents() produced
+no events, there will be a sentinel sitting in the queue that will cause
+SDL_PollEvent() to immediately return 0 next time it is called.
+
+Our SDL_WaitEventTimeout() implementation avoids this issue by always popping
+an event after calling SDL_PumpEvents(). This will remove the new sentinel if
+we didn't get any new events.
+
+Origin: upstream, 2.0.20, commit:e9134b045a6eea1d9bea2046ddcefb669ab6e016
+Bug: https://github.com/libsdl-org/SDL/issues/5136
+Bug-Debian: https://bugs.debian.org/1001809
+---
+ src/events/SDL_events.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/src/events/SDL_events.c b/src/events/SDL_events.c
+index 5ded85c..6098356 100644
+--- a/src/events/SDL_events.c
++++ b/src/events/SDL_events.c
+@@ -808,7 +808,7 @@ SDL_FlushEvents(Uint32 minType, Uint32 maxType)
+ 
+ /* Run the system dependent event loops */
+ void
+-SDL_PumpEvents(void)
++SDL_PumpEventsInternal(SDL_bool push_sentinel)
+ {
+     SDL_VideoDevice *_this = SDL_GetVideoDevice();
+ 
+@@ -836,7 +836,7 @@ SDL_PumpEvents(void)
+ 
+     SDL_SendPendingSignalEvents();  /* in case we had a signal handler fire, etc. */
+ 
+-    if (SDL_GetEventState(SDL_POLLSENTINEL) == SDL_ENABLE) {
++    if (push_sentinel && SDL_GetEventState(SDL_POLLSENTINEL) == SDL_ENABLE) {
+         SDL_Event sentinel;
+ 
+         SDL_zero(sentinel);
+@@ -845,6 +845,12 @@ SDL_PumpEvents(void)
+     }
+ }
+ 
++void
++SDL_PumpEvents()
++{
++    SDL_PumpEventsInternal(SDL_FALSE);
++}
++
+ /* Public functions */
+ 
+ int
+@@ -884,7 +890,7 @@ SDL_WaitEventTimeout_Device(_THIS, SDL_Window *wakeup_window, SDL_Event * event,
+            c) Periodic processing that takes place in some platform PumpEvents() functions happens
+            d) Signals received in WaitEventTimeout() are turned into SDL events
+         */
+-        SDL_PumpEvents();
++        SDL_PumpEventsInternal(SDL_TRUE);
+ 
+         if (!_this->wakeup_lock || SDL_LockMutex(_this->wakeup_lock) == 0) {
+             int status = SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT);
+@@ -983,7 +989,7 @@ SDL_WaitEventTimeout(SDL_Event * event, int timeout)
+ 
+     /* If there isn't a poll sentinel event pending, pump events and add one */
+     if (SDL_AtomicGet(&SDL_sentinel_pending) == 0) {
+-        SDL_PumpEvents();
++        SDL_PumpEventsInternal(SDL_TRUE);
+     }
+ 
+     /* First check for existing events */
+@@ -1030,7 +1036,7 @@ SDL_WaitEventTimeout(SDL_Event * event, int timeout)
+     }
+ 
+     for (;;) {
+-        SDL_PumpEvents();
++        SDL_PumpEventsInternal(SDL_TRUE);
+         switch (SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT)) {
+         case -1:
+             return 0;

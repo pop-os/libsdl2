@@ -1,3 +1,10 @@
+libsdl2 (2.0.18+dfsg-5) unstable; urgency=medium
+
+  * d/patches: Update event loop regression fix to the version that was
+    merged upstream
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 07 Jan 2022 09:06:43 +0000
+
 libsdl2 (2.0.18+dfsg-4) unstable; urgency=medium
 
   * Add proposed patch from upstream to fix osk-sdl regression

@@ -1,0 +1,25 @@
+From: Sam Lantinga <slouken@libsdl.org>
+Date: Thu, 6 Jan 2022 12:03:09 -0800
+Subject: Clarify comment
+
+Co-authored-by: Simon McVittie <smcv@debian.org>
+Origin: upstream, 2.0.20, commit:c9ff90b949286bfbfba7ca53c385216e66201d72
+Bug: https://github.com/libsdl-org/SDL/issues/5136
+Bug-Debian: https://bugs.debian.org/1001809
+---
+ src/events/SDL_events.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/events/SDL_events.c b/src/events/SDL_events.c
+index 8889085..23b5a52 100644
+--- a/src/events/SDL_events.c
++++ b/src/events/SDL_events.c
+@@ -988,7 +988,7 @@ SDL_WaitEventTimeout(SDL_Event * event, int timeout)
+         return 0;
+     case 0:
+         if (timeout == 0) {
+-            /* No events available, and no timeout */
++            /* No events available, and not willing to wait */
+             return 0;
+         }
+         break;

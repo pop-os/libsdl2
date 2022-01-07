@@ -3,7 +3,7 @@ Date: Thu, 6 Jan 2022 11:27:44 -0800
 Subject: Fixed event pump starvation if the application frequently pushes its
  own events
 
-Origin: https://github.com/libsdl-org/SDL/pull/5187
+Origin: upstream, 2.0.20, commit:31f8c3ef4409a93fafa894b78c2ce176bd0c3cf3
 Bug: https://github.com/libsdl-org/SDL/issues/5136
 Bug-Debian: https://bugs.debian.org/1001809
 ---
