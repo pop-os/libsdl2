@@ -1,8 +1,16 @@
-libsdl2 (2.0.20+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.0.20+dfsg-1) experimental; urgency=medium
 
+  * d/gbp.conf, d/control: Branch for experimental
   * New upstream release
+  * d/copyright: Update
+  * d/upstream/metadata: Add
+  * Drop patches that were included in the upstream release
+  * d/p/Avoid-depending-on-libwayland-1.20-unnecessarily.patch:
+    Add patch to avoid hard dependency on libwayland-client 1.20.
+    That version is not in Debian yet (#1001839).
+  * Initially release to experimental, to let 2.0.18+dfsg-5 migrate
 
- -- Simon McVittie <smcv@debian.org>  Tue, 11 Jan 2022 09:38:01 +0000
+ -- Simon McVittie <smcv@debian.org>  Tue, 11 Jan 2022 10:46:47 +0000
 
 libsdl2 (2.0.18+dfsg-5) unstable; urgency=medium
 
