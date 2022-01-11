@@ -1,14 +1,3 @@
-docs-Don-t-let-Doxygen-expand-HOME-environment-variable.patch
-Fix-the-wrong-int-size-for-fcitx-capability.patch
-video-wayland-Handle-0x0-xdg_toplevel_configure-in-fullsc.patch
-Fixed-enabling-udev-hotplug-detection-on-Linux.patch
-Fixed-event-pump-starvation-if-the-application-frequently.patch
-Clarify-comment.patch
-Only-return-from-SDL_PollEvent-if-the-last-sentinel-is-co.patch
-Clarify-that-timeout-0-is-handled-at-the-top-of-SDL_WaitE.patch
-Move-special-sentinel-handling-inside-SDL_PeepEvents.patch
-events-Only-add-sentinels-for-pumping-done-inside-SDL_Wai.patch
-We-only-need-to-add-the-sentinel-at-the-top-of-SDL_WaitEv.patch
 Add-a-make-install-target-for-the-tests.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
