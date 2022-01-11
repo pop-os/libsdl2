@@ -1,3 +1,9 @@
+libsdl2 (2.0.20+dfsg-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 11 Jan 2022 09:38:01 +0000
+
 libsdl2 (2.0.18+dfsg-5) unstable; urgency=medium
 
   * d/patches: Update event loop regression fix to the version that was
