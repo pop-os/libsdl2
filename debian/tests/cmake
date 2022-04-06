@@ -23,6 +23,15 @@ fi
 
 srcdir="$(pwd)"
 
+mkdir "$WORKDIR/targets"
+(
+    cd "$WORKDIR/targets"
+    cmake $CCFILE "$srcdir/debian/tests/cmake-targets"
+)
+make -C "$WORKDIR/targets" VERBOSE=1
+"$WORKDIR/targets/hello"
+make -C "$WORKDIR/targets" VERBOSE=1 clean
+
 mkdir "$WORKDIR/example"
 (
     cd "$WORKDIR/example"
