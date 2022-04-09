@@ -29,7 +29,7 @@ Build-Depends:
  libusb2-dev [kfreebsd-any],
  libusbhid-dev [kfreebsd-any],
  libvulkan-dev [linux-any],
- libwayland-dev [linux-any],
+ libwayland-dev (>= 1.18) [linux-any],
  libx11-dev,
  libxcursor-dev,
  libxext-dev,
