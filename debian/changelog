@@ -1,4 +1,4 @@
-libsdl2 (2.0.22~rc1+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.0.22~rc1+dfsg-1) experimental; urgency=medium
 
   * d/gbp.conf, d/control: Branch for experimental
   * New upstream prerelease
@@ -6,6 +6,7 @@ libsdl2 (2.0.22~rc1+dfsg-1) UNRELEASED; urgency=medium
       run on a system with a Wayland display available, similar to GTK 3.
       This can be overridden with SDL_VIDEODRIVER=x11 for games that make
       X11-specific assumptions.
+  * d/gbp.conf: Make excluded files consistent with d/copyright
   * d/control: Increase build-dependency on libwayland to 1.18
   * Update symbols file for new ABI
   * d/copyright: Update
@@ -13,7 +14,7 @@ libsdl2 (2.0.22~rc1+dfsg-1) UNRELEASED; urgency=medium
     Drop patch, applied upstream (in a slightly different form)
   * d/tests: Assert that the CMake integration provides SDL2::SDL2
 
- -- Simon McVittie <smcv@debian.org>  Sat, 09 Apr 2022 12:06:51 +0100
+ -- Simon McVittie <smcv@debian.org>  Sat, 09 Apr 2022 15:05:02 +0100
 
 libsdl2 (2.0.20+dfsg-2) unstable; urgency=medium
 
