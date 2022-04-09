@@ -75,6 +75,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_DisableScreenSaver@Base 2.0.12
  SDL_DuplicateSurface@Base 2.0.12
  SDL_EnableScreenSaver@Base 2.0.12
+ SDL_EncloseFPoints@Base 2.0.22~rc1
  SDL_EnclosePoints@Base 2.0.12
  SDL_Error@Base 2.0.12
  SDL_EventState@Base 2.0.12
@@ -254,6 +255,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetTouchDevice@Base 2.0.12
  SDL_GetTouchDeviceType@Base 2.0.12
  SDL_GetTouchFinger@Base 2.0.12
+ SDL_GetTouchName@Base 2.0.22~rc1
  SDL_GetVersion@Base 2.0.12
  SDL_GetVideoDriver@Base 2.0.12
  SDL_GetWindowBordersSize@Base 2.0.12
@@ -319,6 +321,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_HasEvent@Base 2.0.12
  SDL_HasEvents@Base 2.0.12
  SDL_HasIntersection@Base 2.0.12
+ SDL_HasIntersectionF@Base 2.0.22~rc1
  SDL_HasMMX@Base 2.0.12
  SDL_HasNEON@Base 2.0.12
  SDL_HasRDTSC@Base 2.0.12
@@ -332,6 +335,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_HideWindow@Base 2.0.12
  SDL_Init@Base 2.0.12
  SDL_InitSubSystem@Base 2.0.12
+ SDL_IntersectFRect@Base 2.0.22~rc1
+ SDL_IntersectFRectAndLine@Base 2.0.22~rc1
  SDL_IntersectRect@Base 2.0.12
  SDL_IntersectRectAndLine@Base 2.0.12
  SDL_IsGameController@Base 2.0.12
@@ -516,6 +521,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_RenderGetMetalLayer@Base 2.0.12
  SDL_RenderGetScale@Base 2.0.12
  SDL_RenderGetViewport@Base 2.0.12
+ SDL_RenderGetWindow@Base 2.0.22~rc1
  SDL_RenderIsClipEnabled@Base 2.0.12
  SDL_RenderLogicalToWindow@Base 2.0.18
  SDL_RenderPresent@Base 2.0.12
@@ -624,6 +630,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_TLSSet@Base 2.0.12
  SDL_ThreadID@Base 2.0.12
  SDL_TryLockMutex@Base 2.0.12
+ SDL_UnionFRect@Base 2.0.22~rc1
  SDL_UnionRect@Base 2.0.12
  SDL_UnloadObject@Base 2.0.12
  SDL_UnlockAudio@Base 2.0.12
