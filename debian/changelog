@@ -1,12 +1,19 @@
 libsdl2 (2.0.22~rc1+dfsg-1) UNRELEASED; urgency=medium
 
+  * d/gbp.conf, d/control: Branch for experimental
   * New upstream prerelease
     - Now defaults to native Wayland (instead of X11 via Xwayland) when
       run on a system with a Wayland display available, similar to GTK 3.
       This can be overridden with SDL_VIDEODRIVER=x11 for games that make
       X11-specific assumptions.
+  * d/control: Increase build-dependency on libwayland to 1.18
+  * Update symbols file for new ABI
+  * d/copyright: Update
+  * d/p/Avoid-depending-on-libwayland-1.20-unnecessarily.patch:
+    Drop patch, applied upstream (in a slightly different form)
+  * d/tests: Assert that the CMake integration provides SDL2::SDL2
 
- -- Simon McVittie <smcv@debian.org>  Sat, 09 Apr 2022 11:48:37 +0100
+ -- Simon McVittie <smcv@debian.org>  Sat, 09 Apr 2022 12:06:51 +0100
 
 libsdl2 (2.0.20+dfsg-2) unstable; urgency=medium
 
