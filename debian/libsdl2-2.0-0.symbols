@@ -26,6 +26,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_BuildAudioCVT@Base 2.0.12
  SDL_CalculateGammaRamp@Base 2.0.12
  SDL_CaptureMouse@Base 2.0.12
+ SDL_ClearComposition@Base 2.0.22~rc1
  SDL_ClearError@Base 2.0.12
  SDL_ClearHints@Base 2.0.12
  SDL_ClearQueuedAudio@Base 2.0.12
@@ -345,6 +346,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_IsShapedWindow@Base 2.0.12
  SDL_IsTablet@Base 2.0.12
  SDL_IsTextInputActive@Base 2.0.12
+ SDL_IsTextInputShown@Base 2.0.22~rc1
  SDL_JoystickAttachVirtual@Base 2.0.14
  SDL_JoystickClose@Base 2.0.12
  SDL_JoystickCurrentPowerLevel@Base 2.0.12
