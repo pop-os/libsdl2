@@ -10,3 +10,4 @@ usr/lib/*/libSDL2_test.a
 usr/lib/*/libSDL2main.a
 usr/lib/*/pkgconfig/sdl2.pc
 usr/share/aclocal/sdl2.m4
+usr/share/installed-tests

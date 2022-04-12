@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -eu
+
+if [ -z "${HOME-}" ] || ! [ -w "${HOME}" ]; then
+    export HOME="${AUTOPKGTEST_TMP}"
+fi
+
+export SDL_AUDIODRIVER=dummy
+export SDL_VIDEODRIVER=dummy
+cd "$AUTOPKGTEST_TMP"
+
+exec ginsttest-runner SDL2

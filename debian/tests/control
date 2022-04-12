@@ -9,3 +9,7 @@ Restrictions: superficial, allow-stderr
 Tests: cmake
 Depends: build-essential, cmake, libsdl2-dev
 Restrictions: superficial, allow-stderr
+
+Tests: installed-tests
+Depends: gnome-desktop-testing, libsdl2-dev
+Restrictions: superficial, allow-stderr

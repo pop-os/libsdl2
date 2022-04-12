@@ -4,32 +4,70 @@ Subject: Add a `make install` target for the tests
 
 This makes it more convenient to compile them alongside SDL, install
 them in an optional package and use them as smoke-tests or diagnostic
-tools.
+tools. The default installation directory is taken from GNOME's
+installed-tests, which seems as good a convention as any other:
+https://wiki.gnome.org/Initiatives/GnomeGoals/InstalledTests
 
 Signed-off-by: Simon McVittie <smcv@collabora.com>
+Forwarded: https://github.com/libsdl-org/SDL/pull/5525
 ---
- test/Makefile.in | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ test/Makefile.in  | 18 ++++++++++++++++++
+ test/configure.ac |  9 +++++++++
+ 2 files changed, 27 insertions(+)
 
 diff --git a/test/Makefile.in b/test/Makefile.in
-index f724618..2f8af21 100644
+index 621694e..95ca336 100644
 --- a/test/Makefile.in
 +++ b/test/Makefile.in
-@@ -81,6 +81,17 @@ TARGETS = \
+@@ -2,6 +2,15 @@
+ 
+ srcdir  = @srcdir@
+ 
++prefix = @prefix@
++exec_prefix = @exec_prefix@
++bindir = @bindir@
++libdir = @libdir@
++libexecdir = @libexecdir@
++includedir = @includedir@
++datarootdir = @datarootdir@
++datadir = @datadir@
++
+ CC      = @CC@
+ EXE	= @EXE@
+ CFLAGS  = @CFLAGS@ -g
+@@ -81,6 +90,15 @@ TARGETS = \
  
  all: Makefile $(TARGETS) copydatafiles
  
-+installedtestsdir =
++installedtestsdir = $(libexecdir)/installed-tests/SDL2
 +
-+ifneq ($(installedtestsdir),)
 +install:
 +	install -D -t $(DESTDIR)$(installedtestsdir) $(TARGETS)
 +	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.bmp)
 +	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.dat)
 +	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.txt)
 +	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.wav)
-+endif
 +
  Makefile: $(srcdir)/Makefile.in
  	$(SHELL) config.status $@
  
+diff --git a/test/configure.ac b/test/configure.ac
+index 694551c..3d37b6a 100644
+--- a/test/configure.ac
++++ b/test/configure.ac
+@@ -99,6 +99,15 @@ AC_SUBST(ISWINDOWS)
+ AC_SUBST(ISUNIX)
+ AC_SUBST(ISOS2)
+ 
++AC_SUBST([prefix])
++AC_SUBST([exec_prefix])
++AC_SUBST([bindir])
++AC_SUBST([libdir])
++AC_SUBST([libexecdir])
++AC_SUBST([includedir])
++AC_SUBST([datarootdir])
++AC_SUBST([datadir])
++
+ dnl Check for SDL
+ SDL_VERSION=2.0.18
+ AM_PATH_SDL2($SDL_VERSION,

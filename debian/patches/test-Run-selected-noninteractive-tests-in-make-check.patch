@@ -1,0 +1,64 @@
+From: Simon McVittie <smcv@collabora.com>
+Date: Tue, 12 Apr 2022 13:33:58 +0100
+Subject: test: Run selected noninteractive tests in `make check`
+
+Signed-off-by: Simon McVittie <smcv@collabora.com>
+Forwarded: https://github.com/libsdl-org/SDL/pull/5525
+---
+ test/Makefile.in | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+diff --git a/test/Makefile.in b/test/Makefile.in
+index 95ca336..7a8b2e3 100644
+--- a/test/Makefile.in
++++ b/test/Makefile.in
+@@ -372,6 +372,49 @@ distclean: clean
+ 	rm -f config.status config.cache config.log
+ 	rm -rf $(srcdir)/autom4te*
+ 
++noninteractive = \
++	testatomic$(EXE) \
++	testerror$(EXE) \
++	testevdev$(EXE) \
++	testfilesystem$(EXE) \
++	testkeys$(EXE) \
++	testlocale$(EXE) \
++	testplatform$(EXE) \
++	testpower$(EXE) \
++	testqsort$(EXE) \
++	testthread$(EXE) \
++	testtimer$(EXE) \
++	testver$(EXE) \
++	$(NULL)
++
++needs_audio = \
++	testaudioinfo$(EXE) \
++	testsurround$(EXE) \
++	$(NULL)
++
++needs_display = \
++	testbounds$(EXE) \
++	testdisplayinfo$(EXE) \
++	$(NULL)
++
++TESTS = $(noninteractive) $(needs_audio) $(needs_display)
++
++check:
++	@set -e; \
++	status=0; \
++	export SDL_AUDIODRIVER=dummy; \
++	export SDL_VIDEODRIVER=dummy; \
++	for exe in $(TESTS); do \
++		echo "$$exe..."; \
++		if ./"$$exe"; then \
++			echo "$$exe: OK"; \
++		else \
++			echo "$$exe: FAILED: $$?"; \
++			status=1; \
++		fi; \
++	done; \
++	exit "$$status"
++
+ DATA = \
+ 	axis.bmp \
+ 	button.bmp \
