@@ -1,9 +1,12 @@
-libsdl2 (2.0.22~rc1+git20220418+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.0.22~rc1+git20220418+dfsg-1) experimental; urgency=medium
 
   * New upstream snapshot 2.0.22-RC1-34-g02225aa73
     - Stop defaulting to native Wayland, too many regressions seen
+  * Unfuzz patch series
+  * d/p/Disable-Werror-declaration-after-statement.patch:
+    Add patch to avoid FTBFS with Pipewire 0.3.50
 
- -- Simon McVittie <smcv@debian.org>  Tue, 19 Apr 2022 10:43:01 +0100
+ -- Simon McVittie <smcv@debian.org>  Tue, 19 Apr 2022 10:54:50 +0100
 
 libsdl2 (2.0.22~rc1+dfsg-1) experimental; urgency=medium
 

@@ -2,9 +2,11 @@ From: Simon McVittie <smcv@debian.org>
 Date: Tue, 19 Apr 2022 10:54:08 +0100
 Subject: Disable -Werror=declaration-after-statement
 
-Current Pipewire headers make this fail.
+This is a workaround for
+<https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/2303>.
 
 Signed-off-by: Simon McVittie <smcv@debian.org>
+Forwarded: not-needed, workaround for a fixed Pipewire bug
 ---
  configure.ac | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
