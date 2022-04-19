@@ -1,0 +1,24 @@
+From: Simon McVittie <smcv@debian.org>
+Date: Tue, 19 Apr 2022 10:54:08 +0100
+Subject: Disable -Werror=declaration-after-statement
+
+Current Pipewire headers make this fail.
+
+Signed-off-by: Simon McVittie <smcv@debian.org>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 2209c04..72123d0 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1503,7 +1503,7 @@ CheckDeclarationAfterStatement()
+     CFLAGS="$save_CFLAGS"
+ 
+     if test x$have_gcc_declaration_after_statement = xyes; then
+-        EXTRA_CFLAGS="$EXTRA_CFLAGS -Wdeclaration-after-statement -Werror=declaration-after-statement"
++        EXTRA_CFLAGS="$EXTRA_CFLAGS -Wdeclaration-after-statement"
+     fi
+ }
+ 
