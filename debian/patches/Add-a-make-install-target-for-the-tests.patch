@@ -12,7 +12,7 @@ Signed-off-by: Simon McVittie <smcv@collabora.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/test/Makefile.in b/test/Makefile.in
-index d29dc6e..9894cdb 100644
+index f724618..2f8af21 100644
 --- a/test/Makefile.in
 +++ b/test/Makefile.in
 @@ -81,6 +81,17 @@ TARGETS = \

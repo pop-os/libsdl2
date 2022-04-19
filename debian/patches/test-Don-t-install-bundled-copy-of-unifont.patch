@@ -11,7 +11,7 @@ Forwarded: not-needed
  1 file changed, 1 deletion(-)
 
 diff --git a/test/Makefile.in b/test/Makefile.in
-index 9894cdb..0cb9a8e 100644
+index 2f8af21..c0fed2b 100644
 --- a/test/Makefile.in
 +++ b/test/Makefile.in
 @@ -374,7 +374,6 @@ DATA = \
@@ -19,6 +19,6 @@ index 9894cdb..0cb9a8e 100644
  	testgles2_sdf_img_sdf.bmp \
  	testyuv.bmp \
 -	unifont-13.0.06.hex \
+ 	utf8.txt \
  	$(NULL)
  
- ifneq ($(srcdir), .)
