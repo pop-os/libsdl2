@@ -1,3 +1,9 @@
+libsdl2 (2.0.22~rc2+dfsg-1) experimental; urgency=medium
+
+  * New upstream prerelease
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 21 Apr 2022 19:00:25 +0100
+
 libsdl2 (2.0.22~rc1+git20220418+dfsg-1) experimental; urgency=medium
 
   * New upstream snapshot 2.0.22-RC1-34-g02225aa73
