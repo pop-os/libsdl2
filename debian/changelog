@@ -1,3 +1,18 @@
+libsdl2 (2.0.22+dfsg-2) experimental; urgency=medium
+
+  * d/gbp.conf, d/control: Branch for experimental
+  * d/p/test-Add-some-common-code-to-load-test-resources.patch,
+    d/p/Add-a-make-install-target-for-the-tests.patch,
+    d/p/test-Run-selected-noninteractive-tests-in-make-check.patch,
+    d/p/test-Install-GNOME-style-installed-tests-metadata.patch:
+    Add patches to run a subset of tests as build-time tests and
+    GNOME-style "as-installed" tests
+  * d/tests/installed-tests: Run a subset of tests as an autopkgtest
+  * d/control: Move installed-tests to a new libsdl2-tests binary package
+  * Upload to experimental for NEW processing
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 26 Apr 2022 16:11:03 +0100
+
 libsdl2 (2.0.22+dfsg-1) unstable; urgency=medium
 
   * New upstream release
