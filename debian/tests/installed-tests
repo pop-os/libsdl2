@@ -10,4 +10,4 @@ export SDL_AUDIODRIVER=dummy
 export SDL_VIDEODRIVER=dummy
 cd "$AUTOPKGTEST_TMP"
 
-exec ginsttest-runner SDL2
+exec ginsttest-runner --tap SDL2
