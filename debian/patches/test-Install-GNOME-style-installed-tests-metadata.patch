@@ -1,21 +1,44 @@
 From: Simon McVittie <smcv@collabora.com>
-Date: Tue, 12 Apr 2022 13:42:04 +0100
+Date: Wed, 4 May 2022 13:53:15 +0100
 Subject: test: Install GNOME-style installed-tests metadata
 
 This allows these tests to be discovered and run by
 gnome-desktop-test-runner.
 
 Signed-off-by: Simon McVittie <smcv@collabora.com>
-Forwarded: https://github.com/libsdl-org/SDL/pull/5525
+Origin: upstream, 2.23.0, commit:ce502054ad03cfea3851f09ed227fdf0d619f39b
 ---
- test/Makefile.in | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ test/CMakeLists.txt   |  9 +++++++++
+ test/Makefile.in      | 15 +++++++++++++--
+ test/template.test.in |  3 +++
+ 3 files changed, 25 insertions(+), 2 deletions(-)
+ create mode 100644 test/template.test.in
 
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index 7568f24..98bd09e 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -421,6 +421,15 @@ foreach(TESTCASE ${NONINTERACTIVE} ${NEEDS_AUDIO} ${NEEDS_DISPLAY})
+         ${TESTCASE}
+         PROPERTIES ENVIRONMENT "${TESTS_ENVIRONMENT}"
+     )
++    if(SDL_INSTALL_TESTS)
++        set(exe ${TESTCASE})
++        set(installedtestsdir "${CMAKE_INSTALL_FULL_LIBEXECDIR}/installed-tests/SDL2")
++        configure_file(template.test.in "${exe}.test" @ONLY)
++        install(
++            FILES "${CMAKE_CURRENT_BINARY_DIR}/${exe}.test"
++            DESTINATION ${CMAKE_INSTALL_DATADIR}/installed-tests/SDL2
++        )
++    endif()
+ endforeach()
+ 
+ if(SDL_INSTALL_TESTS)
 diff --git a/test/Makefile.in b/test/Makefile.in
-index 7a8b2e3..242e260 100644
+index d14e073..8fce76e 100644
 --- a/test/Makefile.in
 +++ b/test/Makefile.in
-@@ -88,16 +88,28 @@ TARGETS = \
+@@ -88,13 +88,24 @@ TARGETS = \
  @OPENGLES2_TARGETS@ += testgles2$(EXE)
  
  
@@ -23,31 +46,25 @@ index 7a8b2e3..242e260 100644
 +all: Makefile $(TARGETS) copydatafiles generatetestmeta
  
  installedtestsdir = $(libexecdir)/installed-tests/SDL2
--
--install:
 +installedtestsmetadir = $(datadir)/installed-tests/SDL2
 +
 +generatetestmeta:
 +	rm -f *.test
 +	set -e; for exe in $(noninteractive) $(needs_audio) $(needs_display); do \
-+		( \
-+			echo '[Test]'; \
-+			echo 'Type=session'; \
-+			echo "Exec=$(installedtestsdir)/$$exe"; \
-+		) > $$exe.test; \
++		sed \
++			-e 's#@installedtestsdir@#$(installedtestsdir)#g' \
++			-e "s#@exe@#$$exe#g" \
++			< $(srcdir)/template.test.in > $$exe.test; \
 +	done
-+
-+install: generatetestmeta
+ 
+ install: all
  	install -D -t $(DESTDIR)$(installedtestsdir) $(TARGETS)
- 	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.bmp)
- 	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.dat)
- 	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.txt)
- 	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(wildcard $(srcdir)/*.wav)
+ 	install -m644 -D -t $(DESTDIR)$(installedtestsdir) $(DATA)
 +	install -m644 -D -t $(DESTDIR)$(installedtestsmetadir) *.test
  
  Makefile: $(srcdir)/Makefile.in
  	$(SHELL) config.status $@
-@@ -365,7 +377,7 @@ testmouse$(EXE): $(srcdir)/testmouse.c
+@@ -362,7 +373,7 @@ testmouse$(EXE): $(srcdir)/testmouse.c
  
  
  clean:
@@ -56,3 +73,12 @@ index 7a8b2e3..242e260 100644
  
  distclean: clean
  	rm -f Makefile
+diff --git a/test/template.test.in b/test/template.test.in
+new file mode 100644
+index 0000000..e1ac063
+--- /dev/null
++++ b/test/template.test.in
+@@ -0,0 +1,3 @@
++[Test]
++Type=session
++Exec=@installedtestsdir@/@exe@

@@ -1,6 +1,6 @@
+test-Run-selected-noninteractive-tests-at-build-time.patch
 test-Add-some-common-code-to-load-test-resources.patch
-Add-a-make-install-target-for-the-tests.patch
-test-Run-selected-noninteractive-tests-in-make-check.patch
+test-Add-a-make-install-target-for-the-tests.patch
 test-Install-GNOME-style-installed-tests-metadata.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch

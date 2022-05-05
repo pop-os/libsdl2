@@ -1,0 +1,149 @@
+From: Simon McVittie <smcv@collabora.com>
+Date: Tue, 12 Apr 2022 13:33:58 +0100
+Subject: test: Run selected noninteractive tests at build-time
+
+In Autotools, these are run by `make -C ${builddir}/test check`.
+In CMake, they're run by `make -C ${builddir} test` or
+`ninja -C ${builddir} test` or `ctest --test-dir ${builddir}`.
+
+Signed-off-by: Simon McVittie <smcv@collabora.com>
+Origin: upstream, 2.23.0, commit:7d2808e30b1405b91eb92439cadee6ab25dc9bfc
+---
+ CMakeLists.txt      |  1 +
+ test/CMakeLists.txt | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ test/Makefile.in    | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 90 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 644715a..18d9c35 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2961,6 +2961,7 @@ endif()
+ ##### Tests #####
+ 
+ if(SDL_TEST)
++  include(CTest)
+   include_directories(BEFORE "${SDL2_BINARY_DIR}/include")
+   include_directories(AFTER "${SDL2_SOURCE_DIR}/include")
+   file(GLOB TEST_SOURCES ${SDL2_SOURCE_DIR}/src/test/*.c)
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index 330af47..d2fc493 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -1,5 +1,6 @@
+ cmake_minimum_required(VERSION 3.0.0)
+ project(SDL2 C)
++include(CTest)
+ 
+ # Global settings for all of the test targets
+ # FIXME: is this wrong?
+@@ -125,6 +126,34 @@ add_executable(controllermap controllermap.c)
+ add_executable(testvulkan testvulkan.c)
+ add_executable(testoffscreen testoffscreen.c)
+ 
++set(NONINTERACTIVE
++    testatomic
++    testerror
++    testfilesystem
++    testkeys
++    testlocale
++    testplatform
++    testpower
++    testqsort
++    testthread
++    testtimer
++    testver
++)
++
++if(LINUX)
++    list(APPEND NONINTERACTIVE testevdev)
++endif()
++
++set(NEEDS_AUDIO
++    testaudioinfo
++    testsurround
++)
++
++set(NEEDS_DISPLAY
++    testbounds
++    testdisplayinfo
++)
++
+ if(OPENGL_FOUND)
+ add_dependencies(testshader OpenGL::GL)
+ add_dependencies(testgl2 OpenGL::GL)
+@@ -298,3 +327,20 @@ if(APPLE)
+         endforeach()
+     endif()
+ endif()
++
++set(TESTS_ENVIRONMENT
++    SDL_AUDIODRIVER=dummy
++    SDL_VIDEODRIVER=dummy
++)
++
++foreach(TESTCASE ${NONINTERACTIVE} ${NEEDS_AUDIO} ${NEEDS_DISPLAY})
++    add_test(
++        NAME ${TESTCASE}
++        COMMAND ${TESTCASE}
++        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
++    )
++    set_tests_properties(
++        ${TESTCASE}
++        PROPERTIES ENVIRONMENT "${TESTS_ENVIRONMENT}"
++    )
++endforeach()
+diff --git a/test/Makefile.in b/test/Makefile.in
+index f724618..120e585 100644
+--- a/test/Makefile.in
++++ b/test/Makefile.in
+@@ -351,6 +351,49 @@ distclean: clean
+ 	rm -f config.status config.cache config.log
+ 	rm -rf $(srcdir)/autom4te*
+ 
++noninteractive = \
++	testatomic$(EXE) \
++	testerror$(EXE) \
++	testevdev$(EXE) \
++	testfilesystem$(EXE) \
++	testkeys$(EXE) \
++	testlocale$(EXE) \
++	testplatform$(EXE) \
++	testpower$(EXE) \
++	testqsort$(EXE) \
++	testthread$(EXE) \
++	testtimer$(EXE) \
++	testver$(EXE) \
++	$(NULL)
++
++needs_audio = \
++	testaudioinfo$(EXE) \
++	testsurround$(EXE) \
++	$(NULL)
++
++needs_display = \
++	testbounds$(EXE) \
++	testdisplayinfo$(EXE) \
++	$(NULL)
++
++TESTS = $(noninteractive) $(needs_audio) $(needs_display)
++
++check:
++	@set -e; \
++	status=0; \
++	export SDL_AUDIODRIVER=dummy; \
++	export SDL_VIDEODRIVER=dummy; \
++	for exe in $(TESTS); do \
++		echo "$$exe..."; \
++		if ./"$$exe"; then \
++			echo "$$exe: OK"; \
++		else \
++			echo "$$exe: FAILED: $$?"; \
++			status=1; \
++		fi; \
++	done; \
++	exit "$$status"
++
+ DATA = \
+ 	axis.bmp \
+ 	button.bmp \
