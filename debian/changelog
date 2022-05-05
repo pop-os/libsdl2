@@ -1,3 +1,16 @@
+libsdl2 (2.0.22+dfsg-3) UNRELEASED; urgency=medium
+
+  * Revert "d/gbp.conf, d/control: Branch for experimental"
+  * d/tests: Install the correct dependency.
+    We now want libsdl2-tests, not libsdl2-dev.
+  * d/tests: Tell ginsttest-runner to output TAP
+  * d/patches: Use upstreamed patches to run build-time and as-installed
+    tests
+  * d/p/Disable-Werror-declaration-after-statement.patch:
+    Remove workaround for #1010151, which has been fixed in testing
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 05 May 2022 10:04:36 +0100
+
 libsdl2 (2.0.22+dfsg-2) experimental; urgency=medium
 
   * d/gbp.conf, d/control: Branch for experimental
