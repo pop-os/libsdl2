@@ -17,6 +17,7 @@
 #include <string.h>
 
 #include "SDL.h"
+#include "testutils.h"
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
@@ -151,7 +152,8 @@ static void AddController(int device_index, SDL_bool verbose)
 
     if (verbose) {
         const char *name = SDL_GameControllerName(gamecontroller);
-        SDL_Log("Opened game controller %s\n", name);
+        const char *path = SDL_GameControllerPath(gamecontroller);
+        SDL_Log("Opened game controller %s%s%s\n", name, path ? ", " : "", path ? path : "");
     }
 
     if (SDL_GameControllerHasSensor(gamecontroller, SDL_SENSOR_ACCEL)) {
@@ -214,34 +216,6 @@ static void DelController(SDL_JoystickID controller)
         gamecontroller = NULL;
     }
     UpdateWindowTitle();
-}
-
-static SDL_Texture *
-LoadTexture(SDL_Renderer *renderer, const char *file, SDL_bool transparent)
-{
-    SDL_Surface *temp = NULL;
-    SDL_Texture *texture = NULL;
-
-    temp = SDL_LoadBMP(file);
-    if (temp == NULL) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't load %s: %s", file, SDL_GetError());
-    } else {
-        /* Set transparent pixel as the pixel at (0,0) */
-        if (transparent) {
-            if (temp->format->BytesPerPixel == 1) {
-                SDL_SetColorKey(temp, SDL_TRUE, *(Uint8 *)temp->pixels);
-            }
-        }
-
-        texture = SDL_CreateTextureFromSurface(renderer, temp);
-        if (!texture) {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture: %s\n", SDL_GetError());
-        }
-    }
-    if (temp) {
-        SDL_FreeSurface(temp);
-    }
-    return texture;
 }
 
 static Uint16 ConvertAxisToRumble(Sint16 axisval)
@@ -507,7 +481,7 @@ loop(void *arg)
             }
         }
     }
-
+    SDL_Delay(16);
     SDL_RenderPresent(screen);
 
 #ifdef __EMSCRIPTEN__
@@ -560,6 +534,7 @@ main(int argc, char *argv[])
     /* Print information about the controller */
     for (i = 0; i < SDL_NumJoysticks(); ++i) {
         const char *name;
+        const char *path;
         const char *description;
 
         SDL_JoystickGetGUIDString(SDL_JoystickGetDeviceGUID(i),
@@ -568,6 +543,7 @@ main(int argc, char *argv[])
         if (SDL_IsGameController(i)) {
             controller_count++;
             name = SDL_GameControllerNameForIndex(i);
+            path = SDL_GameControllerPathForIndex(i);
             switch (SDL_GameControllerTypeForIndex(i)) {
             case SDL_CONTROLLER_TYPE_AMAZON_LUNA:
                 description = "Amazon Luna Controller";
@@ -603,10 +579,11 @@ main(int argc, char *argv[])
             AddController(i, SDL_FALSE);
         } else {
             name = SDL_JoystickNameForIndex(i);
+            path = SDL_JoystickPathForIndex(i);
             description = "Joystick";
         }
-        SDL_Log("%s %d: %s (guid %s, VID 0x%.4x, PID 0x%.4x, player index = %d)\n",
-            description, i, name ? name : "Unknown", guid,
+        SDL_Log("%s %d: %s%s%s (guid %s, VID 0x%.4x, PID 0x%.4x, player index = %d)\n",
+            description, i, name ? name : "Unknown", path ? ", " : "", path ? path : "", guid,
             SDL_JoystickGetDeviceVendor(i), SDL_JoystickGetDeviceProduct(i), SDL_JoystickGetDevicePlayerIndex(i));
     }
     SDL_Log("There are %d game controller(s) attached (%d joystick(s))\n", controller_count, SDL_NumJoysticks());
@@ -634,10 +611,10 @@ main(int argc, char *argv[])
     /* scale for platforms that don't give you the window size you asked for. */
     SDL_RenderSetLogicalSize(screen, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    background_front = LoadTexture(screen, "controllermap.bmp", SDL_FALSE);
-    background_back = LoadTexture(screen, "controllermap_back.bmp", SDL_FALSE);
-    button = LoadTexture(screen, "button.bmp", SDL_TRUE);
-    axis = LoadTexture(screen, "axis.bmp", SDL_TRUE);
+    background_front = LoadTexture(screen, "controllermap.bmp", SDL_FALSE, NULL, NULL);
+    background_back = LoadTexture(screen, "controllermap_back.bmp", SDL_FALSE, NULL, NULL);
+    button = LoadTexture(screen, "button.bmp", SDL_TRUE, NULL, NULL);
+    axis = LoadTexture(screen, "axis.bmp", SDL_TRUE, NULL, NULL);
 
     if (!background_front || !background_back || !button || !axis) {
         SDL_DestroyRenderer(screen);
