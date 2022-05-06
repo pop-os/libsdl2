@@ -1,4 +1,4 @@
-libsdl2 (2.0.22+20220505.gfa50597+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.0.22+git20220505.gfa50597+dfsg-1) UNRELEASED; urgency=medium
 
   * d/gbp.conf, d/control: Branch for experimental
   * New upstream git snapshot
