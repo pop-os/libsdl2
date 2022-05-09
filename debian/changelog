@@ -1,10 +1,11 @@
-libsdl2 (2.0.22+git20220508.gc71ee68+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.0.22+git20220508.gc71ee68+dfsg-1) experimental; urgency=medium
 
   * d/gbp.conf, d/control: Branch for experimental
   * New upstream git snapshot
     - Drop patches that were applied upstream
+    - Update symbols file with new ABI from development branch
 
- -- Simon McVittie <smcv@debian.org>  Fri, 06 May 2022 19:08:18 +0100
+ -- Simon McVittie <smcv@debian.org>  Mon, 09 May 2022 17:02:07 +0100
 
 libsdl2 (2.0.22+dfsg-3) unstable; urgency=medium
 
