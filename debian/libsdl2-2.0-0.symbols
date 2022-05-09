@@ -155,6 +155,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerNameForIndex@Base 2.0.12
  SDL_GameControllerNumMappings@Base 2.0.12
  SDL_GameControllerOpen@Base 2.0.12
+ SDL_GameControllerPath@Base 2.0.22+git20220508
+ SDL_GameControllerPathForIndex@Base 2.0.22+git20220508
  SDL_GameControllerRumble@Base 2.0.12
  SDL_GameControllerRumbleTriggers@Base 2.0.14
  SDL_GameControllerSendEffect@Base 2.0.16
@@ -389,6 +391,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickNumButtons@Base 2.0.12
  SDL_JoystickNumHats@Base 2.0.12
  SDL_JoystickOpen@Base 2.0.12
+ SDL_JoystickPath@Base 2.0.22+git20220508
+ SDL_JoystickPathForIndex@Base 2.0.22+git20220508
  SDL_JoystickRumble@Base 2.0.12
  SDL_JoystickRumbleTriggers@Base 2.0.14
  SDL_JoystickSendEffect@Base 2.0.16
@@ -682,6 +686,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_atanf@Base 2.0.12
  SDL_atof@Base 2.0.12
  SDL_atoi@Base 2.0.12
+ SDL_bsearch@Base 2.0.22+git20220508
  SDL_calloc@Base 2.0.12
  SDL_ceil@Base 2.0.12
  SDL_ceilf@Base 2.0.12
