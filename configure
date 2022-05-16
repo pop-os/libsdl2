@@ -20222,10 +20222,6 @@ fi
 if test x$enable_assembly = xyes; then
     SUMMARY_modules="${SUMMARY_modules} assembly"
 
-
-printf "%s\n" "#define SDL_ASSEMBLY_ROUTINES 1" >>confdefs.h
-
-
     # Make sure that we don't generate floating point code that would
     # cause illegal instruction exceptions on older processors
     case "$host" in
@@ -22404,6 +22400,41 @@ printf "%s\n" "#define SDL_ARM_NEON_BLITTERS 1" >>confdefs.h
             SOURCES="$SOURCES $srcdir/src/video/arm/pixman-arm-neon*.S"
             WARN_ABOUT_ARM_NEON_ASM_MIT="yes"
         fi
+    fi
+}
+
+CheckObjectiveCARC()
+{
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for clang -fobjc-arc option" >&5
+printf %s "checking for clang -fobjc-arc option... " >&6; }
+    have_clang_objc_arc=no
+
+    save_CFLAGS="$CFLAGS"
+    CFLAGS="$save_CFLAGS -fobjc-arc"
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+    int x = 0;
+
+int
+main (void)
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"
+then :
+  have_clang_objc_arc=yes
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $have_clang_objc_arc" >&5
+printf "%s\n" "$have_clang_objc_arc" >&6; }
+    CFLAGS="$save_CFLAGS"
+
+    if test x$have_clang_objc_arc = xyes; then
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -fobjc-arc"
     fi
 }
 
@@ -28540,6 +28571,7 @@ printf "%s\n" "#define SDL_VIDEO_RENDER_OGL_ES2 1" >>confdefs.h
         EXTRA_CFLAGS="$EXTRA_CFLAGS -DTARGET_API_MAC_CARBON"
         EXTRA_CFLAGS="$EXTRA_CFLAGS -DTARGET_API_MAC_OSX"
 
+        CheckObjectiveCARC
         CheckVisibilityHidden
         CheckDeclarationAfterStatement
         CheckDummyVideo
