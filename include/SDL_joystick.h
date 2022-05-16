@@ -185,7 +185,7 @@ extern DECLSPEC const char *SDLCALL SDL_JoystickNameForIndex(int device_index);
  * \returns the path of the selected joystick. If no path can be found, this
  *          function returns NULL; call SDL_GetError() for more information.
  *
- * \since This function is available since SDL 2.0.24.
+ * \since This function is available since SDL 2.24.0.
  *
  * \sa SDL_JoystickPath
  * \sa SDL_JoystickOpen
@@ -349,6 +349,48 @@ extern DECLSPEC int SDLCALL SDL_JoystickAttachVirtual(SDL_JoystickType type,
                                                       int nhats);
 
 /**
+ * The structure that defines an extended virtual joystick description
+ *
+ * The caller must zero the structure and then initialize the version with `SDL_VIRTUAL_JOYSTICK_DESC_VERSION` before passing it to SDL_JoystickAttachVirtualEx()
+ *
+ * \sa SDL_JoystickAttachVirtualEx
+ */
+typedef struct SDL_VirtualJoystickDesc
+{
+    Uint16 version;     /**< `SDL_VIRTUAL_JOYSTICK_DESC_VERSION` */
+    Uint16 type;        /**< `SDL_JoystickType` */
+    Uint16 naxes;       /**< the number of axes on this joystick */
+    Uint16 nbuttons;    /**< the number of buttons on this joystick */
+    Uint16 nhats;       /**< the number of hats on this joystick */
+    Uint16 vendor_id;   /**< the USB vendor ID of this joystick */
+    Uint16 product_id;  /**< the USB product ID of this joystick */
+    Uint16 padding;     /**< unused */
+    Uint32 button_mask; /**< A mask of which buttons are valid for this controller
+                             e.g. (1 << SDL_CONTROLLER_BUTTON_A) */
+    Uint32 axis_mask;   /**< A mask of which axes are valid for this controller
+                             e.g. (1 << SDL_CONTROLLER_AXIS_LEFTX) */
+    const char *name;   /**< the name of the joystick */
+
+    void *userdata;     /**< User data pointer passed to callbacks */
+    void (*Update)(void *userdata); /**< Called when the joystick state should be updated */
+
+} SDL_VirtualJoystickDesc;
+
+/**
+ * \brief The current version of the SDL_VirtualJoystickDesc structure
+ */
+#define SDL_VIRTUAL_JOYSTICK_DESC_VERSION   1
+
+/**
+ * Attach a new virtual joystick with extended properties.
+ *
+ * \returns the joystick's device index, or -1 if an error occurred.
+ *
+ * \since This function is available since SDL 2.24.0.
+ */
+extern DECLSPEC int SDLCALL SDL_JoystickAttachVirtualEx(const SDL_VirtualJoystickDesc *desc);
+
+/**
  * Detach a virtual joystick.
  *
  * \param device_index a value previously returned from
@@ -444,7 +486,7 @@ extern DECLSPEC const char *SDLCALL SDL_JoystickName(SDL_Joystick *joystick);
  * \returns the path of the selected joystick. If no path can be found, this
  *          function returns NULL; call SDL_GetError() for more information.
  *
- * \since This function is available since SDL 2.0.24.
+ * \since This function is available since SDL 2.24.0.
  *
  * \sa SDL_JoystickPathForIndex
  */

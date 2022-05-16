@@ -583,8 +583,6 @@ AC_ARG_ENABLE(assembly,
 if test x$enable_assembly = xyes; then
     SUMMARY_modules="${SUMMARY_modules} assembly"
 
-    AC_DEFINE(SDL_ASSEMBLY_ROUTINES, 1, [ ])
-
     # Make sure that we don't generate floating point code that would
     # cause illegal instruction exceptions on older processors
     case "$host" in
@@ -1429,6 +1427,26 @@ CheckNEON()
             SOURCES="$SOURCES $srcdir/src/video/arm/pixman-arm-neon*.S"
             WARN_ABOUT_ARM_NEON_ASM_MIT="yes"
         fi
+    fi
+}
+
+dnl See if clang's -fobjc-arc supported.
+dnl  Reference: https://github.com/libsdl-org/SDL/pull/5632
+CheckObjectiveCARC()
+{
+    AC_MSG_CHECKING(for clang -fobjc-arc option)
+    have_clang_objc_arc=no
+
+    save_CFLAGS="$CFLAGS"
+    CFLAGS="$save_CFLAGS -fobjc-arc"
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    int x = 0;
+    ]],[])], [have_clang_objc_arc=yes],[])
+    AC_MSG_RESULT($have_clang_objc_arc)
+    CFLAGS="$save_CFLAGS"
+
+    if test x$have_clang_objc_arc = xyes; then
+        EXTRA_CFLAGS="$EXTRA_CFLAGS -fobjc-arc"
     fi
 }
 
@@ -4197,6 +4215,7 @@ dnl BeOS support removed after SDL 2.0.1. Haiku still works.  --ryan.
         EXTRA_CFLAGS="$EXTRA_CFLAGS -DTARGET_API_MAC_CARBON"
         EXTRA_CFLAGS="$EXTRA_CFLAGS -DTARGET_API_MAC_OSX"
 
+        CheckObjectiveCARC
         CheckVisibilityHidden
         CheckDeclarationAfterStatement
         CheckDummyVideo
