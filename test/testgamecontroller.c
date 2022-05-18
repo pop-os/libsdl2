@@ -312,16 +312,69 @@ static SDL_bool ShowingFront()
     return showing_front;
 }
 
-static int OpenVirtualController()
+static void VirtualControllerSetPlayerIndex(void *userdata, int player_index)
+{
+    SDL_Log("Virtual Controller: player index set to %d\n", player_index);
+}
+
+static int VirtualControllerRumble(void *userdata, Uint16 low_frequency_rumble, Uint16 high_frequency_rumble)
+{
+    SDL_Log("Virtual Controller: rumble set to %d/%d\n", low_frequency_rumble, high_frequency_rumble);
+    return 0;
+}
+
+static int VirtualControllerRumbleTriggers(void *userdata, Uint16 left_rumble, Uint16 right_rumble)
+{
+    SDL_Log("Virtual Controller: trigger rumble set to %d/%d\n", left_rumble, right_rumble);
+    return 0;
+}
+
+static int VirtualControllerSetLED(void *userdata, Uint8 red, Uint8 green, Uint8 blue)
+{
+    SDL_Log("Virtual Controller: LED set to RGB %d,%d,%d\n", red, green, blue);
+    return 0;
+}
+
+static void OpenVirtualController()
 {
     SDL_VirtualJoystickDesc desc;
+    int virtual_index;
 
     SDL_zero(desc);
     desc.version = SDL_VIRTUAL_JOYSTICK_DESC_VERSION;
     desc.type = SDL_JOYSTICK_TYPE_GAMECONTROLLER;
     desc.naxes = SDL_CONTROLLER_AXIS_MAX;
     desc.nbuttons = SDL_CONTROLLER_BUTTON_MAX;
-    return SDL_JoystickAttachVirtualEx(&desc);
+    desc.SetPlayerIndex = VirtualControllerSetPlayerIndex;
+    desc.Rumble = VirtualControllerRumble;
+    desc.RumbleTriggers = VirtualControllerRumbleTriggers;
+    desc.SetLED = VirtualControllerSetLED;
+
+    virtual_index = SDL_JoystickAttachVirtualEx(&desc);
+    if (virtual_index < 0) {
+        SDL_Log("Couldn't open virtual device: %s\n", SDL_GetError());
+    } else {
+        virtual_joystick = SDL_JoystickOpen(virtual_index);
+        if (!virtual_joystick) {
+            SDL_Log("Couldn't open virtual device: %s\n", SDL_GetError());
+        }
+    }
+}
+
+static void CloseVirtualController()
+{
+    int i;
+
+    for (i = SDL_NumJoysticks(); i--; ) {
+        if (SDL_JoystickIsVirtual(i)) {
+            SDL_JoystickDetachVirtual(i);
+        }
+    }
+
+    if (virtual_joystick) {
+        SDL_JoystickClose(virtual_joystick);
+        virtual_joystick = NULL;
+    }
 }
 
 static SDL_GameControllerButton FindButtonAtPosition(int x, int y)
@@ -551,6 +604,14 @@ loop(void *arg)
 
                     SDL_GameControllerSetPlayerIndex(gamecontroller, player_index);
                 }
+                break;
+            }
+            if (event.key.keysym.sym == SDLK_a) {
+                OpenVirtualController();
+                break;
+            }
+            if (event.key.keysym.sym == SDLK_d) {
+                CloseVirtualController();
                 break;
             }
             if (event.key.keysym.sym != SDLK_ESCAPE) {
@@ -809,18 +870,10 @@ main(int argc, char *argv[])
 
     for (i = 1; i < argc; ++i) {
         if (SDL_strcmp(argv[i], "--virtual") == 0) {
-            int virtual_index = OpenVirtualController();
-            if (virtual_index < 0) {
-                SDL_Log("Couldn't open virtual device: %s\n", SDL_GetError());
-            } else {
-                virtual_joystick = SDL_JoystickOpen(virtual_index);
-                if (!virtual_joystick) {
-                    SDL_Log("Couldn't open virtual device: %s\n", SDL_GetError());
-                }
-            }
+            OpenVirtualController();
         }
         if (argv[i] && *argv[i] != '-') {
-            controller_index = SDL_atoi(argv[1]);
+            controller_index = SDL_atoi(argv[i]);
             break;
         }
     }
@@ -846,6 +899,7 @@ main(int argc, char *argv[])
         CyclePS5TriggerEffect();
     }
 
+    CloseVirtualController();
     SDL_DestroyRenderer(screen);
     SDL_DestroyWindow(window);
     SDL_QuitSubSystem(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);

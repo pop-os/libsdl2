@@ -71,6 +71,10 @@ VIRTUAL_FreeHWData(joystick_hwdata *hwdata)
         cur = cur->next;
     }
 
+    if (hwdata->joystick) {
+        hwdata->joystick->hwdata = NULL;
+        hwdata->joystick = NULL;
+    }
     if (hwdata->name) {
         SDL_free(hwdata->name);
         hwdata->name = NULL;
@@ -97,8 +101,6 @@ SDL_JoystickAttachVirtualInner(const SDL_VirtualJoystickDesc *desc)
     joystick_hwdata *hwdata = NULL;
     int device_index = -1;
     const char *name = NULL;
-    Uint16 button_mask = 0;
-    Uint16 axis_mask = 0;
     Uint16 *guid16;
     int axis_triggerleft = -1;
     int axis_triggerright = -1;
@@ -160,7 +162,7 @@ SDL_JoystickAttachVirtualInner(const SDL_VirtualJoystickDesc *desc)
         int i, axis;
 
         if (hwdata->desc.button_mask == 0) {
-            for (i = 0; i < hwdata->desc.nbuttons && i < sizeof(Uint16)*8; ++i) {
+            for (i = 0; i < hwdata->desc.nbuttons && i < sizeof(hwdata->desc.button_mask)*8; ++i) {
                 hwdata->desc.button_mask |= (1 << i);
             }
         }
@@ -243,8 +245,16 @@ SDL_JoystickAttachVirtualInner(const SDL_VirtualJoystickDesc *desc)
     hwdata->instance_id = SDL_GetNextJoystickInstanceID();
 
     /* Add virtual joystick to SDL-global lists */
-    hwdata->next = g_VJoys;
-    g_VJoys = hwdata;
+    if (g_VJoys) {
+        joystick_hwdata *last;
+
+        for (last = g_VJoys; last->next; last = last->next) {
+            continue;
+        }
+        last->next = hwdata;
+    } else {
+        g_VJoys = hwdata;
+    }
     SDL_PrivateJoystickAdded(hwdata->instance_id);
 
     /* Return the new virtual-device's index */
@@ -397,6 +407,11 @@ VIRTUAL_JoystickGetDevicePlayerIndex(int device_index)
 static void
 VIRTUAL_JoystickSetDevicePlayerIndex(int device_index, int player_index)
 {
+    joystick_hwdata *hwdata = VIRTUAL_HWDataForIndex(device_index);
+
+    if (hwdata && hwdata->desc.SetPlayerIndex) {
+        hwdata->desc.SetPlayerIndex(hwdata->desc.userdata, player_index);
+    }
 }
 
 
@@ -431,16 +446,12 @@ VIRTUAL_JoystickOpen(SDL_Joystick *joystick, int device_index)
     if (!hwdata) {
         return SDL_SetError("No such device");
     }
-    if (hwdata->opened) {
-        /* This should never happen, it's handled by the higher joystick code */
-        return SDL_SetError("Joystick already opened");
-    }
     joystick->instance_id = hwdata->instance_id;
     joystick->hwdata = hwdata;
     joystick->naxes = hwdata->desc.naxes;
     joystick->nbuttons = hwdata->desc.nbuttons;
     joystick->nhats = hwdata->desc.nhats;
-    hwdata->opened = SDL_TRUE;
+    hwdata->joystick = joystick;
     return 0;
 }
 
@@ -448,33 +459,99 @@ VIRTUAL_JoystickOpen(SDL_Joystick *joystick, int device_index)
 static int
 VIRTUAL_JoystickRumble(SDL_Joystick *joystick, Uint16 low_frequency_rumble, Uint16 high_frequency_rumble)
 {
-    return SDL_Unsupported();
+    int result;
+
+    if (joystick->hwdata) {
+        joystick_hwdata *hwdata = joystick->hwdata;
+        if (hwdata->desc.Rumble) {
+            result = hwdata->desc.Rumble(hwdata->desc.userdata, low_frequency_rumble, high_frequency_rumble);
+        } else {
+            result = SDL_Unsupported();
+        }
+    } else {
+        result = SDL_SetError("Rumble failed, device disconnected");
+    }
+
+    return result;
 }
 
 static int
 VIRTUAL_JoystickRumbleTriggers(SDL_Joystick *joystick, Uint16 left_rumble, Uint16 right_rumble)
 {
-    return SDL_Unsupported();
+    int result;
+
+    if (joystick->hwdata) {
+        joystick_hwdata *hwdata = joystick->hwdata;
+        if (hwdata->desc.RumbleTriggers) {
+            result = hwdata->desc.RumbleTriggers(hwdata->desc.userdata, left_rumble, right_rumble);
+        } else {
+            result = SDL_Unsupported();
+        }
+    } else {
+        result = SDL_SetError("Rumble failed, device disconnected");
+    }
+
+    return result;
 }
 
 
 static Uint32
 VIRTUAL_JoystickGetCapabilities(SDL_Joystick *joystick)
 {
-    return 0;
+    joystick_hwdata *hwdata = joystick->hwdata;
+    Uint32 caps = 0;
+
+    if (hwdata) {
+        if (hwdata->desc.Rumble) {
+            caps |= SDL_JOYCAP_RUMBLE;
+        }
+        if (hwdata->desc.RumbleTriggers) {
+            caps |= SDL_JOYCAP_RUMBLE_TRIGGERS;
+        }
+        if (hwdata->desc.SetLED) {
+            caps |= SDL_JOYCAP_LED;
+        }
+    }
+    return caps;
 }
 
 
 static int
 VIRTUAL_JoystickSetLED(SDL_Joystick *joystick, Uint8 red, Uint8 green, Uint8 blue)
 {
-    return SDL_Unsupported();
+    int result;
+
+    if (joystick->hwdata) {
+        joystick_hwdata *hwdata = joystick->hwdata;
+        if (hwdata->desc.SetLED) {
+            result = hwdata->desc.SetLED(hwdata->desc.userdata, red, green, blue);
+        } else {
+            result = SDL_Unsupported();
+        }
+    } else {
+        result = SDL_SetError("SetLED failed, device disconnected");
+    }
+
+    return result;
 }
 
 static int
 VIRTUAL_JoystickSendEffect(SDL_Joystick *joystick, const void *data, int size)
 {
-    return SDL_Unsupported();
+    int result;
+
+    if (joystick->hwdata) {
+        joystick_hwdata *hwdata = joystick->hwdata;
+        if (hwdata->desc.SendEffect) {
+            result = hwdata->desc.SendEffect(hwdata->desc.userdata, data, size);
+        } else {
+            result = SDL_Unsupported();
+        }
+    } else {
+        result = SDL_SetError("SendEffect failed, device disconnected");
+    }
+
+    return result;
 }
 
 static int
@@ -518,17 +595,11 @@ VIRTUAL_JoystickUpdate(SDL_Joystick *joystick)
 static void
 VIRTUAL_JoystickClose(SDL_Joystick *joystick)
 {
-    joystick_hwdata *hwdata;
-
-    if (!joystick) {
-        return;
+    if (joystick->hwdata) {
+        joystick_hwdata *hwdata = joystick->hwdata;
+        hwdata->joystick = NULL;
+        joystick->hwdata = NULL;
     }
-    if (!joystick->hwdata) {
-        return;
-    }
-
-    hwdata = (joystick_hwdata *)joystick->hwdata;
-    hwdata->opened = SDL_FALSE;
 }
 
 
