@@ -1019,7 +1019,8 @@ SDL_UpdateMouseCapture(SDL_bool force_release)
     }
 
     if (!force_release) {
-        if (mouse->capture_desired || (mouse->auto_capture && SDL_GetMouseState(NULL, NULL) != 0)) {
+        if (SDL_GetMessageBoxCount() == 0 &&
+            (mouse->capture_desired || (mouse->auto_capture && SDL_GetMouseState(NULL, NULL) != 0))) {
             if (!mouse->relative_mode) {
                 capture_window = SDL_GetKeyboardFocus();
             }
@@ -1027,21 +1028,34 @@ SDL_UpdateMouseCapture(SDL_bool force_release)
     }
 
     if (capture_window != mouse->capture_window) {
-        if (mouse->capture_window) {
-            mouse->CaptureMouse(NULL);
-            mouse->capture_window->flags &= ~SDL_WINDOW_MOUSE_CAPTURE;
-            mouse->capture_window = NULL;
+        /* We can get here recursively on Windows, so make sure we complete
+         * all of the window state operations before we change the capture state
+         * (e.g. https://github.com/libsdl-org/SDL/pull/5608)
+         */
+        SDL_Window *previous_capture = mouse->capture_window;
+
+        if (previous_capture) {
+            previous_capture->flags &= ~SDL_WINDOW_MOUSE_CAPTURE;
         }
 
         if (capture_window) {
-            if (mouse->CaptureMouse(capture_window) < 0) {
-                /* CaptureMouse() will have set an error */
-                return -1;
-            }
             capture_window->flags |= SDL_WINDOW_MOUSE_CAPTURE;
         }
 
         mouse->capture_window = capture_window;
+
+        if (mouse->CaptureMouse(capture_window) < 0) {
+            /* CaptureMouse() will have set an error, just restore the state */
+            if (previous_capture) {
+                previous_capture->flags |= SDL_WINDOW_MOUSE_CAPTURE;
+            }
+            if (capture_window) {
+                capture_window->flags &= ~SDL_WINDOW_MOUSE_CAPTURE;
+            }
+            mouse->capture_window = previous_capture;
+
+            return -1;
+        }
     }
     return 0;
 }
@@ -1054,6 +1068,17 @@ SDL_CaptureMouse(SDL_bool enabled)
     if (!mouse->CaptureMouse) {
         return SDL_Unsupported();
     }
+
+#ifdef __WIN32__
+    /* Windows mouse capture is tied to the current thread, and must be called
+     * from the thread that created the window being captured. Since we update
+     * the mouse capture state from the event processing, any application state
+     * changes must be processed on that thread as well.
+     */
+    if (!SDL_OnVideoThread()) {
+        return SDL_SetError("SDL_CaptureMouse() must be called on the main thread");
+    }
+#endif /* __WIN32__ */
 
     if (enabled && SDL_GetKeyboardFocus() == NULL) {
         return SDL_SetError("No window has focus");
