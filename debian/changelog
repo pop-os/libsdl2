@@ -1,3 +1,10 @@
+libsdl2 (2.0.22+git20220524+g5dee082+dfsg-1) experimental; urgency=medium
+
+  * New upstream git snapshot
+    - Avoid implicit promotion from float to double (Closes: #1011014)
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 24 May 2022 18:06:53 +0100
+
 libsdl2 (2.0.22+git20220518.g4cb57bf+dfsg-1) experimental; urgency=medium
 
   * New upstream git snapshot
