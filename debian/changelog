@@ -1,9 +1,14 @@
 libsdl2 (2.0.22+dfsg-4) UNRELEASED; urgency=medium
 
+  [ Gianfranco Costamagna ]
   * Ignore tests if the system is Ubuntu and architecture arm64,
     requiring some real new hw to complete successfully
 
- -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 26 May 2022 14:05:08 +0200
+  [ Simon McVittie ]
+  * d/control: Remove Sam Hocevar from Uploaders,
+    with thanks for past contributions (Closes: #1011583)
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 25 May 2022 09:41:00 +0100
 
 libsdl2 (2.0.22+dfsg-3) unstable; urgency=medium
 

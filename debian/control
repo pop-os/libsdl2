@@ -3,7 +3,6 @@ Priority: optional
 Section: libs
 Maintainer: Debian SDL packages maintainers <pkg-sdl-maintainers@lists.alioth.debian.org>
 Uploaders:
- Sam Hocevar <sho@debian.org>,
  Manuel A. Fernandez Montecelo <mafm@debian.org>,
  Felix Geyer <fgeyer@debian.org>,
  Simon McVittie <smcv@debian.org>
