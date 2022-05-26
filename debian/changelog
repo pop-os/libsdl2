@@ -1,3 +1,10 @@
+libsdl2 (2.0.22+dfsg-4) UNRELEASED; urgency=medium
+
+  * Ignore tests if the system is Ubuntu and architecture arm64,
+    requiring some real new hw to complete successfully
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 26 May 2022 14:05:08 +0200
+
 libsdl2 (2.0.22+dfsg-3) unstable; urgency=medium
 
   * d/tests: Install the correct dependency.
