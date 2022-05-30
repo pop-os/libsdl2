@@ -2,6 +2,7 @@
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+bindnow
 ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
+# https://bugs.launchpad.net/ubuntu/+source/libsdl2/+bug/1976288
 export DEB_CPPFLAGS_MAINT_APPEND = -DUBUNTU_WORKAROUND
 endif
 
