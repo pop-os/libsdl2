@@ -1,11 +1,13 @@
 #!/usr/bin/make -f
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+bindnow
+ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
+export DEB_CPPFLAGS_MAINT_APPEND = -DUBUNTU_WORKAROUND
+endif
 
 built_binaries := $(shell dh_listpackages)
 
-include /usr/share/dpkg/architecture.mk
-include /usr/share/dpkg/pkg-info.mk
+include /usr/share/dpkg/default.mk
 
 confflags = --disable-rpath \
             --disable-nas --disable-esd --disable-arts \
@@ -108,8 +110,6 @@ override_dh_auto_clean-indep:
 
 override_dh_auto_test-arch:
 	dh_auto_test
-	# Run build-time tests on everything except Ubuntu arm64
-ifneq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes)/$(DEB_HOST_ARCH_CPU),yes/arm64)
 	LD_LIBRARY_PATH=$(CURDIR)/build/.libs \
 	dh_auto_test \
 		--buildsystem=autoconf \
@@ -117,7 +117,6 @@ ifneq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes)/$(DEB_HOST_ARCH_CP
 		--builddirectory=$(CURDIR)/debian/build-tests \
 		-- \
 		V=1
-endif
 
 override_dh_auto_install-arch:
 	dh_auto_install -- V=1
