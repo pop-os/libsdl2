@@ -79,7 +79,10 @@ Multi-Arch: same
 Depends:
  libasound2-dev [linux-any],
  libdbus-1-dev,
+ libdecor-0-dev [linux-any],
+ libdrm-dev [linux-any],
  libegl1-mesa-dev [!hurd-any],
+ libgbm-dev [linux-any],
  libgl-dev,
  libgles-dev [!hurd-any],
  libglu1-mesa-dev,
@@ -94,6 +97,7 @@ Depends:
  libx11-dev,
  libxcursor-dev,
  libxext-dev,
+ libxfixes-dev,
  libxi-dev,
  libxinerama-dev,
  libxkbcommon-dev,
