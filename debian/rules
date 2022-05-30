@@ -108,17 +108,8 @@ override_dh_auto_clean-indep:
 
 override_dh_auto_test-arch:
 	dh_auto_test
-ifneq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
-ifeq ($(DEB_HOST_ARCH_CPU),arm64)
-	LD_LIBRARY_PATH=$(CURDIR)/build/.libs \
-	dh_auto_test \
-		--buildsystem=autoconf \
-		--sourcedirectory=$(CURDIR)/test \
-		--builddirectory=$(CURDIR)/debian/build-tests \
-		-- \
-		V=1
-endif
-else
+	# Run build-time tests on everything except Ubuntu arm64
+ifneq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes)/$(DEB_HOST_ARCH_CPU),yes/arm64)
 	LD_LIBRARY_PATH=$(CURDIR)/build/.libs \
 	dh_auto_test \
 		--buildsystem=autoconf \
