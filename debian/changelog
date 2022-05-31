@@ -1,9 +1,10 @@
-libsdl2 (2.0.22+git20220530+g3c3c025+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.0.22+git20220530+g3c3c025+dfsg-1) experimental; urgency=medium
 
   * Merge packaging from unstable
   * New upstream git snapshot
+  * Refresh patches
 
- -- Simon McVittie <smcv@debian.org>  Tue, 31 May 2022 13:22:57 +0100
+ -- Simon McVittie <smcv@debian.org>  Tue, 31 May 2022 13:26:32 +0100
 
 libsdl2 (2.0.22+dfsg-4) unstable; urgency=medium
 
