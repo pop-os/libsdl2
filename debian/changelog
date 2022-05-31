@@ -5,6 +5,26 @@ libsdl2 (2.0.22+git20220524+g5dee082+dfsg-2) UNRELEASED; urgency=medium
 
  -- Simon McVittie <smcv@debian.org>  Wed, 25 May 2022 09:41:00 +0100
 
+libsdl2 (2.0.22+dfsg-4) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Ignore tests if the system is Ubuntu and architecture arm64,
+    requiring some real new hw to complete successfully
+    (workaround for LP: #1976288)
+
+  [ Simon McVittie ]
+  * d/control: Remove Sam Hocevar from Uploaders,
+    with thanks for past contributions (Closes: #1011583)
+  * d/tests/installed-tests: Assert that at least one test was run
+  * d/control: Add missing dependencies for static linking
+    (Closes: #1012088, LP: #1976198)
+  * d/tests/cmake: Exercise static linking to SDL
+  * Standards-Version: 4.6.1 (no changes required)
+  * Only skip testatomic on Ubuntu, not the rest of the test suite.
+    This lets us get at least some confidence that the package is working.
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 30 May 2022 16:43:30 +0100
+
 libsdl2 (2.0.22+git20220524+g5dee082+dfsg-1) experimental; urgency=medium
 
   * New upstream git snapshot

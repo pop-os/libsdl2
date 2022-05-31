@@ -49,3 +49,12 @@ mkdir "$WORKDIR/findsdl2"
 make -C "$WORKDIR/findsdl2" VERBOSE=1
 "$WORKDIR/findsdl2/hello"
 make -C "$WORKDIR/findsdl2" VERBOSE=1 clean
+
+mkdir "$WORKDIR/static"
+(
+    cd "$WORKDIR/static"
+    cmake $CCFILE "$srcdir/debian/tests/cmake-static"
+)
+make -C "$WORKDIR/static" VERBOSE=1
+"$WORKDIR/static/hello"
+make -C "$WORKDIR/static" VERBOSE=1 clean

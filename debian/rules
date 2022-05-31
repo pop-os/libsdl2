@@ -1,11 +1,14 @@
 #!/usr/bin/make -f
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+bindnow
+ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
+# https://bugs.launchpad.net/ubuntu/+source/libsdl2/+bug/1976288
+export DEB_CPPFLAGS_MAINT_APPEND = -DUBUNTU_WORKAROUND
+endif
 
 built_binaries := $(shell dh_listpackages)
 
-include /usr/share/dpkg/architecture.mk
-include /usr/share/dpkg/pkg-info.mk
+include /usr/share/dpkg/default.mk
 
 confflags = --disable-rpath \
             --disable-nas --disable-esd --disable-arts \
