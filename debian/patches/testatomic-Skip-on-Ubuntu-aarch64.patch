@@ -9,7 +9,7 @@ Forwarded: not-needed
  1 file changed, 4 insertions(+)
 
 diff --git a/test/testatomic.c b/test/testatomic.c
-index 16678db..b1cc0eb 100644
+index 7dbad45..99efb38 100644
 --- a/test/testatomic.c
 +++ b/test/testatomic.c
 @@ -708,6 +708,9 @@ main(int argc, char *argv[])
@@ -20,9 +20,9 @@ index 16678db..b1cc0eb 100644
 +    SDL_Log("SKIP https://bugs.launchpad.net/ubuntu/+source/libsdl2/+bug/1976288");
 +#else
      RunBasicTest();
-     RunEpicTest();
- /* This test is really slow, so don't run it by default */
-@@ -715,6 +718,7 @@ main(int argc, char *argv[])
+ 
+     if (SDL_getenv("SDL_TESTS_QUICK") != NULL) {
+@@ -721,6 +724,7 @@ main(int argc, char *argv[])
      RunFIFOTest(SDL_FALSE);
  #endif
      RunFIFOTest(SDL_TRUE);
