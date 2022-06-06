@@ -4,4 +4,4 @@ test-Add-a-make-install-target-for-the-tests.patch
 test-Install-GNOME-style-installed-tests-metadata.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
-testatomic-Skip-on-Ubuntu-aarch64.patch
+345efdcb.patch
