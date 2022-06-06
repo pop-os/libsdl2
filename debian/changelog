@@ -2,6 +2,7 @@ libsdl2 (2.0.22+dfsg-5) UNRELEASED; urgency=medium
 
   * debian/patches/345efdcb.patch:
     - cherry-pick upstream fix for arm64 test failure due to race condition.
+      (LP: #1976288)
   * revert Ubuntu arm64 hack, now that upstream properly fixed it.
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 06 Jun 2022 11:50:18 +0200
