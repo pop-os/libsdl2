@@ -1,4 +1,4 @@
-libsdl2 (2.0.22+dfsg-5) UNRELEASED; urgency=medium
+libsdl2 (2.0.22+dfsg-5) unstable; urgency=medium
 
   * debian/patches/345efdcb.patch:
     - cherry-pick upstream fix for arm64 test failure due to race condition.
