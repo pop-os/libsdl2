@@ -1,4 +1,4 @@
-libsdl2 (2.0.22+git20220612+gbdf1413+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.0.22+git20220612+gbdf1413+dfsg-1) experimental; urgency=medium
 
   * New upstream git snapshot
   * Update symbols file
@@ -6,8 +6,10 @@ libsdl2 (2.0.22+git20220612+gbdf1413+dfsg-1) UNRELEASED; urgency=medium
   * Merge packaging from unstable
     - d/p/345efdcb.patch: Drop, included in new upstream git snapshot
   * d/copyright: Update
+  * d/p/cmake-Fix-static-linking-to-dependencies-with-in-library-.patch:
+    Add proposed patch to fix SDL2::SDL2-static target in our configuration
 
- -- Simon McVittie <smcv@debian.org>  Mon, 13 Jun 2022 10:58:42 +0100
+ -- Simon McVittie <smcv@debian.org>  Mon, 13 Jun 2022 12:07:53 +0100
 
 libsdl2 (2.0.22+dfsg-5) unstable; urgency=medium
 
