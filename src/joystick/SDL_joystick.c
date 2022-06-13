@@ -1810,6 +1810,11 @@ SDL_CreateJoystickName(Uint16 vendor, Uint16 product, const char *vendor_name, c
     char *name;
     size_t i, len;
 
+    /* Use the given name for the Nintendo Online NES Controllers */
+    if (SDL_strncmp(product_name, "NES Controller", 14) == 0) {
+        return SDL_strdup(product_name);
+    }
+
     custom_name = GuessControllerName(vendor, product);
     if (custom_name) {
         return SDL_strdup(custom_name);
@@ -2051,6 +2056,10 @@ SDL_GetJoystickGameControllerType(const char *name, Uint16 vendor, Uint16 produc
                 break;
             case k_eControllerType_SwitchJoyConLeft:
             case k_eControllerType_SwitchJoyConRight:
+                /* We always support the Nintendo Online NES Controllers */
+                if (name && SDL_strncmp(name, "NES Controller", 14) == 0) {
+                    return SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO;
+                }
                 type = SDL_GetHintBoolean(SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS, SDL_FALSE) ? SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO : SDL_CONTROLLER_TYPE_UNKNOWN;
                 break;
             default:
@@ -2702,6 +2711,14 @@ Uint16 SDL_JoystickGetProductVersion(SDL_Joystick *joystick)
     return version;
 }
 
+Uint16 SDL_JoystickGetFirmwareVersion(SDL_Joystick *joystick)
+{
+    if (!SDL_PrivateJoystickValid(joystick)) {
+        return 0;
+    }
+    return joystick->firmware_version;
+}
+
 const char *SDL_JoystickGetSerial(SDL_Joystick *joystick)
 {
     if (!SDL_PrivateJoystickValid(joystick)) {
@@ -2727,68 +2744,13 @@ SDL_JoystickType SDL_JoystickGetType(SDL_Joystick *joystick)
 /* convert the guid to a printable string */
 void SDL_JoystickGetGUIDString(SDL_JoystickGUID guid, char *pszGUID, int cbGUID)
 {
-    static const char k_rgchHexToASCII[] = "0123456789abcdef";
-    int i;
-
-    if ((pszGUID == NULL) || (cbGUID <= 0)) {
-        return;
-    }
-
-    for (i = 0; i < sizeof(guid.data) && i < (cbGUID-1)/2; i++) {
-        /* each input byte writes 2 ascii chars, and might write a null byte. */
-        /* If we don't have room for next input byte, stop */
-        unsigned char c = guid.data[i];
-
-        *pszGUID++ = k_rgchHexToASCII[c >> 4];
-        *pszGUID++ = k_rgchHexToASCII[c & 0x0F];
-    }
-    *pszGUID = '\0';
-}
-
-/*-----------------------------------------------------------------------------
- * Purpose: Returns the 4 bit nibble for a hex character
- * Input  : c -
- * Output : unsigned char
- *-----------------------------------------------------------------------------*/
-static unsigned char nibble(unsigned char c)
-{
-    if ((c >= '0') && (c <= '9')) {
-        return (c - '0');
-    }
-
-    if ((c >= 'A') && (c <= 'F')) {
-        return (c - 'A' + 0x0a);
-    }
-
-    if ((c >= 'a') && (c <= 'f')) {
-        return (c - 'a' + 0x0a);
-    }
-
-    /* received an invalid character, and no real way to return an error */
-    /* AssertMsg1(false, "Q_nibble invalid hex character '%c' ", c); */
-    return 0;
+    SDL_GUIDToString(guid, pszGUID, cbGUID);
 }
 
 /* convert the string version of a joystick guid to the struct */
 SDL_JoystickGUID SDL_JoystickGetGUIDFromString(const char *pchGUID)
 {
-    SDL_JoystickGUID guid;
-    int maxoutputbytes= sizeof(guid);
-    size_t len = SDL_strlen(pchGUID);
-    Uint8 *p;
-    size_t i;
-
-    /* Make sure it's even */
-    len = (len) & ~0x1;
-
-    SDL_memset(&guid, 0x00, sizeof(guid));
-
-    p = (Uint8 *)&guid;
-    for (i = 0; (i < len) && ((p - (Uint8 *)&guid) < maxoutputbytes); i+=2, p++) {
-        *p = (nibble((unsigned char)pchGUID[i]) << 4) | nibble((unsigned char)pchGUID[i+1]);
-    }
-
-    return guid;
+    return SDL_GUIDFromString(pchGUID);
 }
 
 /* update the power level for this joystick */
