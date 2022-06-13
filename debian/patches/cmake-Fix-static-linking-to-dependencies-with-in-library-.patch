@@ -1,0 +1,35 @@
+From: Simon McVittie <smcv@collabora.com>
+Date: Mon, 13 Jun 2022 11:51:41 +0100
+Subject: cmake: Fix static linking to dependencies with "-" in library name
+
+When SDL is built with Wayland support on Linux, and Wayland libraries
+are linked as dependencies instead of being loaded with dlopen(), its
+dependencies will include libraries whose names contain a dash, like
+`-lwayland-client` and `-ldecor-0`. Don't replace such libraries with
+`-lwayland` and `-ldecor`: those don't exist and linking them will fail.
+
+Signed-off-by: Simon McVittie <smcv@collabora.com>
+Forwarded: https://github.com/libsdl-org/SDL/pull/5789
+---
+ sdl2-config.cmake.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sdl2-config.cmake.in b/sdl2-config.cmake.in
+index 16a2520..2ac3fbe 100644
+--- a/sdl2-config.cmake.in
++++ b/sdl2-config.cmake.in
+@@ -53,12 +53,12 @@ set(_sdl2_libraries "@SDL_LIBS@")
+ set(_sdl2_static_private_libs "@SDL_STATIC_LIBS@")
+ 
+ # Convert _sdl2_libraries to list and keep only libraries
+-string(REGEX MATCHALL "-[lm]([a-zA-Z0-9._]+)" _sdl2_libraries "${_sdl2_libraries}")
++string(REGEX MATCHALL "-[lm]([-a-zA-Z0-9._]+)" _sdl2_libraries "${_sdl2_libraries}")
+ string(REGEX REPLACE "^-l" "" _sdl2_libraries "${_sdl2_libraries}")
+ string(REGEX REPLACE ";-l" ";" _sdl2_libraries "${_sdl2_libraries}")
+ 
+ # Convert _sdl2_static_private_libs to list and keep only libraries
+-string(REGEX MATCHALL "(-[lm]([a-zA-Z0-9._]+))|(-Wl,[^ ]*framework[^ ]*)" _sdl2_static_private_libs "${_sdl2_static_private_libs}")
++string(REGEX MATCHALL "(-[lm]([-a-zA-Z0-9._]+))|(-Wl,[^ ]*framework[^ ]*)" _sdl2_static_private_libs "${_sdl2_static_private_libs}")
+ string(REGEX REPLACE "^-l" "" _sdl2_static_private_libs "${_sdl2_static_private_libs}")
+ string(REGEX REPLACE ";-l" ";" _sdl2_static_private_libs "${_sdl2_static_private_libs}")
+ 
