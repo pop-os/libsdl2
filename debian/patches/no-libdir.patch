@@ -14,24 +14,24 @@ sdl2-config.cmake to be architecture-dependent, because it gets installed
 in ${libdir} anyway.]
 
 Forwarded: not-needed
-Last-Update: 2021-08-11
+Last-Update: 2022-06-13
 ---
  sdl2-config.in | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/sdl2-config.in b/sdl2-config.in
-index 5a2aed2..5cc21a6 100644
+index 3a87ab8..86aaba8 100644
 --- a/sdl2-config.in
 +++ b/sdl2-config.in
-@@ -3,7 +3,6 @@
- prefix=@prefix@
+@@ -7,7 +7,6 @@ bindir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
+ prefix=$(cd -P -- "$bindir/@bin_prefix_relpath@" && printf '%s\n' "$(pwd -P)")
  exec_prefix=@exec_prefix@
  exec_prefix_set=no
 -libdir=@libdir@
  
  @ENABLE_STATIC_FALSE@usage="\
  @ENABLE_STATIC_FALSE@Usage: $0 [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--cflags] [--libs]"
-@@ -45,11 +44,11 @@ while test $# -gt 0; do
+@@ -49,12 +48,12 @@ while test $# -gt 0; do
        echo -I@includedir@/SDL2 @SDL_CFLAGS@
        ;;
  @ENABLE_SHARED_TRUE@    --libs)
@@ -40,8 +40,9 @@ index 5a2aed2..5cc21a6 100644
  @ENABLE_SHARED_TRUE@      ;;
  @ENABLE_STATIC_TRUE@@ENABLE_SHARED_TRUE@    --static-libs)
  @ENABLE_STATIC_TRUE@@ENABLE_SHARED_FALSE@    --libs|--static-libs)
--@ENABLE_STATIC_TRUE@      echo -L@libdir@ @SDL_LIBS@ @SDL_STATIC_LIBS@
-+@ENABLE_STATIC_TRUE@      echo @SDL_LIBS@ @SDL_STATIC_LIBS@
+ @ENABLE_STATIC_TRUE@      sdl_static_libs=$(echo "@SDL_LIBS@ @SDL_STATIC_LIBS@" | sed -E "s#-lSDL2[ $]#-Wl,-Bstatic -lSDL2 -Wl,-Bdynamic #g")
+-@ENABLE_STATIC_TRUE@      echo -L@libdir@ $sdl_static_libs
++@ENABLE_STATIC_TRUE@      echo $sdl_static_libs
  @ENABLE_STATIC_TRUE@      ;;
      *)
        echo "${usage}" 1>&2
