@@ -942,3 +942,13 @@ SDL_DYNAPI_PROC(const char*,SDL_GameControllerPath,(SDL_GameController *a),(a),r
 SDL_DYNAPI_PROC(const char*,SDL_JoystickPathForIndex,(int a),(a),return)
 SDL_DYNAPI_PROC(const char*,SDL_JoystickPath,(SDL_Joystick *a),(a),return)
 SDL_DYNAPI_PROC(int,SDL_JoystickAttachVirtualEx,(const SDL_VirtualJoystickDesc *a),(a),return)
+SDL_DYNAPI_PROC(Uint16,SDL_GameControllerGetFirmwareVersion,(SDL_GameController *a),(a),return)
+SDL_DYNAPI_PROC(Uint16,SDL_JoystickGetFirmwareVersion,(SDL_Joystick *a),(a),return)
+SDL_DYNAPI_PROC(void,SDL_GUIDToString,(SDL_GUID a, char *b, int c),(a,b,c),)
+SDL_DYNAPI_PROC(SDL_GUID,SDL_GUIDFromString,(const char *a),(a),return)
+SDL_DYNAPI_PROC(SDL_bool,SDL_HasLSX,(void),(),return)
+SDL_DYNAPI_PROC(SDL_bool,SDL_HasLASX,(void),(),return)
+#ifdef __WIN32__
+SDL_DYNAPI_PROC(ID3D12Device*,SDL_RenderGetD3D12Device,(SDL_Renderer *a),(a),return)
+#endif
+SDL_DYNAPI_PROC(size_t,SDL_utf8strnlen,(const char *a, size_t b),(a,b),return)

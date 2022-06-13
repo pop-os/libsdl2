@@ -1200,6 +1200,8 @@ extern "C" {
  *
  *  This variable is case insensitive and can be set to the following values:
  *    "direct3d"
+ *    "direct3d11"
+ *    "direct3d12"
  *    "opengl"
  *    "opengles2"
  *    "opengles"
@@ -1507,6 +1509,21 @@ extern "C" {
 #define SDL_HINT_VIDEO_WAYLAND_PREFER_LIBDECOR "SDL_VIDEO_WAYLAND_PREFER_LIBDECOR"
 
 /**
+ *  \brief  A variable controlling whether video mode emulation is enabled under Wayland.
+ *
+ *  When this hint is set, a standard set of emulated CVT video modes will be exposed for use by the application.
+ *  If it is disabled, the only modes exposed will be the logical desktop size and, in the case of a scaled
+ *  desktop, the native display resolution.
+ *
+ *  This variable can be set to the following values:
+ *    "0"       - Video mode emulation is disabled.
+ *    "1"       - Video mode emulation is enabled.
+ *
+ *  By default video mode emulation is enabled.
+ */
+#define SDL_HINT_VIDEO_WAYLAND_MODE_EMULATION "SDL_VIDEO_WAYLAND_MODE_EMULATION"
+
+/**
 *  \brief  A variable that is the address of another SDL_Window* (as a hex string formatted with "%p").
 *  
 *  If this hint is set before SDL_CreateWindowFrom() and the SDL_Window* it is set to has
@@ -1790,6 +1807,57 @@ extern "C" {
  *
  */
 #define SDL_HINT_WINDOWS_USE_D3D9EX "SDL_WINDOWS_USE_D3D9EX"
+
+/**
+ * \brief Controls whether SDL will declare the process to be DPI aware.
+ *
+ *  This hint must be set before initializing the video subsystem.
+ *
+ *  The main purpose of declaring DPI awareness is to disable OS bitmap scaling of SDL windows on monitors with 
+ *  a DPI scale factor.
+ * 
+ *  This hint is equivalent to requesting DPI awareness via external means (e.g. calling SetProcessDpiAwarenessContext)
+ *  and does not cause SDL to use a virtualized coordinate system, so it will generally give you 1 SDL coordinate = 1 pixel
+ *  even on high-DPI displays.
+ * 
+ *  For more information, see:
+ *  https://docs.microsoft.com/en-us/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows
+ * 
+ *  This variable can be set to the following values:
+ *    ""             - Do not change the DPI awareness (default).
+ *    "unaware"      - Declare the process as DPI unaware. (Windows 8.1 and later).
+ *    "system"       - Request system DPI awareness. (Vista and later).
+ *    "permonitor"   - Request per-monitor DPI awareness. (Windows 8.1 and later).
+ *    "permonitorv2" - Request per-monitor V2 DPI awareness. (Windows 10, version 1607 and later).
+ *                     The most visible difference from "permonitor" is that window title bar will be scaled
+ *                     to the visually correct size when dragging between monitors with different scale factors.
+ *                     This is the preferred DPI awareness level.
+ *
+ * If the requested DPI awareness is not available on the currently running OS, SDL will try to request the best
+ * available match.
+ */
+#define SDL_HINT_WINDOWS_DPI_AWARENESS "SDL_WINDOWS_DPI_AWARENESS"
+
+ /**
+ * \brief Uses DPI-scaled points as the SDL coordinate system on Windows.
+ * 
+ *  This changes the SDL coordinate system units to be DPI-scaled points, rather than pixels everywhere.
+ *  This means windows will be appropriately sized, even when created on high-DPI displays with scaling.
+ * 
+ *  e.g. requesting a 640x480 window from SDL, on a display with 125% scaling in Windows display settings,
+ *  will create a window with an 800x600 client area (in pixels).
+ *
+ *  Setting this to "1" implicitly requests process DPI awareness (setting SDL_WINDOWS_DPI_AWARENESS is unnecessary),
+ *  and forces SDL_WINDOW_ALLOW_HIGHDPI on all windows.
+ * 
+ *  This variable can be set to the following values:
+ *    "0"       - SDL coordinates equal Windows coordinates. No automatic window resizing when dragging
+ *                between monitors with different scale factors (unless this is performed by
+ *                Windows itself, which is the case when the process is DPI unaware).
+ *    "1"       - SDL coordinates are in DPI-scaled points. Automatically resize windows as needed on
+ *                displays with non-100% scale factors.
+ */
+#define SDL_HINT_WINDOWS_DPI_SCALING "SDL_WINDOWS_DPI_SCALING"
 
 /**
  *  \brief  A variable controlling whether the window frame and title bar are interactive when the cursor is hidden 

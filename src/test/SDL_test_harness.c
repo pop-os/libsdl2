@@ -349,7 +349,7 @@ static void SDLTest_LogTestSuiteSummary(SDLTest_TestSuiteReference *testSuites)
 /* Gets a timer value in seconds */
 static float GetClock()
 {
-    float currentClock = clock() / (float) CLOCKS_PER_SEC;
+    float currentClock = SDL_GetPerformanceCounter() / (float) SDL_GetPerformanceFrequency();
     return currentClock;
 }
 
@@ -441,6 +441,11 @@ int SDLTest_RunSuites(SDLTest_TestSuiteReference *testSuites[], const char *user
             testCounter++;
             totalNumberOfTests++;
         }
+    }
+
+    if (totalNumberOfTests == 0) {
+        SDLTest_LogError("No tests to run?");
+        return -1;
     }
 
     /* Pre-allocate an array for tracking failed tests (potentially all test cases) */
