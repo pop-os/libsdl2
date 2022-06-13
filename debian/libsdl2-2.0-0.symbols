@@ -1,5 +1,7 @@
 libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
 * Build-Depends-Package: libsdl2-dev
+ (arch=linux-any)SDL_LinuxSetThreadPriority@Base 2.0.12
+ (arch=linux-any)SDL_LinuxSetThreadPriorityAndPolicy@Base 2.0.18
  SDL_AddEventWatch@Base 2.0.12
  SDL_AddHintCallback@Base 2.0.12
  SDL_AddTimer@Base 2.0.12
@@ -111,6 +113,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GL_SwapWindow@Base 2.0.12
  SDL_GL_UnbindTexture@Base 2.0.12
  SDL_GL_UnloadLibrary@Base 2.0.12
+ SDL_GUIDFromString@Base 2.0.22+git20220612
+ SDL_GUIDToString@Base 2.0.22+git20220612
  SDL_GameControllerAddMapping@Base 2.0.12
  SDL_GameControllerAddMappingsFromRW@Base 2.0.12
  SDL_GameControllerClose@Base 2.0.12
@@ -126,6 +130,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerGetBindForButton@Base 2.0.12
  SDL_GameControllerGetButton@Base 2.0.12
  SDL_GameControllerGetButtonFromString@Base 2.0.12
+ SDL_GameControllerGetFirmwareVersion@Base 2.0.22+git20220612
  SDL_GameControllerGetJoystick@Base 2.0.12
  SDL_GameControllerGetNumTouchpadFingers@Base 2.0.14
  SDL_GameControllerGetNumTouchpads@Base 2.0.14
@@ -325,6 +330,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_HasEvents@Base 2.0.12
  SDL_HasIntersection@Base 2.0.12
  SDL_HasIntersectionF@Base 2.0.22~rc1
+ SDL_HasLASX@Base 2.0.22+git20220612
+ SDL_HasLSX@Base 2.0.22+git20220612
  SDL_HasMMX@Base 2.0.12
  SDL_HasNEON@Base 2.0.12
  SDL_HasRDTSC@Base 2.0.12
@@ -369,6 +376,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickGetDeviceProductVersion@Base 2.0.12
  SDL_JoystickGetDeviceType@Base 2.0.12
  SDL_JoystickGetDeviceVendor@Base 2.0.12
+ SDL_JoystickGetFirmwareVersion@Base 2.0.22+git20220612
  SDL_JoystickGetGUID@Base 2.0.12
  SDL_JoystickGetGUIDFromString@Base 2.0.12
  SDL_JoystickGetGUIDString@Base 2.0.12
@@ -403,8 +411,6 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickSetVirtualButton@Base 2.0.14
  SDL_JoystickSetVirtualHat@Base 2.0.14
  SDL_JoystickUpdate@Base 2.0.12
- (arch=linux-any)SDL_LinuxSetThreadPriority@Base 2.0.12
- (arch=linux-any)SDL_LinuxSetThreadPriorityAndPolicy@Base 2.0.18
  SDL_LoadBMP_RW@Base 2.0.12
  SDL_LoadDollarTemplates@Base 2.0.12
  SDL_LoadFile@Base 2.0.12
@@ -801,6 +807,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_ultoa@Base 2.0.12
  SDL_utf8strlcpy@Base 2.0.12
  SDL_utf8strlen@Base 2.0.12
+ SDL_utf8strnlen@Base 2.0.22+git20220612
  SDL_vasprintf@Base 2.0.18
  SDL_vsnprintf@Base 2.0.12
  SDL_vsscanf@Base 2.0.12
