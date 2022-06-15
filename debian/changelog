@@ -1,3 +1,11 @@
+libsdl2 (2.0.22+git20220615+g960b86d+dfsg-1) experimental; urgency=medium
+
+  * New upstream git snapshot
+  * d/p/cmake-Fix-static-linking-to-dependencies-with-in-library-.patch:
+    Drop patch, applied upstream
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 15 Jun 2022 14:04:37 +0100
+
 libsdl2 (2.0.22+git20220612+gbdf1413+dfsg-1) experimental; urgency=medium
 
   * New upstream git snapshot
