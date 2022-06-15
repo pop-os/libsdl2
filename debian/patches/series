@@ -1,3 +1,2 @@
-cmake-Fix-static-linking-to-dependencies-with-in-library-.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
