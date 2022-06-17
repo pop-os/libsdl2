@@ -5,6 +5,29 @@ libsdl2 (2.0.22+git20220615+g960b86d+dfsg-2) UNRELEASED; urgency=medium
 
  -- Simon McVittie <smcv@debian.org>  Fri, 17 Jun 2022 11:14:57 +0100
 
+libsdl2 (2.0.22+dfsg-6) unstable; urgency=medium
+
+  * d/watch: Use GitHub to download releases
+  * d/rules: Wrap configure flags one per line, and sort them.
+    This reduces the diff when we change them.
+  * d/rules: Explicitly disable use of libraries we don't build-depend on.
+    SDL doesn't build-depend on JACK or the proprietary bcm_host and Vivante
+    graphics APIs, so these would not get enabled in official Debian builds.
+    For reproducibility, if they happen to be installed on a system where a
+    contributor is doing their own local build, don't enable them
+    there either.
+    - In particular, this ensures that the old bcm_host driver for
+      Raspberry Pi is not enabled. This is an outdated kernel driver which
+      has been superseded by KMS/DRM. (Closes: #1012863)
+  * d/rules: Explicitly disable auto-detection of other OSs' drivers.
+    This ensures that they are not enabled if compatible headers are
+    somehow available locally. Note that --disable-xinput refers to Windows
+    XInput (an API for Xbox-360-compatible game controllers) and should not
+    be confused with --enable-video-x11-xinput.
+  * d/rules: Explicitly enable library dependencies we intend to enable
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 17 Jun 2022 10:14:50 +0100
+
 libsdl2 (2.0.22+git20220615+g960b86d+dfsg-1) experimental; urgency=medium
 
   * New upstream git snapshot

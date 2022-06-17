@@ -6,16 +6,45 @@ built_binaries := $(shell dh_listpackages)
 
 include /usr/share/dpkg/default.mk
 
-confflags = --disable-rpath \
-            --disable-nas --disable-esd --disable-arts \
-            --disable-alsa-shared --disable-pulseaudio-shared \
-            --enable-ibus \
-            --disable-x11-shared --disable-video-directfb \
-            --enable-video-opengles \
-            --disable-video-opengles1 \
-            --disable-wayland-shared \
-            --enable-video-kmsdrm --disable-kmsdrm-shared \
-            --enable-hidapi --enable-hidapi-joystick
+confflags = \
+	--disable-alsa-shared \
+	--disable-arts \
+	--disable-directx \
+	--disable-esd \
+	--disable-fusionsound \
+	--disable-jack \
+	--disable-joystick-mfi \
+	--disable-kmsdrm-shared \
+	--disable-nas \
+	--disable-pulseaudio-shared \
+	--disable-render-d3d \
+	--disable-rpath \
+	--disable-video-cocoa \
+	--disable-video-directfb \
+	--disable-video-metal \
+	--disable-video-opengles1 \
+	--disable-video-rpi \
+	--disable-video-vivante \
+	--disable-wasapi \
+	--disable-wayland-shared \
+	--disable-x11-shared \
+	--disable-xinput \
+	--enable-alsa \
+	--enable-dbus \
+	--enable-fcitx \
+	--enable-hidapi \
+	--enable-hidapi-joystick \
+	--enable-ibus \
+	--enable-libsamplerate \
+	--enable-pulseaudio \
+	--enable-sdl2-config \
+	--enable-sndio \
+	--enable-video-kmsdrm \
+	--enable-video-opengl \
+	--enable-video-opengles \
+	--enable-video-opengles2 \
+	--enable-video-x11 \
+	$(NULL)
 
 # disable autoheader (invoked automatically by autoreconf), necessary in order
 # to use debhelper compat level v10 without overriding dh-autoreconf calls
@@ -32,11 +61,13 @@ endif
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
   confflags += --enable-libdecor
+  confflags += --enable-libudev
   confflags += --enable-pipewire
   confflags += --enable-video-vulkan
   confflags += --enable-video-wayland
 else
   confflags += --disable-libdecor
+  confflags += --disable-libudev
   confflags += --disable-pipewire
   confflags += --disable-video-vulkan
   confflags += --disable-video-wayland
