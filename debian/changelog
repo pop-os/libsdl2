@@ -1,3 +1,10 @@
+libsdl2 (2.0.22+git20220615+g960b86d+dfsg-2) UNRELEASED; urgency=medium
+
+  * d/watch: Use GitHub to download releases
+  * d/watch: Download prereleases for experimental branch
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 17 Jun 2022 11:14:57 +0100
+
 libsdl2 (2.0.22+git20220615+g960b86d+dfsg-1) experimental; urgency=medium
 
   * New upstream git snapshot
