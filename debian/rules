@@ -10,12 +10,15 @@ confflags = \
 	--disable-alsa-shared \
 	--disable-arts \
 	--disable-esd \
+	--disable-jack \
 	--disable-kmsdrm-shared \
 	--disable-nas \
 	--disable-pulseaudio-shared \
 	--disable-rpath \
 	--disable-video-directfb \
 	--disable-video-opengles1 \
+	--disable-video-rpi \
+	--disable-video-vivante \
 	--disable-wayland-shared \
 	--disable-x11-shared \
 	--enable-hidapi \
