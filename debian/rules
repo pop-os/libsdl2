@@ -9,18 +9,26 @@ include /usr/share/dpkg/default.mk
 confflags = \
 	--disable-alsa-shared \
 	--disable-arts \
+	--disable-directx \
 	--disable-esd \
+	--disable-fusionsound \
 	--disable-jack \
+	--disable-joystick-mfi \
 	--disable-kmsdrm-shared \
 	--disable-nas \
 	--disable-pulseaudio-shared \
+	--disable-render-d3d \
 	--disable-rpath \
+	--disable-video-cocoa \
 	--disable-video-directfb \
+	--disable-video-metal \
 	--disable-video-opengles1 \
 	--disable-video-rpi \
 	--disable-video-vivante \
+	--disable-wasapi \
 	--disable-wayland-shared \
 	--disable-x11-shared \
+	--disable-xinput \
 	--enable-hidapi \
 	--enable-hidapi-joystick \
 	--enable-ibus \
