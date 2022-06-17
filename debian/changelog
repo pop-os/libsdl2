@@ -1,11 +1,11 @@
-libsdl2 (2.23.1+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.23.1+dfsg-1) experimental; urgency=medium
 
   * New upstream prerelease
   * d/watch: Use GitHub to download releases
   * d/watch: Download prereleases for experimental branch
   * Merge packaging changes from unstable
 
- -- Simon McVittie <smcv@debian.org>  Fri, 17 Jun 2022 11:28:02 +0100
+ -- Simon McVittie <smcv@debian.org>  Fri, 17 Jun 2022 12:13:59 +0100
 
 libsdl2 (2.0.22+dfsg-6) unstable; urgency=medium
 
