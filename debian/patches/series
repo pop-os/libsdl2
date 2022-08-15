@@ -1,2 +1,4 @@
+core-linux-Don-t-cache-the-RealtimeKit-D-Bus-connection.patch
+Add-SDL_JOYBATTERYUPDATED-event-to-SDL_JoystickEventState.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
