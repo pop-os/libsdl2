@@ -25,6 +25,7 @@ my $wikipath = undef;
 my $warn_about_missing = 0;
 my $copy_direction = 0;
 my $optionsfname = undef;
+my $wikipreamble = undef;
 
 foreach (@ARGV) {
     $warn_about_missing = 1, next if $_ eq '--warn-about-missing';
@@ -75,6 +76,7 @@ if (defined $optionsfname) {
             $projecturl = $val, next if $key eq 'projecturl';
             $wikiurl = $val, next if $key eq 'wikiurl';
             $bugreporturl = $val, next if $key eq 'bugreporturl';
+            $wikipreamble = $val, next if $key eq 'wikipreamble';
         }
     }
     close(OPTIONS);
@@ -595,14 +597,23 @@ while (readdir(DH)) {
         next;  # only dealing with wiki pages.
     }
 
+    my $fn = $dent;
+    $fn =~ s/\..*\Z//;
+
+    # Ignore FrontPage.
+    next if $fn eq 'FrontPage';
+
+    # Ignore "Category*" pages.
+    next if ($fn =~ /\ACategory/);
+
     open(FH, '<', "$wikipath/$dent") or die("Can't open '$wikipath/$dent': $!\n");
 
     my $current_section = '[start]';
     my @section_order = ( $current_section );
-    my $fn = $dent;
-    $fn =~ s/\..*\Z//;
     my %sections = ();
     $sections{$current_section} = '';
+
+    my $firstline = 1;
 
     while (<FH>) {
         chomp;
@@ -611,18 +622,24 @@ while (readdir(DH)) {
         s/\s*\Z//;
 
         if ($type eq 'mediawiki') {
-            if (/\A\= (.*?) \=\Z/) {
+            if (defined($wikipreamble) && $firstline && /\A\=\=\=\=\=\= (.*?) \=\=\=\=\=\=\Z/ && ($1 eq $wikipreamble)) {
+                $firstline = 0;  # skip this.
+                next;
+            } elsif (/\A\= (.*?) \=\Z/) {
+                $firstline = 0;
                 $current_section = ($1 eq $fn) ? '[Brief]' : $1;
                 die("Doubly-defined section '$current_section' in '$dent'!\n") if defined $sections{$current_section};
                 push @section_order, $current_section;
                 $sections{$current_section} = '';
             } elsif (/\A\=\= (.*?) \=\=\Z/) {
+                $firstline = 0;
                 $current_section = ($1 eq $fn) ? '[Brief]' : $1;
                 die("Doubly-defined section '$current_section' in '$dent'!\n") if defined $sections{$current_section};
                 push @section_order, $current_section;
                 $sections{$current_section} = '';
                 next;
             } elsif (/\A\-\-\-\-\Z/) {
+                $firstline = 0;
                 $current_section = '[footer]';
                 die("Doubly-defined section '$current_section' in '$dent'!\n") if defined $sections{$current_section};
                 push @section_order, $current_section;
@@ -630,13 +647,18 @@ while (readdir(DH)) {
                 next;
             }
         } elsif ($type eq 'md') {
-            if (/\A\#+ (.*?)\Z/) {
+            if (defined($wikipreamble) && $firstline && /\A\#\#\#\#\#\# (.*?)\Z/ && ($1 eq $wikipreamble)) {
+                $firstline = 0;  # skip this.
+                next;
+            } elsif (/\A\#+ (.*?)\Z/) {
+                $firstline = 0;
                 $current_section = ($1 eq $fn) ? '[Brief]' : $1;
                 die("Doubly-defined section '$current_section' in '$dent'!\n") if defined $sections{$current_section};
                 push @section_order, $current_section;
                 $sections{$current_section} = '';
                 next;
             } elsif (/\A\-\-\-\-\Z/) {
+                $firstline = 0;
                 $current_section = '[footer]';
                 die("Doubly-defined section '$current_section' in '$dent'!\n") if defined $sections{$current_section};
                 push @section_order, $current_section;
@@ -647,7 +669,12 @@ while (readdir(DH)) {
             die("Unexpected wiki file type. Fixme!\n");
         }
 
-        $sections{$current_section} .= "$orig\n";
+        if ($firstline) {
+            $firstline = ($_ ne '');
+        }
+        if (!$firstline) {
+            $sections{$current_section} .= "$orig\n";
+        }
     }
     close(FH);
 
@@ -817,6 +844,7 @@ if ($copy_direction == 1) {  # --copy-to-headers
             foreach (@desclines) {
                 s/\A(\:|\* )//;
                 s/\(\)\Z//;  # Convert "SDL_Func()" to "SDL_Func"
+                s/\[\[(.*?)\]\]/$1/;  # in case some wikilinks remain.
                 s/\A\/*//;
                 $str .= "\\sa $_\n";
             }
@@ -1108,6 +1136,14 @@ if ($copy_direction == 1) {  # --copy-to-headers
         } else { die("Unexpected wikitype '$wikitype'\n"); }
         $$sectionsref{'[footer]'} = $footer;
 
+        if (defined $wikipreamble) {
+            if ($wikitype eq 'mediawiki') {
+                print FH "====== $wikipreamble ======\n";
+            } elsif ($wikitype eq 'md') {
+                print FH "###### $wikipreamble\n";
+            } else { die("Unexpected wikitype '$wikitype'\n"); }
+        }
+
         my $prevsectstr = '';
         my @ordered_sections = (@standard_wiki_sections, defined $wikisectionorderref ? @$wikisectionorderref : ());  # this copies the arrays into one.
         foreach (@ordered_sections) {
@@ -1324,6 +1360,7 @@ if ($copy_direction == 1) {  # --copy-to-headers
             foreach (@desclines) {
                 s/\A(\:|\* )//;
                 s/\(\)\Z//;  # Convert "SDL_Func()" to "SDL_Func"
+                s/\[\[(.*?)\]\]/$1/;  # in case some wikilinks remain.
                 s/\A\/*//;
                 s/\A\.BR\s+//;  # dewikify added this, but we want to handle it.
                 s/\A\s+//;
