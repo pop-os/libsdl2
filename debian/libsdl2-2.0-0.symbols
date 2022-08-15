@@ -189,6 +189,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetCurrentVideoDriver@Base 2.0.12
  SDL_GetCursor@Base 2.0.12
  SDL_GetDefaultAssertionHandler@Base 2.0.12
+ SDL_GetDefaultAudioInfo@Base 2.23.2
  SDL_GetDefaultCursor@Base 2.0.12
  SDL_GetDesktopDisplayMode@Base 2.0.12
  SDL_GetDisplayBounds@Base 2.0.12
@@ -222,16 +223,19 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetNumTouchFingers@Base 2.0.12
  SDL_GetNumVideoDisplays@Base 2.0.12
  SDL_GetNumVideoDrivers@Base 2.0.12
+ SDL_GetOriginalMemoryFunctions@Base 2.23.2
  SDL_GetPerformanceCounter@Base 2.0.12
  SDL_GetPerformanceFrequency@Base 2.0.12
  SDL_GetPixelFormatName@Base 2.0.12
  SDL_GetPlatform@Base 2.0.12
+ SDL_GetPointDisplayIndex@Base 2.23.2
  SDL_GetPowerInfo@Base 2.0.12
  SDL_GetPrefPath@Base 2.0.12
  SDL_GetPreferredLocales@Base 2.0.14
  SDL_GetQueuedAudioSize@Base 2.0.12
  SDL_GetRGB@Base 2.0.12
  SDL_GetRGBA@Base 2.0.12
+ SDL_GetRectDisplayIndex@Base 2.23.2
  SDL_GetRelativeMouseMode@Base 2.0.12
  SDL_GetRelativeMouseState@Base 2.0.12
  SDL_GetRenderDrawBlendMode@Base 2.0.12
@@ -549,6 +553,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_RenderWindowToLogical@Base 2.0.18
  SDL_ReportAssertion@Base 2.0.12
  SDL_ResetAssertionReport@Base 2.0.12
+ SDL_ResetHint@Base 2.23.2
+ SDL_ResetKeyboard@Base 2.23.2
  SDL_RestoreWindow@Base 2.0.12
  SDL_SIMDAlloc@Base 2.0.12
  SDL_SIMDFree@Base 2.0.12
@@ -701,6 +707,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_copysignf@Base 2.0.12
  SDL_cos@Base 2.0.12
  SDL_cosf@Base 2.0.12
+ SDL_crc16@Base 2.23.2
  SDL_crc32@Base 2.0.14
  SDL_exp@Base 2.0.12
  SDL_expf@Base 2.0.12
