@@ -1,8 +1,15 @@
-libsdl2 (2.23.2+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.23.2+dfsg-1) experimental; urgency=medium
 
   * New upstream release candidate
+  * d/p/core-linux-Don-t-cache-the-RealtimeKit-D-Bus-connection.patch,
+    d/p/Add-SDL_JOYBATTERYUPDATED-event-to-SDL_JoystickEventState.patch:
+    Add post-release bugfixes from upstream
+  * d/p/no-libdir.patch: Redo to cope with changes to how static linking
+    is handled upstream
+  * d/libsdl2-2.0-0.symbols: Update
+  * Update Lintian overrides
 
- -- Simon McVittie <smcv@debian.org>  Mon, 15 Aug 2022 16:28:27 +0100
+ -- Simon McVittie <smcv@debian.org>  Mon, 15 Aug 2022 19:34:25 +0100
 
 libsdl2 (2.23.1+dfsg-1) experimental; urgency=medium
 
