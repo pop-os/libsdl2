@@ -28,9 +28,9 @@
 #include "SDL_hints.h"
 
 #include "../../core/unix/SDL_poll.h"
-#include "../../events/SDL_sysevents.h"
 #include "../../events/SDL_events_c.h"
 #include "../../events/scancodes_xfree86.h"
+#include "../SDL_sysvideo.h"
 
 #include "SDL_waylandvideo.h"
 #include "SDL_waylandevents_c.h"
@@ -545,7 +545,7 @@ pointer_handle_button_common(struct SDL_WaylandInput *input, uint32_t serial,
     enum wl_pointer_button_state state = state_w;
     uint32_t sdl_button;
 
-    if  (input->pointer_focus) {
+    if (window) {
         switch (button) {
             case BTN_LEFT:
                 sdl_button = SDL_BUTTON_LEFT;
@@ -567,6 +567,23 @@ pointer_handle_button_common(struct SDL_WaylandInput *input, uint32_t serial,
                 break;
             default:
                 return;
+        }
+
+        /* Wayland won't let you "capture" the mouse, but it will
+           automatically track the mouse outside the window if you
+           drag outside of it, until you let go of all buttons (even
+           if you add or remove presses outside the window, as long
+           as any button is still down, the capture remains) */
+        if (state) {  /* update our mask of currently-pressed buttons */
+            input->buttons_pressed |= SDL_BUTTON(sdl_button);
+        } else {
+            input->buttons_pressed &= ~(SDL_BUTTON(sdl_button));
+        }
+
+        if (input->buttons_pressed != 0) {
+            window->sdlwindow->flags |= SDL_WINDOW_MOUSE_CAPTURE;
+        } else {
+            window->sdlwindow->flags &= ~SDL_WINDOW_MOUSE_CAPTURE;
         }
 
         Wayland_data_device_set_serial(input->data_device, serial);
@@ -913,9 +930,15 @@ keyboard_handle_leave(void *data, struct wl_keyboard *keyboard,
                       uint32_t serial, struct wl_surface *surface)
 {
     struct SDL_WaylandInput *input = data;
+    SDL_WindowData *window;
 
     if (!surface || !SDL_WAYLAND_own_surface(surface)) {
         return;
+    }
+
+    window = wl_surface_get_user_data(surface);
+    if (window) {
+        window->sdlwindow->flags &= ~SDL_WINDOW_MOUSE_CAPTURE;
     }
 
     /* Stop key repeat before clearing keyboard focus */
@@ -1111,8 +1134,7 @@ keyboard_handle_modifiers(void *data, struct wl_keyboard *keyboard,
     WAYLAND_xkb_keymap_key_for_each(input->xkb.keymap,
                                     Wayland_keymap_iter,
                                     &keymap);
-    SDL_SetKeymap(0, keymap.keymap, SDL_NUM_SCANCODES);
-    SDL_SendKeymapChangedEvent();
+    SDL_SetKeymap(0, keymap.keymap, SDL_NUM_SCANCODES, SDL_TRUE);
 }
 
 static void
@@ -1560,9 +1582,9 @@ text_input_preedit_string(void *data,
     text_input->has_preedit = SDL_TRUE;
     if (text) {
         if (SDL_GetHintBoolean(SDL_HINT_IME_SUPPORT_EXTENDED_TEXT, SDL_FALSE)) {
-            size_t cursor_begin_utf8 = cursor_begin >= 0 ? SDL_utf8strnlen(text, cursor_begin) : -1;
-            size_t cursor_end_utf8 = cursor_end >= 0 ? SDL_utf8strnlen(text, cursor_end) : -1;
-            size_t cursor_size_utf8;
+            int cursor_begin_utf8 = cursor_begin >= 0 ? (int)SDL_utf8strnlen(text, cursor_begin) : -1;
+            int cursor_end_utf8 = cursor_end >= 0 ? (int)SDL_utf8strnlen(text, cursor_end) : -1;
+            int cursor_size_utf8;
             if (cursor_end_utf8 >= 0) {
                 if (cursor_begin_utf8 >= 0) {
                     cursor_size_utf8 = cursor_end_utf8 - cursor_begin_utf8;
@@ -1574,11 +1596,11 @@ text_input_preedit_string(void *data,
             }
             SDL_SendEditingText(text, cursor_begin_utf8, cursor_size_utf8);
         } else {
-            size_t text_bytes = SDL_strlen(text), i = 0;
-            size_t cursor = 0;
+            int text_bytes = (int)SDL_strlen(text), i = 0;
+            int cursor = 0;
             do {
-                const size_t sz = SDL_utf8strlcpy(buf, text+i, sizeof(buf));
-                const size_t chars = SDL_utf8strlen(buf);
+                const int sz = (int)SDL_utf8strlcpy(buf, text+i, sizeof(buf));
+                const int chars = (int)SDL_utf8strlen(buf);
     
                 SDL_SendEditingText(buf, cursor, chars);
     
