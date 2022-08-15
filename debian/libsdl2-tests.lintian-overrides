@@ -1,2 +1,4 @@
+# the tests avoid direct calls into libc so there is not necessarily anything to fortify
+libsdl2-tests: hardening-no-fortify-functions [usr/libexec/installed-tests/*]
 # test data is not documentation
-libsdl2-tests: package-contains-documentation-outside-usr-share-doc usr/libexec/installed-tests/*
+libsdl2-tests: package-contains-documentation-outside-usr-share-doc [usr/libexec/installed-tests/*]
