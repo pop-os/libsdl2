@@ -11,10 +11,10 @@ Forwarded: not-needed
  1 file changed, 1 deletion(-)
 
 diff --git a/test/Makefile.in b/test/Makefile.in
-index 9fc38f2..2a9b490 100644
+index 93df636..6970f65 100644
 --- a/test/Makefile.in
 +++ b/test/Makefile.in
-@@ -441,7 +441,6 @@ DATA = \
+@@ -440,7 +440,6 @@ DATA = \
  	testgles2_sdf_img_normal.bmp \
  	testgles2_sdf_img_sdf.bmp \
  	testyuv.bmp \
