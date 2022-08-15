@@ -1,26 +1,32 @@
-From: Gianfranco Costamagna <locutusofborg@debian.org>
-Date: Wed, 27 Sep 2017 00:29:24 +0200
-Subject: Remove libdir from sdl2-config
+From: Simon McVittie <smcv@debian.org>
+Date: Mon, 15 Aug 2022 16:47:26 +0100
+Subject: Avoid hard-coding libdir in sdl2-config
 
 This makes the -dev package multiarch co-installable, allowing compilation
 of SDL programs for more than one architecture on the same system.
 
-This is not an upstreamable change, since it relies on a Debian-specific
-assumption (that we are installing the library into a directory on the
-linker's default search path).
+This is not an upstreamable change, since it relies on Debian-specific
+assumptions:
 
-[smcv: Only patch sdl2-config.in, not sdl2-config.cmake.in. It's OK for
-sdl2-config.cmake to be architecture-dependent, because it gets installed
-in ${libdir} anyway.]
+* we are installing the library into a directory on the linker's default
+  search path
+* static linking is done with at least one of:
+  - $DEB_HOST_MULTIARCH set, or
+  - $PKG_CONFIG set to the host architecture pkg-config, or
+  - $CC set to a compiler for the host architecture that supports the
+    -print-multiarch argument (which Debian's gcc and clang do)
 
+Adapted from an earlier patch by Gianfranco Costamagna.
+
+Co-authored-by: Gianfranco Costamagna <locutusofborg@debian.org>
 Forwarded: not-needed
-Last-Update: 2022-06-13
+Last-Update: 2022-08-15
 ---
- sdl2-config.in | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sdl2-config.in | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/sdl2-config.in b/sdl2-config.in
-index 3a87ab8..86aaba8 100644
+index f6eca76..70f0190 100644
 --- a/sdl2-config.in
 +++ b/sdl2-config.in
 @@ -7,7 +7,6 @@ bindir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
@@ -31,7 +37,7 @@ index 3a87ab8..86aaba8 100644
  
  @ENABLE_STATIC_FALSE@usage="\
  @ENABLE_STATIC_FALSE@Usage: $0 [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--cflags] [--libs]"
-@@ -49,12 +48,12 @@ while test $# -gt 0; do
+@@ -49,12 +48,20 @@ while test $# -gt 0; do
        echo -I@includedir@/SDL2 @SDL_CFLAGS@
        ;;
  @ENABLE_SHARED_TRUE@    --libs)
@@ -40,7 +46,15 @@ index 3a87ab8..86aaba8 100644
  @ENABLE_SHARED_TRUE@      ;;
  @ENABLE_STATIC_TRUE@@ENABLE_SHARED_TRUE@    --static-libs)
  @ENABLE_STATIC_TRUE@@ENABLE_SHARED_FALSE@    --libs|--static-libs)
- @ENABLE_STATIC_TRUE@      sdl_static_libs=$(echo "@SDL_LIBS@ @SDL_STATIC_LIBS@" | sed -E "s#-lSDL2[ $]#-Wl,-Bstatic -lSDL2 -Wl,-Bdynamic #g")
++@ENABLE_STATIC_TRUE@      if [ -n "${DEB_HOST_MULTIARCH-}" ]; then
++@ENABLE_STATIC_TRUE@          libdir="/usr/lib/$DEB_HOST_MULTIARCH"
++@ENABLE_STATIC_TRUE@      elif [ -n "${PKG_CONFIG}" ]; then
++@ENABLE_STATIC_TRUE@          libdir="$("$PKG_CONFIG" --variable=libdir sdl2)"
++@ENABLE_STATIC_TRUE@      else
++@ENABLE_STATIC_TRUE@          # Assume CC is set to a suitable gcc or clang version
++@ENABLE_STATIC_TRUE@          libdir="/usr/lib/$("$CC" -print-multiarch)"
++@ENABLE_STATIC_TRUE@      fi
+ @ENABLE_STATIC_TRUE@      sdl_static_libs=$(echo "@SDL_LIBS@ @SDL_STATIC_LIBS@" | sed -E "s#-lSDL2[ $]#$libdir/libSDL2.a #g")
 -@ENABLE_STATIC_TRUE@      echo -L@libdir@ $sdl_static_libs
 +@ENABLE_STATIC_TRUE@      echo $sdl_static_libs
  @ENABLE_STATIC_TRUE@      ;;
