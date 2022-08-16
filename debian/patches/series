@@ -1,4 +1,7 @@
 core-linux-Don-t-cache-the-RealtimeKit-D-Bus-connection.patch
 Add-SDL_JOYBATTERYUPDATED-event-to-SDL_JoystickEventState.patch
+video-Add-video-device-quirk-flags-and-apply-them-to-the-.patch
+wayland-Eliminate-excessive-calls-to-SetFullscreen.patch
+Make-sure-we-hold-the-joystick-lock-when-disconnecting-a-.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch

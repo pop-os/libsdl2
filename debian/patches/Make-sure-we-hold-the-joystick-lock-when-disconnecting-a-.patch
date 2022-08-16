@@ -1,0 +1,72 @@
+From: Sam Lantinga <slouken@libsdl.org>
+Date: Mon, 15 Aug 2022 17:27:33 -0700
+Subject: Make sure we hold the joystick lock when disconnecting a HIDAPI
+ joystick
+
+This prevents crashes when calling SDL joystick API functions from a
+different thread while disconnection is happening.
+
+See https://github.com/libsdl-org/SDL/issues/6063 for a more thorough
+review of joystick locking.
+
+Origin: upstream, 2.23.3, commit:9670d2bb9ed19e3720c58378fe3eadab1ea0c40e
+---
+ src/joystick/hidapi/SDL_hidapijoystick.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
+
+diff --git a/src/joystick/hidapi/SDL_hidapijoystick.c b/src/joystick/hidapi/SDL_hidapijoystick.c
+index 3d596c8..132d3ea 100644
+--- a/src/joystick/hidapi/SDL_hidapijoystick.c
++++ b/src/joystick/hidapi/SDL_hidapijoystick.c
+@@ -522,21 +522,19 @@ void
+ HIDAPI_JoystickDisconnected(SDL_HIDAPI_Device *device, SDL_JoystickID joystickID)
+ {
+     int i, j;
+-    SDL_bool unique = HIDAPI_JoystickInstanceIsUnique(device, joystickID);
++   
++    SDL_LockJoysticks();
+ 
+-    if (!unique) {
++    if (!HIDAPI_JoystickInstanceIsUnique(device, joystickID)) {
+         /* Disconnecting a child always disconnects the parent */
+         device = device->parent;
+-        unique = SDL_TRUE;
+     }
+ 
+     for (i = 0; i < device->num_joysticks; ++i) {
+         if (device->joysticks[i] == joystickID) {
+-            if (unique) {
+-                SDL_Joystick *joystick = SDL_JoystickFromInstanceID(joystickID);
+-                if (joystick) {
+-                    HIDAPI_JoystickClose(joystick);
+-                }
++            SDL_Joystick *joystick = SDL_JoystickFromInstanceID(joystickID);
++            if (joystick) {
++                HIDAPI_JoystickClose(joystick);
+             }
+ 
+             HIDAPI_DelJoystickInstanceFromDevice(device, joystickID);
+@@ -546,18 +544,18 @@ HIDAPI_JoystickDisconnected(SDL_HIDAPI_Device *device, SDL_JoystickID joystickID
+                 HIDAPI_DelJoystickInstanceFromDevice(child, joystickID);
+             }
+ 
+-            if (unique) {
+-                --SDL_HIDAPI_numjoysticks;
++            --SDL_HIDAPI_numjoysticks;
+ 
+-                if (!shutting_down) {
+-                    SDL_PrivateJoystickRemoved(joystickID);
+-                }
++            if (!shutting_down) {
++                SDL_PrivateJoystickRemoved(joystickID);
+             }
+         }
+     }
+ 
+     /* Rescan the device list in case device state has changed */
+     SDL_HIDAPI_change_count = 0;
++
++    SDL_UnlockJoysticks();
+ }
+ 
+ static int
