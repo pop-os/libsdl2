@@ -1,0 +1,24 @@
+From: Cameron Cawley <ccawley2011@gmail.com>
+Date: Tue, 16 Aug 2022 15:08:10 +0100
+Subject: opengl: Support NV12 textures on GPUs with only 2 texture units
+
+Origin: upstream, 2.23.3, commit:09b6956dcc4f5d9ca06765fd34d11639bcf96988
+---
+ src/render/opengl/SDL_render_gl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/render/opengl/SDL_render_gl.c b/src/render/opengl/SDL_render_gl.c
+index 202e17d..a3f5767 100644
+--- a/src/render/opengl/SDL_render_gl.c
++++ b/src/render/opengl/SDL_render_gl.c
+@@ -1919,6 +1919,10 @@ GL_CreateRenderer(SDL_Window * window, Uint32 flags)
+     if (data->shaders && data->num_texture_units >= 3) {
+         renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_YV12;
+         renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_IYUV;
++    }
++
++    /* We support NV12 textures using 2 textures and a shader */
++    if (data->shaders && data->num_texture_units >= 2) {
+         renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_NV12;
+         renderer->info.texture_formats[renderer->info.num_texture_formats++] = SDL_PIXELFORMAT_NV21;
+     }
