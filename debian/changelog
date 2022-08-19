@@ -1,3 +1,9 @@
+libsdl2 (2.23.2+dfsg-4) experimental; urgency=medium
+
+  * d/patches: Update to upstream commit prerelease-2.23.2-21-g6e007c36e
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 19 Aug 2022 10:22:45 +0100
+
 libsdl2 (2.23.2+dfsg-3) experimental; urgency=medium
 
   * d/patches: Update to upstream commit prerelease-2.23.2-17-g51be30f3c,
