@@ -1,0 +1,39 @@
+From: Sam Lantinga <slouken@libsdl.org>
+Date: Thu, 18 Aug 2022 19:05:55 -0700
+Subject: Add null termination to Wayland_data_source_get_data() if requested
+
+Bug: https://github.com/libsdl-org/SDL/issues/6083
+Origin: upstream, 2.23.3, commit:6e007c36e703e03f5bbf1c0314f208664f4e98b3
+---
+ src/video/wayland/SDL_waylanddatamanager.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/src/video/wayland/SDL_waylanddatamanager.c b/src/video/wayland/SDL_waylanddatamanager.c
+index 3fbdd72..e61ba45 100644
+--- a/src/video/wayland/SDL_waylanddatamanager.c
++++ b/src/video/wayland/SDL_waylanddatamanager.c
+@@ -305,14 +305,22 @@ Wayland_data_source_get_data(SDL_WaylandDataSource *source,
+     } else {
+         mime_data = mime_data_list_find(&source->mimes, mime_type);
+         if (mime_data != NULL && mime_data->length > 0) {
+-            buffer = SDL_malloc(mime_data->length);
++            size_t buffer_length = mime_data->length;
++
++            if (null_terminate == SDL_TRUE) {
++                ++buffer_length;
++            }
++            buffer = SDL_malloc(buffer_length);
+             if (buffer == NULL) {
+                 *length = SDL_OutOfMemory();
+             } else {
+                 *length = mime_data->length;
+                 SDL_memcpy(buffer, mime_data->data, mime_data->length);
++                if (null_terminate) {
++                    *((Uint8 *)buffer + mime_data->length) = 0;
++                }
+             }
+-       }
++        }
+     }
+ 
+     return buffer;
