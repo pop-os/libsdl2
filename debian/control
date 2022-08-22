@@ -46,7 +46,7 @@ Build-Depends:
 Build-Depends-Indep:
  graphviz <!nodoc>,
  doxygen <!nodoc>,
-Vcs-Git: https://salsa.debian.org/sdl-team/libsdl2.git -b experimental
+Vcs-Git: https://salsa.debian.org/sdl-team/libsdl2.git
 Vcs-Browser: https://salsa.debian.org/sdl-team/libsdl2
 Homepage: https://www.libsdl.org/
 Rules-Requires-Root: no
