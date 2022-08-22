@@ -1,17 +1,2 @@
-core-linux-Don-t-cache-the-RealtimeKit-D-Bus-connection.patch
-Add-SDL_JOYBATTERYUPDATED-event-to-SDL_JoystickEventState.patch
-video-Add-video-device-quirk-flags-and-apply-them-to-the-.patch
-wayland-Eliminate-excessive-calls-to-SetFullscreen.patch
-Make-sure-we-hold-the-joystick-lock-when-disconnecting-a-.patch
-testgles2-Add-threaded-option-to-use-a-render-thread-per-.patch
-Handle-SDL_PIXELFORMAT_EXTERNAL_OES-in-SDL_GetPixelFormat.patch
-opengl-Support-NV12-textures-on-GPUs-with-only-2-texture-.patch
-testgles2-Fix-typo-in-help-text.patch
-wayland-Never-commit-with-an-undefined-window-title.patch
-Fixed-interactions-between-mouse-capture-and-grab-on-X11.patch
-wayland-Set-the-libdecor-app-ID-after-visibility-calls.patch
-Always-define-SDL_COMPILE_TIME_ASSERT-as-static_assert-in.patch
-Don-t-include-the-null-terminator-in-Wayland-clipboard-te.patch
-Add-null-termination-to-Wayland_data_source_get_data-if-r.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
