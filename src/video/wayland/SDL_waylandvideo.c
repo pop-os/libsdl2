@@ -279,7 +279,8 @@ Wayland_CreateDevice(void)
 
     device->free = Wayland_DeleteDevice;
 
-    device->disable_display_mode_switching = SDL_TRUE;
+    device->quirk_flags = VIDEO_DEVICE_QUIRK_DISABLE_DISPLAY_MODE_SWITCHING |
+                          VIDEO_DEVICE_QUIRK_DISABLE_UNSET_FULLSCREEN_ON_MINIMIZE;
 
     return device;
 }
