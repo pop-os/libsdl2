@@ -1,9 +1,12 @@
-libsdl2 (2.24.0+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.24.0+dfsg-1) unstable; urgency=medium
 
   * New upstream release
     - Functionally equivalent to 2.23.2+dfsg-4
+  * Drop patches that were applied upstream
+  * d/watch, d/gbp.conf, d/control: Go back to unstable branch
+  * Release to unstable
 
- -- Simon McVittie <smcv@debian.org>  Mon, 22 Aug 2022 11:05:22 +0100
+ -- Simon McVittie <smcv@debian.org>  Mon, 22 Aug 2022 11:45:00 +0100
 
 libsdl2 (2.23.2+dfsg-4) experimental; urgency=medium
 
