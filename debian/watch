@@ -1,6 +1,6 @@
 version=4
 opts="repack,dversionmangle=s/[~.+](?:dfsg|ds)[0-9]*$//,repacksuffix=+dfsg,pgpmode=auto" \
-https://github.com/libsdl-org/SDL/releases \
-.*/SDL2-(\d+\.\d*[02468]\.\d+)@ARCHIVE_EXT@
+https://www.libsdl.org/release/SDL2-(\d+\.\d*[02468]\.\d+)@ARCHIVE_EXT@
 
-# also: https://www.libsdl.org/release/SDL2-(\d+\.\d*[02468]\.\d+)@ARCHIVE_EXT@
+# also:
+# https://github.com/libsdl-org/SDL/releases .*/SDL2-(\d+\.\d*[02468]\.\d+)@ARCHIVE_EXT@
