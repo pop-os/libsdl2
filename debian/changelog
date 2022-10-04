@@ -1,3 +1,19 @@
+libsdl2 (2.24.0+dfsg-2) unstable; urgency=medium
+
+  * d/p/cmake-always-create-SDL2-SDL2main-target-in-autotools-cma.patch,
+    d/p/cmake-fix-location-of-SDL2-SDL2test-imported-library.patch,
+    d/p/configure.ac-fix-configure-tests-broken-with-Clang-15-imp.patch,
+    d/p/apply-commit-d0a3570300812bc81888e7a7eadb9311621dc9a7-to-.patch,
+    d/p/Fix-incorrect-return-value-in-X11_GetPixelFormatFromVisua.patch,
+    d/p/Fix-SDL_PIXELFORMAT_INDEX1LSB-test-case.patch,
+    d/p/Fixed-bug-6287-SDL_FillRect-failed-for-SDL_Surface-with-B.patch:
+    Add various bug fixes from upstream release-2.24.x branch
+  * d/tests: Add a test for linking to SDL2::SDL2main (and also C++)
+    Thanks: quyykk
+  * d/watch: Update for Github website changes
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 04 Oct 2022 12:50:33 +0100
+
 libsdl2 (2.24.0+dfsg-1) unstable; urgency=medium
 
   * New upstream release
