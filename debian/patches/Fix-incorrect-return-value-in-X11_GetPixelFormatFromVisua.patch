@@ -1,0 +1,22 @@
+From: Cameron Cawley <ccawley2011@gmail.com>
+Date: Thu, 8 Sep 2022 15:53:54 +0100
+Subject: Fix incorrect return value in X11_GetPixelFormatFromVisualInfo
+
+Origin: upstream, 2.24.1, commit:fa239a219208b8a332ff1642a3d4b7aa51e73041
+---
+ src/video/x11/SDL_x11modes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/video/x11/SDL_x11modes.c b/src/video/x11/SDL_x11modes.c
+index c8f6c54..8e38847 100644
+--- a/src/video/x11/SDL_x11modes.c
++++ b/src/video/x11/SDL_x11modes.c
+@@ -127,7 +127,7 @@ X11_GetPixelFormatFromVisualInfo(Display * display, XVisualInfo * vinfo)
+     if (vinfo->class == PseudoColor || vinfo->class == StaticColor) {
+         switch (vinfo->depth) {
+         case 8:
+-            return SDL_PIXELTYPE_INDEX8;
++            return SDL_PIXELFORMAT_INDEX8;
+         case 4:
+             if (BitmapBitOrder(display) == LSBFirst) {
+                 return SDL_PIXELFORMAT_INDEX4LSB;

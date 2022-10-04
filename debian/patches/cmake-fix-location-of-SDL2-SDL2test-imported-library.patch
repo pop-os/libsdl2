@@ -1,0 +1,22 @@
+From: Anonymous Maarten <anonymous.maarten@gmail.com>
+Date: Mon, 5 Sep 2022 21:53:50 +0200
+Subject: cmake: fix location of SDL2::SDL2test imported library
+
+Origin: upstream, 2.24.1, commit:08e8824372b258b2978a9539fa1ed5703fe8d350
+---
+ sdl2-config.cmake.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sdl2-config.cmake.in b/sdl2-config.cmake.in
+index 3db5a92..5895278 100644
+--- a/sdl2-config.cmake.in
++++ b/sdl2-config.cmake.in
+@@ -160,7 +160,7 @@ if(EXISTS "${_sdl2test_library}")
+     add_library(SDL2::SDL2test STATIC IMPORTED)
+     set_target_properties(SDL2::SDL2test
+       PROPERTIES
+-        IMPORTED_LOCATION "_sdl2test_library"
++        IMPORTED_LOCATION "${_sdl2test_library}"
+         INTERFACE_INCLUDE_DIRECTORIES "${SDL2_INCLUDE_DIR}"
+         IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+     )
