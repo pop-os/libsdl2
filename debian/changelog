@@ -1,4 +1,4 @@
-libsdl2 (2.24.1+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.24.1+dfsg-1) unstable; urgency=medium
 
   * New upstream stable release
   * d/p/cmake-always-create-SDL2-SDL2main-target-in-autotools-cma.patch,
@@ -9,8 +9,11 @@ libsdl2 (2.24.1+dfsg-1) UNRELEASED; urgency=medium
     d/p/Fix-SDL_PIXELFORMAT_INDEX1LSB-test-case.patch,
     d/p/Fixed-bug-6287-SDL_FillRect-failed-for-SDL_Surface-with-B.patch:
     Drop patches, included upstream
+  * d/control: (Build-)Depend on libegl-dev instead of libegl1-mesa-dev
+  * d/control: Drop (Build-)Depends on libglu1-mesa-dev, no longer required
+  * d/rules, d/control: Make libsamplerate a hard dependency
 
- -- Simon McVittie <smcv@debian.org>  Wed, 05 Oct 2022 11:18:08 +0100
+ -- Simon McVittie <smcv@debian.org>  Wed, 05 Oct 2022 12:17:19 +0100
 
 libsdl2 (2.24.0+dfsg-2) unstable; urgency=medium
 
