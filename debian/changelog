@@ -1,3 +1,17 @@
+libsdl2 (2.24.1+dfsg-1) UNRELEASED; urgency=medium
+
+  * New upstream stable release
+  * d/p/cmake-always-create-SDL2-SDL2main-target-in-autotools-cma.patch,
+    d/p/cmake-fix-location-of-SDL2-SDL2test-imported-library.patch,
+    d/p/configure.ac-fix-configure-tests-broken-with-Clang-15-imp.patch,
+    d/p/apply-commit-d0a3570300812bc81888e7a7eadb9311621dc9a7-to-.patch,
+    d/p/Fix-incorrect-return-value-in-X11_GetPixelFormatFromVisua.patch,
+    d/p/Fix-SDL_PIXELFORMAT_INDEX1LSB-test-case.patch,
+    d/p/Fixed-bug-6287-SDL_FillRect-failed-for-SDL_Surface-with-B.patch:
+    Drop patches, included upstream
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 05 Oct 2022 11:18:08 +0100
+
 libsdl2 (2.24.0+dfsg-2) unstable; urgency=medium
 
   * d/p/cmake-always-create-SDL2-SDL2main-target-in-autotools-cma.patch,

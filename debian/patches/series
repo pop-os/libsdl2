@@ -1,9 +1,2 @@
-cmake-always-create-SDL2-SDL2main-target-in-autotools-cma.patch
-cmake-fix-location-of-SDL2-SDL2test-imported-library.patch
-configure.ac-fix-configure-tests-broken-with-Clang-15-imp.patch
-apply-commit-d0a3570300812bc81888e7a7eadb9311621dc9a7-to-.patch
-Fix-incorrect-return-value-in-X11_GetPixelFormatFromVisua.patch
-Fix-SDL_PIXELFORMAT_INDEX1LSB-test-case.patch
-Fixed-bug-6287-SDL_FillRect-failed-for-SDL_Surface-with-B.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
