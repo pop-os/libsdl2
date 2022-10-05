@@ -15,6 +15,7 @@ confflags = \
 	--disable-jack \
 	--disable-joystick-mfi \
 	--disable-kmsdrm-shared \
+	--disable-libsamplerate-shared \
 	--disable-nas \
 	--disable-pulseaudio-shared \
 	--disable-render-d3d \

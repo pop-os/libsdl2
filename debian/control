@@ -86,6 +86,7 @@ Depends:
  libgles-dev [!hurd-any],
  libibus-1.0-dev,
  libpulse-dev,
+ libsamplerate0-dev,
  libsdl2-2.0-0 (= ${binary:Version}),
  libsndio-dev,
  libudev-dev [linux-any],
