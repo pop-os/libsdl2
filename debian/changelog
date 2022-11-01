@@ -1,4 +1,4 @@
-libsdl2 (2.24.2+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.24.2+dfsg-1) unstable; urgency=medium
 
   * New upstream stable release
     - Includes a change to fix a test failure on 32-bit big-endian
@@ -7,7 +7,7 @@ libsdl2 (2.24.2+dfsg-1) UNRELEASED; urgency=medium
     d/p/build-Add-a-mechanism-to-mark-builds-with-vendor-info.patch:
     Backport patches from upstream git to add vendor information to binaries
 
- -- Simon McVittie <smcv@debian.org>  Tue, 01 Nov 2022 21:37:06 +0000
+ -- Simon McVittie <smcv@debian.org>  Tue, 01 Nov 2022 22:14:15 +0000
 
 libsdl2 (2.24.1+dfsg-1) unstable; urgency=medium
 
