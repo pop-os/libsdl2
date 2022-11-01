@@ -1,3 +1,11 @@
+libsdl2 (2.24.2+dfsg-1) UNRELEASED; urgency=medium
+
+  * New upstream stable release
+    - Includes a change to fix a test failure on 32-bit big-endian
+      (hppa, mips, powerpc). Thanks to Helge Deller (Closes: #1021310)
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 01 Nov 2022 21:37:06 +0000
+
 libsdl2 (2.24.1+dfsg-1) unstable; urgency=medium
 
   * New upstream stable release
