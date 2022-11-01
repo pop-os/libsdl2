@@ -1,0 +1,210 @@
+From: Simon McVittie <smcv@debian.org>
+Date: Tue, 1 Nov 2022 22:11:14 +0000
+Subject: build: Expand version info in SDL_REVISION and SDL_GetRevision()
+
+Instead of using a URL and git sha1, this uses `git describe` to
+describe the version relative to the nearest previous git tag, which
+gives a better indication of whether this is a release, a prerelease,
+a slightly patched prerelease, or a long way after the last release
+during active development.
+
+This serves two purposes: it makes those APIs more informative, and it
+also puts this information into the binary in a form that is easy to
+screen-scrape using strings(1). For instance, if the bundled version of
+SDL in a game has this, we can see at a glance what version it is.
+
+It's also shorter than using the web address of the origin git
+repository and the full git commit sha1.
+
+Also write the computed version into a file ./VERSION in `make dist`
+tarballs, so that when we build from a tarball on a system that doesn't
+have git available, we still get the version details.
+
+For the Perforce code path in showrev.sh, output the version number
+followed by the Perforce revision, in a format reminiscent of
+`git describe` (with p instead of g to indicate Perforce).
+
+For the code path with no VCS available at all, put a suffix on the
+version number to indicate that this is just a guess (we can't know
+whether this SDL version is actually a git snapshot or has been
+patched locally or similar).
+
+Resolves: https://github.com/libsdl-org/SDL/issues/6418
+Signed-off-by: Simon McVittie <smcv@collabora.com>
+Origin: upstream, 2.25.0, commit:2dc788cb9ffa83a2840e62f5ad2d0a7055cfcb19
+---
+ CMakeLists.txt               | 33 ++++++++++++++++++++-------------
+ Makefile.in                  |  2 +-
+ build-scripts/showrev.sh     | 35 +++++++++++++++++++++++++++++------
+ build-scripts/updaterev.sh   | 20 +++++++++++++++++++-
+ include/SDL_revision.h.cmake |  6 +-----
+ 5 files changed, 70 insertions(+), 26 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 79e53b7..45614b1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2789,29 +2789,36 @@ listtostr(EXTRA_CFLAGS _EXTRA_CFLAGS)
+ set(EXTRA_CFLAGS ${_EXTRA_CFLAGS})
+ 
+ # Compat helpers for the configuration files
++
++if(EXISTS "${PROJECT_SOURCE_DIR}/VERSION")
++  file(READ "${PROJECT_SOURCE_DIR}/VERSION" SDL_SOURCE_VERSION)
++endif()
++
+ find_package(Git)
+ if(Git_FOUND)
+   execute_process(COMMAND
+-    "${GIT_EXECUTABLE}" remote get-url origin
+-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+-    RESULT_VARIABLE GIT_URL_STATUS
+-    OUTPUT_VARIABLE GIT_URL
+-    ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+-
+-  execute_process(COMMAND
+-    "${GIT_EXECUTABLE}" rev-list --max-count=1 HEAD~..
+-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
++    "${GIT_EXECUTABLE}" describe --always --tags --long
++    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+     RESULT_VARIABLE GIT_REVISION_STATUS
+     OUTPUT_VARIABLE GIT_REVISION
+     ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
++else()
++  set(GIT_REVISION_STATUS 1)
++  set(GIT_REVISION "")
++endif()
+ 
+-  if(GIT_URL_STATUS EQUAL 0 OR GIT_REVISION_STATUS EQUAL 0)
+-    set(SDL_REVISION "${GIT_URL}@${GIT_REVISION}")
++if(SDL_SOURCE_VERSION)
++  set(SDL_REVISION "SDL-${SDL_SOURCE_VERSION}")
++elseif(GIT_REVISION_STATUS EQUAL 0)
++  if(GIT_REVISION MATCHES "^[0-9a-f]+$")
++    # Just a truncated sha1, so prefix it with the version number
++    set(SDL_REVISION "SDL-${SDL_VERSION}-g${GIT_REVISION}")
+   else()
+-    set(SDL_REVISION "")
++    # e.g. release-2.24.0-542-g96361fc47
++    set(SDL_REVISION "SDL-${GIT_REVISION}")
+   endif()
+ else()
+-  set(SDL_REVISION "")
++  set(SDL_REVISION "SDL-${SDL_VERSION}-no-vcs")
+ endif()
+ 
+ configure_file("${SDL2_SOURCE_DIR}/include/SDL_revision.h.cmake"
+diff --git a/Makefile.in b/Makefile.in
+index 1dc78f6..1418a62 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -252,7 +252,7 @@ dist $(distfile):
+ 	    -name '.#*' \) \
+ 	    -exec rm -f {} \;
+ 	if test -f $(distdir)/test/Makefile; then (cd $(distdir)/test && make distclean); fi
+-	(cd $(distdir); build-scripts/updaterev.sh)
++	(cd $(distdir); $(srcdir)/build-scripts/updaterev.sh --dist)
+ 	tar cvf - $(distdir) | gzip --best >$(distfile)
+ 	rm -rf $(distdir)
+ 
+diff --git a/build-scripts/showrev.sh b/build-scripts/showrev.sh
+index 71be3fe..02cbbb0 100755
+--- a/build-scripts/showrev.sh
++++ b/build-scripts/showrev.sh
+@@ -5,10 +5,31 @@
+ SDL_ROOT=$(dirname $0)/..
+ cd $SDL_ROOT
+ 
++if [ -e ./VERSION ]; then
++    cat ./VERSION
++    exit 0
++fi
++
++major=$(sed -ne 's/^#define SDL_MAJOR_VERSION  *//p' include/SDL_version.h)
++minor=$(sed -ne 's/^#define SDL_MINOR_VERSION  *//p' include/SDL_version.h)
++micro=$(sed -ne 's/^#define SDL_PATCHLEVEL  *//p' include/SDL_version.h)
++version="${major}.${minor}.${micro}"
++
+ if [ -x "$(command -v git)" ]; then
+-    rev=$(echo "$(git remote get-url origin 2>/dev/null)@$(git rev-list HEAD~.. 2>/dev/null)")
+-    if [ "$rev" != "@" ]; then
+-        echo $rev
++    rev="$(git describe --tags --long 2>/dev/null)"
++    if [ -n "$rev" ]; then
++        # e.g. release-2.24.0-542-g96361fc47
++        # or release-2.24.1-5-g36b987dab
++        # or prerelease-2.23.2-0-gcb46e1b3f
++        echo "$rev"
++        exit 0
++    fi
++
++    rev="$(git describe --always --tags --long 2>/dev/null)"
++    if [ -n "$rev" ]; then
++        # Just a truncated sha1, e.g. 96361fc47.
++        # Turn it into e.g. 2.25.0-g96361fc47
++        echo "${version}-g${rev}"
+         exit 0
+     fi
+ fi
+@@ -16,10 +37,12 @@ fi
+ if [ -x "$(command -v p4)" ]; then
+     rev="$(p4 changes -m1 ./...\#have 2>/dev/null| awk '{print $2}')"
+     if [ $? = 0 ]; then
+-        echo $rev
++        # e.g. 2.25.0-p7511446
++        echo "${version}-p${rev}"
+         exit 0
+     fi
+ fi
+ 
+-echo ""
+-exit 1
++# best we can do
++echo "${version}-no-vcs"
++exit 0
+diff --git a/build-scripts/updaterev.sh b/build-scripts/updaterev.sh
+index eb20e80..a15784d 100755
+--- a/build-scripts/updaterev.sh
++++ b/build-scripts/updaterev.sh
+@@ -6,10 +6,28 @@ outdir=`pwd`
+ cd `dirname $0`
+ srcdir=..
+ header=$outdir/include/SDL_revision.h
++dist=
++
++while [ "$#" -gt 0 ]; do
++    case "$1" in
++        (--dist)
++            dist=yes
++            shift
++            ;;
++        (*)
++            echo "$0: Unknown option: $1" >&2
++            exit 2
++            ;;
++    esac
++done
+ 
+ rev=`sh showrev.sh 2>/dev/null`
+ if [ "$rev" != "" ]; then
+-    echo "#define SDL_REVISION \"$rev\"" >"$header.new"
++    if [ -n "$dist" ]; then
++        echo "$rev" > "$outdir/VERSION"
++    fi
++    echo "/* Generated by updaterev.sh, do not edit */" >"$header.new"
++    echo "#define SDL_REVISION \"SDL-$rev\"" >>"$header.new"
+     echo "#define SDL_REVISION_NUMBER 0" >>"$header.new"
+     if diff $header $header.new >/dev/null 2>&1; then
+         rm "$header.new"
+diff --git a/include/SDL_revision.h.cmake b/include/SDL_revision.h.cmake
+index b27ec11..dc12088 100644
+--- a/include/SDL_revision.h.cmake
++++ b/include/SDL_revision.h.cmake
+@@ -1,6 +1,2 @@
+-#cmakedefine SDL_REVISION "@SDL_REVISION@"
++#define SDL_REVISION "@SDL_REVISION@"
+ #define SDL_REVISION_NUMBER 0
+-
+-#ifndef SDL_REVISION
+-#define SDL_REVISION ""
+-#endif

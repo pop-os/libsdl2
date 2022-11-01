@@ -40,6 +40,7 @@ confflags = \
 	--enable-pulseaudio \
 	--enable-sdl2-config \
 	--enable-sndio \
+	--enable-vendor-info="${DEB_VENDOR} ${DEB_VERSION}" \
 	--enable-video-kmsdrm \
 	--enable-video-opengl \
 	--enable-video-opengles \

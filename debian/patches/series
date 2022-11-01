@@ -1,2 +1,4 @@
+build-Expand-version-info-in-SDL_REVISION-and-SDL_GetRevi.patch
+build-Add-a-mechanism-to-mark-builds-with-vendor-info.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
