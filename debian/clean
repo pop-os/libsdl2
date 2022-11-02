@@ -1,4 +1,3 @@
-VERSION
 debian/build-tests/
 docs/SDL.tag
 docs/doxygen_warn.txt
