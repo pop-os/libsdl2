@@ -82,6 +82,12 @@ confflags += ac_cv_header_libunwind_h=no
 	dh $@
 
 override_dh_auto_configure:
+	# Emulate what will get included in upstream tarballs in 2.25.x
+	# (git describe --always --long --tags release-x.y.z)
+	case $(DEB_VERSION_UPSTREAM) in \
+		(2.24.2+d*) echo release-2.24.2-0-g55b03c749 ;; \
+		(*) echo $(DEB_VERSION_UPSTREAM) ;; \
+	esac > VERSION
 	dh_auto_configure -- $(confflags)
 	# test/configure.ac uses AC_PATH_X, so we need to pass in
 	# --x-includes and --x-libraries to avoid it wanting to use
