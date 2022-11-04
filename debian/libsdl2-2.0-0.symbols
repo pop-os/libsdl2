@@ -28,7 +28,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_BuildAudioCVT@Base 2.0.12
  SDL_CalculateGammaRamp@Base 2.0.12
  SDL_CaptureMouse@Base 2.0.12
- SDL_ClearComposition@Base 2.0.22~rc1
+ SDL_ClearComposition@Base 2.0.22
  SDL_ClearError@Base 2.0.12
  SDL_ClearHints@Base 2.0.12
  SDL_ClearQueuedAudio@Base 2.0.12
@@ -78,7 +78,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_DisableScreenSaver@Base 2.0.12
  SDL_DuplicateSurface@Base 2.0.12
  SDL_EnableScreenSaver@Base 2.0.12
- SDL_EncloseFPoints@Base 2.0.22~rc1
+ SDL_EncloseFPoints@Base 2.0.22
  SDL_EnclosePoints@Base 2.0.12
  SDL_Error@Base 2.0.12
  SDL_EventState@Base 2.0.12
@@ -113,8 +113,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GL_SwapWindow@Base 2.0.12
  SDL_GL_UnbindTexture@Base 2.0.12
  SDL_GL_UnloadLibrary@Base 2.0.12
- SDL_GUIDFromString@Base 2.0.22+git20220612
- SDL_GUIDToString@Base 2.0.22+git20220612
+ SDL_GUIDFromString@Base 2.24.0
+ SDL_GUIDToString@Base 2.24.0
  SDL_GameControllerAddMapping@Base 2.0.12
  SDL_GameControllerAddMappingsFromRW@Base 2.0.12
  SDL_GameControllerClose@Base 2.0.12
@@ -130,7 +130,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerGetBindForButton@Base 2.0.12
  SDL_GameControllerGetButton@Base 2.0.12
  SDL_GameControllerGetButtonFromString@Base 2.0.12
- SDL_GameControllerGetFirmwareVersion@Base 2.0.22+git20220612
+ SDL_GameControllerGetFirmwareVersion@Base 2.24.0
  SDL_GameControllerGetJoystick@Base 2.0.12
  SDL_GameControllerGetNumTouchpadFingers@Base 2.0.14
  SDL_GameControllerGetNumTouchpads@Base 2.0.14
@@ -161,8 +161,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerNameForIndex@Base 2.0.12
  SDL_GameControllerNumMappings@Base 2.0.12
  SDL_GameControllerOpen@Base 2.0.12
- SDL_GameControllerPath@Base 2.0.22+git20220508
- SDL_GameControllerPathForIndex@Base 2.0.22+git20220508
+ SDL_GameControllerPath@Base 2.24.0
+ SDL_GameControllerPathForIndex@Base 2.24.0
  SDL_GameControllerRumble@Base 2.0.12
  SDL_GameControllerRumbleTriggers@Base 2.0.14
  SDL_GameControllerSendEffect@Base 2.0.16
@@ -190,7 +190,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetCurrentVideoDriver@Base 2.0.12
  SDL_GetCursor@Base 2.0.12
  SDL_GetDefaultAssertionHandler@Base 2.0.12
- SDL_GetDefaultAudioInfo@Base 2.23.2
+ SDL_GetDefaultAudioInfo@Base 2.24.0
  SDL_GetDefaultCursor@Base 2.0.12
  SDL_GetDesktopDisplayMode@Base 2.0.12
  SDL_GetDisplayBounds@Base 2.0.12
@@ -225,12 +225,12 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetNumTouchFingers@Base 2.0.12
  SDL_GetNumVideoDisplays@Base 2.0.12
  SDL_GetNumVideoDrivers@Base 2.0.12
- SDL_GetOriginalMemoryFunctions@Base 2.23.2
+ SDL_GetOriginalMemoryFunctions@Base 2.24.0
  SDL_GetPerformanceCounter@Base 2.0.12
  SDL_GetPerformanceFrequency@Base 2.0.12
  SDL_GetPixelFormatName@Base 2.0.12
  SDL_GetPlatform@Base 2.0.12
- SDL_GetPointDisplayIndex@Base 2.23.2
+ SDL_GetPointDisplayIndex@Base 2.24.0
  SDL_GetPowerInfo@Base 2.0.12
  SDL_GetPrefPath@Base 2.0.12
  SDL_GetPreferredLocales@Base 2.0.14
@@ -238,7 +238,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetQueuedAudioSize@Base 2.0.12
  SDL_GetRGB@Base 2.0.12
  SDL_GetRGBA@Base 2.0.12
- SDL_GetRectDisplayIndex@Base 2.23.2
+ SDL_GetRectDisplayIndex@Base 2.24.0
  SDL_GetRelativeMouseMode@Base 2.0.12
  SDL_GetRelativeMouseState@Base 2.0.12
  SDL_GetRenderDrawBlendMode@Base 2.0.12
@@ -270,7 +270,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetTouchDevice@Base 2.0.12
  SDL_GetTouchDeviceType@Base 2.0.12
  SDL_GetTouchFinger@Base 2.0.12
- SDL_GetTouchName@Base 2.0.22~rc1
+ SDL_GetTouchName@Base 2.0.22
  SDL_GetVersion@Base 2.0.12
  SDL_GetVideoDriver@Base 2.0.12
  SDL_GetWindowBordersSize@Base 2.0.12
@@ -337,9 +337,9 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_HasEvent@Base 2.0.12
  SDL_HasEvents@Base 2.0.12
  SDL_HasIntersection@Base 2.0.12
- SDL_HasIntersectionF@Base 2.0.22~rc1
- SDL_HasLASX@Base 2.0.22+git20220612
- SDL_HasLSX@Base 2.0.22+git20220612
+ SDL_HasIntersectionF@Base 2.0.22
+ SDL_HasLASX@Base 2.24.0
+ SDL_HasLSX@Base 2.24.0
  SDL_HasMMX@Base 2.0.12
  SDL_HasNEON@Base 2.0.12
  SDL_HasPrimarySelectionText@Base 2.25.0~git20221101
@@ -354,8 +354,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_HideWindow@Base 2.0.12
  SDL_Init@Base 2.0.12
  SDL_InitSubSystem@Base 2.0.12
- SDL_IntersectFRect@Base 2.0.22~rc1
- SDL_IntersectFRectAndLine@Base 2.0.22~rc1
+ SDL_IntersectFRect@Base 2.0.22
+ SDL_IntersectFRectAndLine@Base 2.0.22
  SDL_IntersectRect@Base 2.0.12
  SDL_IntersectRectAndLine@Base 2.0.12
  SDL_IsGameController@Base 2.0.12
@@ -364,9 +364,9 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_IsShapedWindow@Base 2.0.12
  SDL_IsTablet@Base 2.0.12
  SDL_IsTextInputActive@Base 2.0.12
- SDL_IsTextInputShown@Base 2.0.22~rc1
+ SDL_IsTextInputShown@Base 2.0.22
  SDL_JoystickAttachVirtual@Base 2.0.14
- SDL_JoystickAttachVirtualEx@Base 2.0.22+git20220518
+ SDL_JoystickAttachVirtualEx@Base 2.24.0
  SDL_JoystickClose@Base 2.0.12
  SDL_JoystickCurrentPowerLevel@Base 2.0.12
  SDL_JoystickDetachVirtual@Base 2.0.14
@@ -385,7 +385,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickGetDeviceProductVersion@Base 2.0.12
  SDL_JoystickGetDeviceType@Base 2.0.12
  SDL_JoystickGetDeviceVendor@Base 2.0.12
- SDL_JoystickGetFirmwareVersion@Base 2.0.22+git20220612
+ SDL_JoystickGetFirmwareVersion@Base 2.24.0
  SDL_JoystickGetGUID@Base 2.0.12
  SDL_JoystickGetGUIDFromString@Base 2.0.12
  SDL_JoystickGetGUIDString@Base 2.0.12
@@ -409,8 +409,8 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_JoystickNumButtons@Base 2.0.12
  SDL_JoystickNumHats@Base 2.0.12
  SDL_JoystickOpen@Base 2.0.12
- SDL_JoystickPath@Base 2.0.22+git20220508
- SDL_JoystickPathForIndex@Base 2.0.22+git20220508
+ SDL_JoystickPath@Base 2.24.0
+ SDL_JoystickPathForIndex@Base 2.24.0
  SDL_JoystickRumble@Base 2.0.12
  SDL_JoystickRumbleTriggers@Base 2.0.14
  SDL_JoystickSendEffect@Base 2.0.16
@@ -543,7 +543,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_RenderGetMetalLayer@Base 2.0.12
  SDL_RenderGetScale@Base 2.0.12
  SDL_RenderGetViewport@Base 2.0.12
- SDL_RenderGetWindow@Base 2.0.22~rc1
+ SDL_RenderGetWindow@Base 2.0.22
  SDL_RenderIsClipEnabled@Base 2.0.12
  SDL_RenderLogicalToWindow@Base 2.0.18
  SDL_RenderPresent@Base 2.0.12
@@ -558,9 +558,9 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_RenderWindowToLogical@Base 2.0.18
  SDL_ReportAssertion@Base 2.0.12
  SDL_ResetAssertionReport@Base 2.0.12
- SDL_ResetHint@Base 2.23.2
+ SDL_ResetHint@Base 2.24.0
  SDL_ResetHints@Base 2.25.0~git20221101
- SDL_ResetKeyboard@Base 2.23.2
+ SDL_ResetKeyboard@Base 2.24.0
  SDL_RestoreWindow@Base 2.0.12
  SDL_SIMDAlloc@Base 2.0.12
  SDL_SIMDFree@Base 2.0.12
@@ -657,7 +657,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_TLSSet@Base 2.0.12
  SDL_ThreadID@Base 2.0.12
  SDL_TryLockMutex@Base 2.0.12
- SDL_UnionFRect@Base 2.0.22~rc1
+ SDL_UnionFRect@Base 2.0.22
  SDL_UnionRect@Base 2.0.12
  SDL_UnloadObject@Base 2.0.12
  SDL_UnlockAudio@Base 2.0.12
@@ -707,7 +707,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_atanf@Base 2.0.12
  SDL_atof@Base 2.0.12
  SDL_atoi@Base 2.0.12
- SDL_bsearch@Base 2.0.22+git20220508
+ SDL_bsearch@Base 2.24.0
  SDL_calloc@Base 2.0.12
  SDL_ceil@Base 2.0.12
  SDL_ceilf@Base 2.0.12
@@ -715,7 +715,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_copysignf@Base 2.0.12
  SDL_cos@Base 2.0.12
  SDL_cosf@Base 2.0.12
- SDL_crc16@Base 2.23.2
+ SDL_crc16@Base 2.24.0
  SDL_crc32@Base 2.0.14
  SDL_exp@Base 2.0.12
  SDL_expf@Base 2.0.12
@@ -822,7 +822,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_ultoa@Base 2.0.12
  SDL_utf8strlcpy@Base 2.0.12
  SDL_utf8strlen@Base 2.0.12
- SDL_utf8strnlen@Base 2.0.22+git20220612
+ SDL_utf8strnlen@Base 2.24.0
  SDL_vasprintf@Base 2.0.18
  SDL_vsnprintf@Base 2.0.12
  SDL_vsscanf@Base 2.0.12
