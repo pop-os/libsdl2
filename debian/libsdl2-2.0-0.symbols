@@ -139,6 +139,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GameControllerGetProductVersion@Base 2.0.12
  SDL_GameControllerGetSensorData@Base 2.0.14
  SDL_GameControllerGetSensorDataRate@Base 2.0.16
+ SDL_GameControllerGetSensorDataWithTimestamp@Base 2.25.0~git20221101
  SDL_GameControllerGetSerial@Base 2.0.14
  SDL_GameControllerGetStringForAxis@Base 2.0.12
  SDL_GameControllerGetStringForButton@Base 2.0.12
@@ -205,6 +206,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetGrabbedWindow@Base 2.0.12
  SDL_GetHint@Base 2.0.12
  SDL_GetHintBoolean@Base 2.0.12
+ SDL_GetJoystickGUIDInfo@Base 2.25.0~git20221101
  SDL_GetKeyFromName@Base 2.0.12
  SDL_GetKeyFromScancode@Base 2.0.12
  SDL_GetKeyName@Base 2.0.12
@@ -232,6 +234,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetPowerInfo@Base 2.0.12
  SDL_GetPrefPath@Base 2.0.12
  SDL_GetPreferredLocales@Base 2.0.14
+ SDL_GetPrimarySelectionText@Base 2.25.0~git20221101
  SDL_GetQueuedAudioSize@Base 2.0.12
  SDL_GetRGB@Base 2.0.12
  SDL_GetRGBA@Base 2.0.12
@@ -290,6 +293,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_GetWindowPixelFormat@Base 2.0.12
  SDL_GetWindowPosition@Base 2.0.12
  SDL_GetWindowSize@Base 2.0.12
+ SDL_GetWindowSizeInPixels@Base 2.25.0~git20221101
  SDL_GetWindowSurface@Base 2.0.12
  SDL_GetWindowTitle@Base 2.0.12
  SDL_GetWindowWMInfo@Base 2.0.12
@@ -338,6 +342,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_HasLSX@Base 2.0.22+git20220612
  SDL_HasMMX@Base 2.0.12
  SDL_HasNEON@Base 2.0.12
+ SDL_HasPrimarySelectionText@Base 2.25.0~git20221101
  SDL_HasRDTSC@Base 2.0.12
  SDL_HasSSE2@Base 2.0.12
  SDL_HasSSE3@Base 2.0.12
@@ -554,6 +559,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_ReportAssertion@Base 2.0.12
  SDL_ResetAssertionReport@Base 2.0.12
  SDL_ResetHint@Base 2.23.2
+ SDL_ResetHints@Base 2.25.0~git20221101
  SDL_ResetKeyboard@Base 2.23.2
  SDL_RestoreWindow@Base 2.0.12
  SDL_SIMDAlloc@Base 2.0.12
@@ -571,6 +577,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_SensorClose@Base 2.0.12
  SDL_SensorFromInstanceID@Base 2.0.12
  SDL_SensorGetData@Base 2.0.12
+ SDL_SensorGetDataWithTimestamp@Base 2.25.0~git20221101
  SDL_SensorGetDeviceInstanceID@Base 2.0.12
  SDL_SensorGetDeviceName@Base 2.0.12
  SDL_SensorGetDeviceNonPortableType@Base 2.0.12
@@ -595,6 +602,7 @@ libSDL2-2.0.so.0 libsdl2-2.0-0 #MINVER#
  SDL_SetModState@Base 2.0.12
  SDL_SetPaletteColors@Base 2.0.12
  SDL_SetPixelFormatPalette@Base 2.0.12
+ SDL_SetPrimarySelectionText@Base 2.25.0~git20221101
  SDL_SetRelativeMouseMode@Base 2.0.12
  SDL_SetRenderDrawBlendMode@Base 2.0.12
  SDL_SetRenderDrawColor@Base 2.0.12
