@@ -1,7 +1,7 @@
-libsdl2 (2.25.0~git20221101+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.25.1+dfsg-1) UNRELEASED; urgency=medium
 
   * d/control, d/gbp.conf: Branch for experimental
-  * New upstream snapshot
+  * New upstream development release
     - Drop patches that were included upstream
   * d/.gitignore: Add
   * d/clean: Clean up files that are modified by the build
