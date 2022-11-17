@@ -125,6 +125,7 @@ struct _SDL_GameController
     int ref_count;
 
     const char *name;
+    ControllerMapping_t *mapping;
     int num_bindings;
     SDL_ExtendedGameControllerBind *bindings;
     SDL_ExtendedGameControllerBind **last_match_axis;
@@ -740,6 +741,10 @@ static ControllerMapping_t *SDL_PrivateMatchControllerMappingForGUID(SDL_Joystic
     for (mapping = s_pSupportedControllers; mapping; mapping = mapping->next) {
         SDL_JoystickGUID mapping_guid;
 
+        if (SDL_memcmp(&mapping->guid, &s_zeroGUID, sizeof(mapping->guid)) == 0) {
+            continue;
+        }
+
         SDL_memcpy(&mapping_guid, &mapping->guid, sizeof(mapping_guid));
         if (!match_version) {
             SDL_SetJoystickGUIDVersion(&mapping_guid, 0);
@@ -1070,19 +1075,20 @@ SDL_PrivateGameControllerParseControllerConfigString(SDL_GameController *gamecon
 /*
  * Make a new button mapping struct
  */
-static void SDL_PrivateLoadButtonMapping(SDL_GameController *gamecontroller, const char *pchName, const char *pchMapping)
+static void SDL_PrivateLoadButtonMapping(SDL_GameController *gamecontroller, ControllerMapping_t *pControllerMapping)
 {
     int i;
 
     CHECK_GAMECONTROLLER_MAGIC(gamecontroller, );
 
-    gamecontroller->name = pchName;
+    gamecontroller->name = pControllerMapping->name;
     gamecontroller->num_bindings = 0;
+    gamecontroller->mapping = pControllerMapping;
     if (gamecontroller->joystick->naxes) {
         SDL_memset(gamecontroller->last_match_axis, 0, gamecontroller->joystick->naxes * sizeof(*gamecontroller->last_match_axis));
     }
 
-    SDL_PrivateGameControllerParseControllerConfigString(gamecontroller, pchMapping);
+    SDL_PrivateGameControllerParseControllerConfigString(gamecontroller, pControllerMapping->mapping);
 
     /* Set the zero point for triggers */
     for (i = 0; i < gamecontroller->num_bindings; ++i) {
@@ -1191,9 +1197,9 @@ static void SDL_PrivateGameControllerRefreshMapping(ControllerMapping_t *pContro
 {
     SDL_GameController *gamecontrollerlist = SDL_gamecontrollers;
     while (gamecontrollerlist) {
-        if (!SDL_memcmp(&gamecontrollerlist->joystick->guid, &pControllerMapping->guid, sizeof(pControllerMapping->guid))) {
+        if (gamecontrollerlist->mapping == pControllerMapping) {
             /* Not really threadsafe.  Should this lock access within SDL_GameControllerEventWatcher? */
-            SDL_PrivateLoadButtonMapping(gamecontrollerlist, pControllerMapping->name, pControllerMapping->mapping);
+            SDL_PrivateLoadButtonMapping(gamecontrollerlist, pControllerMapping);
 
             {
                 SDL_Event event;
@@ -1755,7 +1761,7 @@ SDL_GameControllerMapping(SDL_GameController *gamecontroller)
 {
     CHECK_GAMECONTROLLER_MAGIC(gamecontroller, NULL);
 
-    return SDL_GameControllerMappingForGUID(gamecontroller->joystick->guid);
+    return CreateMappingString(gamecontroller->mapping, gamecontroller->joystick->guid);
 }
 
 static void
@@ -1993,6 +1999,10 @@ SDL_bool SDL_ShouldIgnoreGameController(const char *name, SDL_JoystickGUID guid)
         /* Don't treat the PS3 and PS4 motion controls as a separate game controller */
         return SDL_TRUE;
     }
+    if (SDL_strncmp(name, "Nintendo ", 9) == 0 && SDL_strstr(name, " IMU") != NULL) {
+        /* Don't treat the Nintendo IMU as a separate game controller */
+        return SDL_TRUE;
+    }
     if (SDL_endswith(name, " Accelerometer") ||
         SDL_endswith(name, " IR") ||
         SDL_endswith(name, " Motion Plus") ||
@@ -2126,7 +2136,7 @@ SDL_GameControllerOpen(int device_index)
         }
     }
 
-    SDL_PrivateLoadButtonMapping(gamecontroller, pSupportedController->name, pSupportedController->mapping);
+    SDL_PrivateLoadButtonMapping(gamecontroller, pSupportedController);
 
     /* Add the controller to list */
     ++gamecontroller->ref_count;
@@ -2999,7 +3009,7 @@ SDL_GameControllerEventState(int state)
         break;
     default:
         for (i = 0; i < SDL_arraysize(event_list); ++i) {
-            SDL_EventState(event_list[i], state);
+            (void)SDL_EventState(event_list[i], state);
         }
         break;
     }

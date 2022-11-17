@@ -199,8 +199,10 @@ wayland_get_system_cursor(SDL_VideoData *vdata, Wayland_CursorData *cdata, float
         return SDL_FALSE;
     }
     focusdata = focus->driverdata;
-    *scale = focusdata->scale_factor;
-    size *= focusdata->scale_factor;
+
+    /* Cursors use integer scaling. */
+    *scale = SDL_ceilf(focusdata->scale_factor);
+    size *= *scale;
     for (i = 0; i < vdata->num_cursor_themes; i += 1) {
         if (vdata->cursor_themes[i].size == size) {
             theme = vdata->cursor_themes[i].theme;
@@ -620,10 +622,9 @@ Wayland_RecreateCursor(SDL_Cursor *cursor, SDL_VideoData *vdata)
         create_buffer_from_shm(cdata, cdata->w, cdata->h, WL_SHM_FORMAT_ARGB8888);
 
         SDL_memcpy(cdata->shm_data, old_data_pointer, stride * cdata->h);
-
-        cdata->surface = wl_compositor_create_surface(vdata->compositor);
-        wl_surface_set_user_data(cdata->surface, NULL);
     }
+    cdata->surface = wl_compositor_create_surface(vdata->compositor);
+    wl_surface_set_user_data(cdata->surface, NULL);
 }
 
 void
@@ -691,7 +692,9 @@ Wayland_FiniMouse(SDL_VideoData *data)
     for (i = 0; i < data->num_cursor_themes; i += 1) {
         WAYLAND_wl_cursor_theme_destroy(data->cursor_themes[i].theme);
     }
+    data->num_cursor_themes = 0;
     SDL_free(data->cursor_themes);
+    data->cursor_themes = NULL;
 
     SDL_DelHintCallback(SDL_HINT_VIDEO_WAYLAND_EMULATE_MOUSE_WARP, 
                         Wayland_EmulateMouseWarpChanged, input);
