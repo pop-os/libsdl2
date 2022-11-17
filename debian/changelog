@@ -5,8 +5,13 @@ libsdl2 (2.25.0~git20221101+dfsg-1) UNRELEASED; urgency=medium
     - Drop patches that were included upstream
   * d/.gitignore: Add
   * d/clean: Clean up files that are modified by the build
+  * Update symbols file
+  * Normalize symbols file to use stable releases where possible.
+    We don't need to generate fine-grained dependencies on specific betas,
+    release candidates and git snapshots: for smooth upgrades from older
+    Debian releases, it's enough to know which stable release is the minimum.
 
- -- Simon McVittie <smcv@debian.org>  Thu, 03 Nov 2022 10:35:12 +0000
+ -- Simon McVittie <smcv@debian.org>  Thu, 17 Nov 2022 19:11:40 +0000
 
 libsdl2 (2.24.2+dfsg-1) unstable; urgency=medium
 
