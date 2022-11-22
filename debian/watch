@@ -9,4 +9,4 @@ opts="\
     pgpmode=auto, \
     repack, \
     repacksuffix=+dfsg" \
-https://github.com/libsdl-org/SDL/tags .*/releases/tag/release-?@ANY_VERSION@
+https://github.com/libsdl-org/SDL/tags .*/releases/tag/release-?(2\.[0-9.]+)
