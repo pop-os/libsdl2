@@ -1,2 +1,4 @@
+Revert-Added-Linux-mappings-for-the-Logitech-G29-in-PS3-a.patch
+Removed-G29-from-controller_type.c.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
