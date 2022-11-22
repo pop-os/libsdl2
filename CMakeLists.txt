@@ -85,8 +85,8 @@ endif()
 
 # See docs/release_checklist.md
 set(SDL_MAJOR_VERSION 2)
-set(SDL_MINOR_VERSION 25)
-set(SDL_MICRO_VERSION 1)
+set(SDL_MINOR_VERSION 26)
+set(SDL_MICRO_VERSION 0)
 set(SDL_VERSION "${SDL_MAJOR_VERSION}.${SDL_MINOR_VERSION}.${SDL_MICRO_VERSION}")
 
 # Set defaults preventing destination file conflicts
@@ -1045,7 +1045,7 @@ if(SDL_LIBC)
             bsearch qsort abs bcopy memset memcpy memmove memcmp strlen strlcpy strlcat
             _strrev _strupr _strlwr index rindex strchr strrchr strstr strtok_r
             itoa _ltoa _uitoa _ultoa strtol strtoul _i64toa _ui64toa strtoll strtoull
-            atoi atof strcmp strncmp _stricmp strcasecmp _strnicmp strncasecmp
+            atoi atof strcmp strncmp _stricmp strcasecmp _strnicmp strncasecmp strcasestr
             wcscmp _wcsdup wcsdup wcslcat wcslcpy wcslen wcsncmp wcsstr
             wcscasecmp _wcsicmp wcsncasecmp _wcsnicmp
             sscanf vsscanf vsnprintf fopen64 fseeko fseeko64 _Exit
@@ -2960,8 +2960,9 @@ set(EXTRA_CFLAGS ${_EXTRA_CFLAGS})
 
 # Compat helpers for the configuration files
 
-if(EXISTS "${PROJECT_SOURCE_DIR}/VERSION")
-  file(READ "${PROJECT_SOURCE_DIR}/VERSION" SDL_SOURCE_VERSION)
+if(EXISTS "${PROJECT_SOURCE_DIR}/VERSION.txt")
+  file(READ "${PROJECT_SOURCE_DIR}/VERSION.txt" SDL_SOURCE_VERSION)
+  string(STRIP "${SDL_SOURCE_VERSION}" SDL_SOURCE_VERSION)
 endif()
 
 find_package(Git)
