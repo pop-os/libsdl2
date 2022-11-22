@@ -1,8 +1,15 @@
-libsdl2 (2.26.0+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.26.0+dfsg-1) unstable; urgency=medium
 
   * New upstream release
+  * Use stable release 2.26.0 for all symbols new in 2.25.x
+  * d/watch: Only watch for 2.x versions.
+    Development has started on SDL 3, which will be incompatible, and
+    should be packaged as a parallel libsdl3 source package.
+  * Add post-release patches to fix regression for Logitech G29.
+    We want this to show up as a steering wheel, not a Playstation gamepad.
+  * Release to unstable
 
- -- Simon McVittie <smcv@debian.org>  Tue, 22 Nov 2022 21:46:59 +0000
+ -- Simon McVittie <smcv@debian.org>  Tue, 22 Nov 2022 21:52:45 +0000
 
 libsdl2 (2.25.1+dfsg-1) experimental; urgency=medium
 
