@@ -1,9 +1,10 @@
-libsdl2 (2.26.1+dfsg-1) UNRELEASED; urgency=medium
+libsdl2 (2.26.1+dfsg-1) unstable; urgency=medium
 
   * New upstream stable release
   * Drop patches for Logitech G29 regression, applied upstream
+  * d/gbp.conf: Use DEP-14 branch names
 
- -- Simon McVittie <smcv@debian.org>  Tue, 06 Dec 2022 09:21:54 +0000
+ -- Simon McVittie <smcv@debian.org>  Mon, 12 Dec 2022 10:57:42 +0000
 
 libsdl2 (2.26.0+dfsg-1) unstable; urgency=medium
 
