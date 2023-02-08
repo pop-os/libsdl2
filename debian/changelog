@@ -1,3 +1,11 @@
+libsdl2 (2.26.3+dfsg-1) UNRELEASED; urgency=medium
+
+  * New upstream stable release 2.26.3
+    - No changes relevant to Unix platforms
+  * d/copyright: Update
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 08 Feb 2023 17:56:47 +0000
+
 libsdl2 (2.26.2+dfsg-1) unstable; urgency=medium
 
   * New upstream stable release

@@ -15,7 +15,7 @@ Files-Excluded: Android.mk
 
 Files: *
 Copyright:
- 1997-2022 Sam Lantinga <slouken@libsdl.org>
+ 1997-2023 Sam Lantinga <slouken@libsdl.org>
  2012 Raspberry Pi Foundation
  2012-2018 RISC OS Open Ltd
  2018-2019 EXL
@@ -144,8 +144,8 @@ Copyright: 2015-2020, Gianfranco Costamagna <locutusofborg@debian.org>
            2001, Christian T. Steigies <cts@debian.org>
            2001, Branden Robinson <branden@debian.org>
            2012, Canonical Ltd.
-           2018, Simon McVittie
-           2022, Collabora Ltd.
+           2018-2023, Simon McVittie
+           2022-2023, Collabora Ltd.
 License: LGPL-2.1+
 
 Files: debian/tests/cmake-findsdl2/FindSDL2.cmake
