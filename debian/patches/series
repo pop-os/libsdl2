@@ -1,2 +1,3 @@
+Fixed-Steam-Runtime-sandbox-detection.patch
 no-libdir.patch
 test-Don-t-install-bundled-copy-of-unifont.patch
