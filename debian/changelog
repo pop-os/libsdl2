@@ -1,3 +1,9 @@
+libsdl2 (2.26.3+dfsg-1pop1) jammy; urgency=medium
+
+  * Pop!_OS Backports
+
+ -- Brock Szuszczewicz <brock@szu.email>  Tue, 25 Apr 2023 11:01:17 -0600
+
 libsdl2 (2.26.3+dfsg-1) unstable; urgency=medium
 
   * New upstream stable release 2.26.3
